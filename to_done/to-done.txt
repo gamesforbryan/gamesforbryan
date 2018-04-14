@@ -1,0 +1,28 @@
+to-done is a simple project tracking system for single person or very small teams.  It uses plain text files (or even paper) to track your tasks.
+
+Basic:
+- Put each task on its own line.
+- Put a hyphen next to the task if it needs doing.
+~ Put a tilde next to the taks if it is in progress.
+- Any task...
+	- ... can have 1...
+	- ... or more child tasks.
+~ Put the parent task in progress...
+	~ ... if the child task is in progress.
+! Sometimes, we want to just say something without it being an task.
+! So, we put an exclamation mark to show that this is just a note.
+? Other times, we're not sure whether we need to do something or not, so we put a question mark.
+X If we decide not to do something, we put an X.
+	! Maybe, we even put a note why we decided not to do that task.
++ Finally, when an task is done, we use the plus sign.
+	! If you are using this system on paper, the hyphen very easily turns into a plus
+	
+Advanced:
+- Keep 1 todo.txt file and 1 done.txt file.
+- Move big chunks of completed tasks to done.txt whenever you need a motivation boost.
+- If a task seems too large to take on, break it up into smaller child tasks.
+	- Make each child task small enough to manage
+		? Or, maybe break the child task into smaller child tasks.
+- Don't spend so much time wrangling your list that you're not spending time doing work.
+	- Work on your current tasks for at least 15 minutes a day, no matter how tired or grumpy you feel after work.
+	! However, if you're not feeling creative, managing your list is better than skipping a day

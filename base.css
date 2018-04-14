@@ -1,0 +1,17 @@
+body {
+	background-color: #bbe8e9;
+	/*background-image: url(img/gamesforbryan_logo.png);
+	background-repeat: no-repeat;*/
+	margin-left: auto;
+	margin-right: auto;
+	width: 70%;
+	color: #292929;
+}
+
+a:link {
+	color: #f8983b;
+}
+
+a:visited {
+	color: #535354;
+}
