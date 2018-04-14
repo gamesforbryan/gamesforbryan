@@ -1,0 +1,191 @@
+<html>
+<head>
+	<title>Elevator Pitch</title>
+	<script type="text/javascript">
+	
+	var audio;
+	var defaultBackgroundColor = "#908dff";
+	var someones = ["Bigfoot", "a Dolphin", "a Jehovah's Witness", "a Fast Food Cashier", "a Brain Surgeon", "a Chef", "a Bank Manager", "a Dancer", "a Little Boy", "a Football Player", "a Cat", "an Astronaut", "the President of the United States", "a Vampire Slayer", "a Worm", "a Pirate", "the Poor", "Your Dad", "a Preschool Teacher", "a Party Clown", "a Ninja", "a Scientist", "a News Anchor", "a Person From the Future"];
+	var somethings = ["an Umbrella", "a Laser Pointer", "a Shrink Ray", "a Hovercraft", "an Eel", "the Whole Universe", "an Ant", "Used Socks", "a Fart", "Poop", "a Bucket Full of Pee", "a Set of Encyclopedias", "Dirty Bathtub Water", "Fresh Lemonade", "a Tornado", "a Live Dinosaur", "Fossilized Poop", "an Invisibility Cloak", "a Jet Pack", "a Death Ray"];
+	var somebodies = someones;
+	var timeRemaining;
+	var timer;
+		
+	function $(id)
+	{
+		return document.getElementById(id);
+	}
+	
+	function toggle_instructions()
+	{
+		var element = $("instructions");
+		element.hidden = !element.hidden;
+		element = $("toggle_instructions_button");
+		element.hidden = !element.hidden;
+	}
+	
+	function get_random(arr)
+	{
+		var randIndex = Math.floor(Math.random() * arr.length);
+		return arr[randIndex];
+	}
+	
+	function take_random(arr)
+	{
+		var randIndex = Math.floor(Math.random() * arr.length);
+		return arr.splice(randIndex, 1)[0];
+	}
+	
+	function start_game()
+	{
+		audio = $("alert");
+		var element = $("toggle_instructions_button");
+		element.hidden = true;
+		element = $("instructions");
+		element.hidden = true;
+		element = $("game_start_button");
+		element.hidden = true;
+		element = $("game_display");
+		var displayString = "You are<br/>";
+		displayString += "<h1>" + take_random(someones) + "</h1><br/>";
+		displayString += "trying to sell<br/>";
+		displayString += "<h1>" + take_random(somethings) + "</h1><br/>";
+		displayString += "to<br/>";
+		displayString += "<h1>" + take_random(somebodies) + "</h1>";
+		element.innerHTML = displayString;
+		element.hidden = false;
+		start_timer();
+		display_time();
+	}
+	
+	function start_timer()
+	{
+		timeRemaining = 60;
+		timer = setInterval(advance_timer, 1000);
+	}
+	
+	function advance_timer()
+	{
+		if (timeRemaining > 0)
+		{
+			timeRemaining -= 1;
+			display_time();
+		}
+		else
+		{	$("game_display").innerHTML = "TIME'S UP!!!";
+			$("ok_button").hidden = false;
+			$("time_display").innerHTML = "";
+			setBackground(randomColor());
+			audio.volume = 1;
+			audio.play();
+		}
+	}
+	
+	function display_time()
+	{
+		var element = $("time_display");
+		var displayString = "" + timeRemaining + " SECONDS LEFT";
+		element.innerHTML = displayString;
+		return true;
+	}
+	
+	function end_game()
+	{
+		setBackground(defaultBackgroundColor);
+		clearInterval(timer);
+		$("toggle_instructions_button").hidden = false;
+		$("game_start_button").hidden = false;
+		$("ok_button").hidden = true;
+	}
+	
+	function setBackground(color)
+	{
+		document.body.style.backgroundColor = color;
+	}
+	
+	function randomColor()
+	{
+		var hex = "0123456789abcdef";
+		var hexString = "";
+		for (var i = 0; i < 6; ++i)
+		{
+			hexString += get_random(hex);
+		}
+		return hexString;
+	}
+	
+	function initialize()
+	{
+		setBackground(defaultBackgroundColor);
+		var onClick = function()
+		{
+			audio.volume = 0;
+			audio.play(); 
+			}
+		audio = $('alert');
+		$('game_start_button').addEventListener('click', onClick, false);
+		
+	}
+	</script>
+	<style>
+	body
+	{
+		font-size: 32px; font-size: 4vw;
+	}
+	button
+	{
+		width: 100%;
+		height: 50%;
+		font-size: 32px; font-size: 8vw;
+	}
+	div
+	{
+		width: 100%;
+		text-align: center;
+	}
+	#game_display
+	{
+		font-size: 16px; font-size: 2vw;
+	}
+	#time_display
+	{
+		font-size: 32px; font-size: 4vw;
+	}
+	</style>
+</head>
+<body onload="initialize();">
+	<audio id="alert" src="alert.mp3"></audio>
+	<button id="toggle_instructions_button" onclick="toggle_instructions();">
+	Instructions
+	</button>
+	<div id="instructions" hidden="true">
+	Elevator Pitch<br/>
+	A game that combines Charades + Snake Oil + Taboo<br/><br/>
+	
+		You are a<br/>
+		[Someone]<br/>
+		trying to sell a<br/>
+		[Something]<br/>
+		to a<br/>
+		[Somebody]<br/><br/>
+		
+	You have 1 minute to show and tell what you are.<br/><br/>
+	You can do anything and say anything as long as you don't say exactly what the Someone, Something, or Somebody are.<br/><br/>
+	At the end of your minute, the other players get 1 guess each.<br/><br/>
+	Each player who correctly guesses the Someone, Something, or Somebody gets 1 point for each correct guess.<br/><br/>
+	You get 1 point for each Someone, Something, or Somebody that is correctly guessed.<br/><br/>
+	</div>
+	<button id="game_start_button" onclick="start_game();">
+	Start
+	</button>
+	<button id="ok_button" onclick="end_game();" hidden="true">
+	OK
+	</button>
+	<div id="game_display" hidden="true">
+	foo.
+	</div>
+	<div id="time_display">
+	Copyright 2015 - Games For Bryan
+	</div>
+</body>
+</html>
