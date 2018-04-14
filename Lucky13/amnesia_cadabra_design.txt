@@ -1,0 +1,23 @@
+Amnesia Cadabra
+
+Overview:  You are at a convention for wizards when someone shows off their new mass amnesia spell.  And now you have to figure out who you are in order to restore your memory before everybody else.
+
+Components:
+	- 13 cards numbered 1 to 13
+	- 2 tokens per player
+	
+4~8 players
+
+Set Up:
+	- Shuffle the 13 cards.
+	- Deal 1 card face down to each player.
+	- Place the remaining cards in a stack in the center of the table.
+	- Each player takes their card and without looking at the card, places it on their forehead so everyone else can see it.
+	
+On Your Turn:
+	- Perform 1 of the following actions:
+		- Spend 1 token to look at the top card of the stack and then put it back on the bottom of the stack.
+		- Spend 1 token, and ask a player if your number is higher or lower than another players.  The other player must answer truthfully.
+			Ex: "Here's my token.  Bob, is my number higher than Marcy's?"
+		- Spend 1 token and guess at the value of your number.  If you are right, then you win.
+		- Take 2 tokens.  Then, take the top card from the stack, show it to everyone except you, then put it back on the bottom of the stack.

@@ -1,0 +1,35 @@
+Archons
+
+Overview: The Archons of the Realm are vying for power in this trick-taking game.
+
+Inspired by:
+James Ernest's Gladiator
+
+Components:
+- 1 deck of poker cards with the face cards removed
+- 13 Archon cards (3 hearts, 3 spades, 3 diamonds, 3 clubs, 1 Demiurge card) (You can substitute the face cards and joker from a deck with a different card back.  For example, red and blue decks).
+	King Archon:  Cards of the same color are worth +1 point each for scoring.
+	Queen Archon:  Cards of the same suit are worth +1 point each for scoring.
+	Jack Archon:  Cards of the same suit are worth +1 when taking tricks.
+	Demiurge (Joker):  Whoever holds the Demiurge can put a card from their hand under the Demiurge.  Cards of that suit are not scored for the hand.  They do not get the card back (ex. a player with 7 cards in their hand has the Demiurge.  They put 1 of their cards under the Demiurge.  They will now have only 6 cards for the rest of their hand).
+
+Set Up:
+	- The Archons & Demiurge are shuffled into a poker deck that has had the face cards and jokers removed.
+	- Each player is dealt 7 cards.
+	- The player to the left of the dealer leads.  If they do not have an Archon card, then the player to their left leads, and so on.  If no one has an Archon, then the cards are reshuffled and redealt.
+
+On Each Turn:
+	- The leading player plays an Archon face up and a poker card face down.  Each player around the table plays a poker card face down.
+	- When everyone has played, the turn is resolved.
+	- Each player gets 1 card dealt to them.
+	- If a player only has Archon cards in their hand, they must discard all of them and get a new hand.
+	- If no one has any Archon cards left in their hand, then the hand is over and is scored.
+	! The Demiurge, the poker cards, and 1 Archon card from each player are shuffled back into the deck.  Each player gets a new hand of 7 cards.  3 hands are played, with the highest score winning at the end.
+	
+Resolving a Play:
+	- All players turn up their face down cards.
+	- Ties are thrown into the pot.
+	- Of the remaining cards, if there is an Ace, then the highest single card is put in the discard pile.
+	- Of the remaining cards, whoever holds the highest card wins.
+	- Whoever wins the play gets to keep the Archon face up in front of them, and any poker cards that weren't "destroyed".
+	! NOTE: If players have a Jack Archon and have played a card of the same suit, their card value is increased by 1 before resolving.
