@@ -1,0 +1,58 @@
+Sub Net
+by Andrew Ulysses Baker
+
+Overview:  Two AI, an attacker and a Defender, are engaged in a deadly game of cat and mouse in a corporate server network.
+
+Components:
+- 2 copies of the map
+- 2 pencils or pens (not provided)
+- Table divider (optional; not provided)
+
+Set Up:
+- Attacker and Defender each get a copy of the map and a pencil or pen
+- Attacker chooses a public node to start in and writes its number down in their first box.
+
+Each Round:
+- Attacker goes.
+- Defender goes.
+
+Attacker's Turn:
+- Move 1~2 nodes along lines.  Cannot pass a lock unless it has been hacked.  Write the turn number in a white box surrounding that node.  Cannot move onto a node with all of its white boxes filled in.
+OR
+- Hack a node (Write the turn number in a white box surrounding that node.  Cannot hack a node with all of its white boxes filled in.  Then cross out the hacked element (e.g. Money, Lock).  If a node has a lock, the lock(s) must be hacked first.):
+	- Money:
+		- Once a money node has been hacked, you may return to a public node and end the game.  If playing multiple games in a row, each hacked money node is 1 match point.
+	- Log:
+		- Once this log node has been hacked, you may lie when the Defender queries it about your activity.
+	- Key:
+		- Once this node has been hacked, you may pass through all locks without needing to hack them first.
+	- Lock:
+		- Once the lock(s) on a node has been hacked, you may move through this node and hack any contents of the node.
+		- If a node has multiple locks, you must lock each one in turn before you can move through this node and hack any contents of the node.
+	
+Defender's Turn:
+- Pick an available toolbox.  Cross it out and use its ability.
+	- Ping (Rings):
+		- Call out a node.
+		- The attacker must tell how many edges away their node is from the specified node (shortest route).
+	- Scan (Eye):
+		- Call out a letter or number.
+		- If the attacker is in a node with that letter or number, they say "Yes".
+	- Lock (Lock):
+		- Call out a node.
+		- That node gains an additional lock.
+	- Query (Scroll):
+		- Call out a log node.
+		- If the attacker has not hacked that log node, they must say a node # that they visited within the last 6 turns.
+		- If the attacker has hacked that log node, they may lie about which node(s) they've visited.
+		
+Ending the Game:
+- The game ends after 30 turns.  If the attacker has not hacked at least 1 money node and returned to the public node, then the Defender wins.
+- If attacker announces that they have hacked at least 1 money node and returned to the public node, the Defender must guess 1 money node that the attacker hacked and their current public node.
+	- The Defender gets 1 point for correctly guessing which money node the attacker hacked.
+	- The Defender gets 1 point for correctly guessing the Attacker's starting node.
+	- The Defender gets 1 point for correctly guessing an exact location on a specific turn.
+- The Defender may now review the Attacker's sheet for errors.
+	- The Defender gets 1 point for every successful error in the Attacker's sheet
+		! Note: This implies that it is okay for the Attacker to deliberately violate the worksheet (e.g. jump from one point to another in an impossible way) in advanced play (because they are a hacker, of course).
+- If the Defender gets at least 3 points, they win.  Otherwise, the Attacker wins.
