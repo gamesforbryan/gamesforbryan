@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Games For Bryan - Twilight Struggle Realignment Roller</title>
+		<link rel="stylesheet" type="text/css" href="base.css"/>
+		<script>
+		function $(name)
+		{
+			return document.getElementById(name);
+		}
+		
+		function main()
+		{
+			us_value = $("us_value");
+			ussr_value = $("ussr_value");
+			realignment_tab = $("realignment_tab");
+			coup_tab = $("coup_tab");
+			realignment_result = $("realignment_result");
+			coup_result = $("coup_result");
+		}
+		
+		function calculateRealignment()
+		{
+			realignment_result.innerHTML = "foo!";
+		}
+		
+		function calculateCoup()
+		{
+			coup_result.innerHTML = "bar!";
+		}
+		
+		function showRealignment() { realignment_tab.hidden = false; coup_tab.hidden = true; }
+		function showCoup() { realignment_tab.hidden = true; coup_tab.hidden = false; }
+		</script>
+		
+	</head>
+	<body onload="main()">
+		<div><b>Twilight Struggle Realignment Roller</b></div>
+		<a href="http://www.gamesforbryan.com"><img src="img/gamesforbryan_logo_small.png"/></a>
+		<div>
+			<input type="radio" name="type_name" value="realignment" onclick="showRealignment()" />Realignment
+			<input type="radio" name="type_name" value="coup" onclick="showCoup()"/>Coup
+			<br/>
+			<div id="realignment_tab">
+				<input type="submit" name="submit" onclick="calculateRealignment()" />
+				<div id="realignment_result">
+				</div>
+			</div>
+			<div id="coup_tab">
+			US (<input type="text" id="us_value" name="us_value"/>) vs. USSR (<input type="text" id="ussr_value" name="ussr_value"/>)
+			<br/>
+				<input type="submit" name="submit" onclick="calculateCoup()" />
+				<div id="coup_result">
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
