@@ -4,10 +4,12 @@
 // After the tutorial has been completed, subsequent playthroughs will allow a player to start from the Tutorial or begin with a randomly assigned loadout
 // With a randomly assigned loadout, the player is given a randomly selected set of cards and intrinsic aptitudes for a particular archetype (of which, we will have a database of 10 or so)
 // The player chooses the set of starting cards from a superset available for their archetype
-// Players are presented with a choice of subsequent encounters (1 ~ 3)
-// The selected encounter triggers.  Each encounter type has a different subroutine that we'll route between
-// Once the encounter has resolved, if the player's Life Points are below 0, they die.  Go to the On Death subroutine.
-// Otherwise, they are presented with next encounter set.
+// Players are presented with a choice of subsequent encounter sets (1 ~ 3)
+// The selected encounter set triggers.  Each encounter set type has a different subroutine that we'll route between
+// In each set are multiple encounters (1 ~ 9) presented in more or less linear order.
+// Once an encounter has resolved, if the player's Life Points are below 0, they die.  Go to the On Death subroutine.
+// Otherwise, they are presented with the next encounter in the current set
+// If there aren't any more encounters in the current set, they are presented with next encounter set to choose from.
 
 // On Death, display an indicator of the player's current progress.
 // Also display their highest progress.
@@ -37,3 +39,19 @@
 // Once they've managed to go through all of the encounters in reverse, they are presented with a final challenge, fighting their way through to defeat The Council of Tyranny.
 // Or, they can Join the Council of Tyranny, which means there's a random chance they could spawn as that character in a future run.
 // If they Defeat the Warwitch, they can keep going forever, with cards just getting harder and weirder.
+
+// Defeat enemies by playing a card-based minigame
+// The game is hybrid between Slay the Spire and one of those Choose an Adventure books
+// Players draw up to their hand limit at the start of combat
+// The enemy also draws a hand of cards
+// The player or enemy with the highest initiative goes first.  Ties are settled on a biased coin toss (in favor of the player).
+// Player can select and play any card in their hand that they can currently activate
+// Whether or not a card can be activated depends on resource cost, curse effects, card in hand effects, unplayable status, and target availability
+// Flourish effect - When active, if a player can empty their hand before ending their turn, they draw back up to their hand limit
+// Stun - Force opponent to randomly discard a card from their hand
+// Stagger - Force opponent to move a card from their discard pile to the exhausted stack
+// Revive - Move all exhausted cards to your hand.
+// If a player goes to draw a card, and their draw deck is empty, they shuffle their discard pile and set it face down as the new draw pile
+// If the enemy is reduced to 0 or fewer Life Points, they lose.
+// When an enemy loses to the Player, the Player is presented with a selection of loot that has dropped off of it
+// This should be a varying amount of gold, experience, and a choice of cards representing cards that the enemy had in their hand when they were defeated
