@@ -1,0 +1,54 @@
+Bobail Variant Cards
+
+Overview:  The game of Bobail is an excellent 2-player abstract strategy.  These cards warp the format by changing rules, win conditions, etc.
+
+Components: 13 cards, 1 Bobail Set
+
+1. Orthogonal Movement Only
+	In the basic rules of Bobail, the bobail moves like a chess king, and the rest of the pieces move like chess queens that will not come to rest until they adjacent to another piece or the edge of the board.
+	When this card is displayed, only orthogonal movement is allowed.  This effectively reduces the possibility space of the game, making it a simpler game.
+2. Diagonal Movement Only
+	In the basic rules of Bobail, the bobail moves like a chess king, and the rest of the pieces move like chess queens that will not come to rest until they adjacent to another piece or the edge of the board.
+	When this card is displayed, only diagonal movement is allowed.  This effectively reduces the possibility space of the game, making it a simpler game.
+3. Reverse Goals
+	In the basic rules of Bobail, each player is striving to get the bobail piece onto the row that represents their piece's starting positions.
+	When this card is displayed, the bobail goals are reversed.  Each player is trying to push the bobail piece into their opponent's starting row (more like football).
+4. No Backtracking
+	In the basic rules of Bobail, players are free to recreate board state without stalemate.
+	When this card is displayed, a player must not spend their move reverting board state.  If this means that they have no legal moves, then they immediately lose.
+5. Bobail Moves Like Regular Piece
+	In the basic rules of Bobail, the bobail moves like a chess king.
+	When this card is displayed, the bobail piece moves like a regular piece.
+6. Regular Pieces Move Like Bobail
+	In the basic rules of Bobail, the regular pieces move like chess queens that will not come to rest until they come to the end of the empty spaces or the edge of the board.
+	When this card is displayed, the regular pieces move like chess kings.
+7. Heavy Pieces
+	In the basic rules of Bobail, pieces must stop when they encounter another piece.
+	When this card is displayed, if any piece slides into any other piece, it will push that piece 1 space in the same direction, if possible.  It will then occupy the space previously occupied by the other piece.
+8. Reverse Play Order
+	In the basic rules of Bobail, each player must first move the bobail and then one of their pieces.  If they cannot make a legal movement, they immediately lose.
+	When this card is displayed, first move a piece, then move the bobail.
+9. Jumping Pieces
+	In the basic rules of Bobail, pieces move by sliding.
+	When this card is displayed, pieces can also move by jumping one space into any adjacent empty space.
+10. Skyfall
+	In the basic rules of Bobail, pieces start in each player's starting row.
+	When this card is displayed, remove all pieces except for the bobail.  On your turn, if you have unplaced pieces, place them anywhere on the board instead of moving a piece.
+11. Crowded
+	In the basic rules of Bobail, the only thing that blocks a piece's movement is whether they are moving to an empty space.
+	When this card is displayed, a piece cannot move out of a space where it is adjacent to more opponent pieces than your own team's pieces.
+12. Swapping Pieces
+	In the basic rules of Bobail, pieces move by sliding.
+	When this card is displayed, pieces can move by swapping position with an adjacent opponent piece and then continuing to move like a normal piece.
+13. Dangerous Teleporter 
+	In the basic rules of Bobail, pieces move by sliding.
+	When this card is displayed, pieces can move by coordinate bidding.
+	Each player holds up their hand with 1 to 5 fingers held up.
+	The space chosen is the x/y coordinate of player 1/player 2's fingers.
+	If the chosen space is occupied, the piece is removed from the game.
+
+Basic Variant:
+Play a series of games of Bobail, drawing two or more variant cards and playing a game with these variant rules.
+
+Advanced Variant:
+Play 2 out of 3 games of Bobail.  Before each game, draw 2 variant cards.  On your turn, draw 1 variant card, play 1 variant card face up on your discard pile.  Then play a turn of Bobail with these 2 variant rules (yours and your opponent's).
