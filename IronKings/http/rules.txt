@@ -1,0 +1,173 @@
+Iron Kings
+
+Overview: The very earth quakes as ancient war machines are awakened by modern Medieval mechanics and set loose upon the ruins of the "Balrog Zone" to see what plunder they can bring back to their Holdfast.
+Type: Worker placement, resource collection
+
+Components:
+    - ??? Map Tiles
+    - 1 Wilderness Tile
+    - Per Player
+        - 1 Player Boards
+        - 1 Iron King piece
+        - 1 Holdfast piece
+        - 5 worker pawns
+        - Steam tracker token
+        - 20 Planning Cards
+    - Treasure Cards
+    - Upgrade Cards
+    - Damage Tokens
+    - Resource tokens
+        - Coal
+        - Wood
+        - Iron
+        - Water
+        - Treasure
+    - 1 "First Player" banner
+    
+Set Up:
+- Randomly assign Player 1.  Give them the "First Player" banner.
+- Each player picks their starting position on the bottom row of the map and places their Holdfast and Iron King on their starting position.
+- Shuffle all of the decks.
+- Each player draws 5 planning cards.
+
+On Your Turn:
+- If any of your workers are placed on the map and not adjacent to your Iron King's hex, put them in your Wilderness space.
+- If you have no workers in the rested box OR you have a worker on the Brake space, take all of your workers currently placed on the player board and on the map adjacent to your IK and put them in the rested box.
+    - If your IK is currently positioned on your Holdfast, also take all of your workers currently in "Wilderness" and put them in the rested box.
+- Place 1 worker on any Legal Space and resolve its effect.
+- If there is a worker on the Throttle and not on the Brake, also reveal the next Iron King Planning Card and resolve its effects.
+
+Ending the Game:
+? VP goal
+? X turns after Balrog rises
+? X turns
+
+Spaces
+Holdfast: A player selects the location for this piece during set up.  Returning their IK to this space is how they can cash in their treasures for VP.
+Repair (HF): Unlimited worker placement.  Otherwise, same as Repair (IK)
+Wilderness:  If a worker is on this space, they have survived a near-mishap and are on their way through the Wilderness back to their crew.
+Rested Box:  If a worker is on this space, the player may take one and place it in a Legal Space during their worker placement phase.
+Throttle: If a worker is on this space, then at the end of the player's worker placement phase, they'll resolve their IK phase.
+Brake:  If a worker is on this space, then no IK phase for this player.
+Build Steam: Spend pairs of water and wood to generate 3 steam per pair.  Spend pairs of water and coal to generate 4 steam per pair.
+            You cannot build more steam than your max steam meter.
+Draw 2 & Plan 1:  Draw 2 planning cards into your hand.  Then place 1 face up into your planning stack.
+Repair:  Place 1 worker to remove 1 damage counter.  Also spend 1 iron to remove 2 damage counters.
+Map Hex:
+    Players can place workers on map hexes adjacent to their IK in order to resolve the effect on that hex.
+    Many of these hexes can only be harvested a set number of times, indicated by the stack of tokens placed on the hex at the start of the game.
+        Forest: Harvest wood
+        Mountain: Harvest coal
+        Barrow: Harvest coal
+        Ruins: Harvest coal
+        Lake: Harvest water
+        Wasteland: ?Harvest coal
+    Players can maneuver their IKs onto a hex for a different effect. (Must Step onto hex to trigger effect.  Merely turning in place or being pushed onto a hex does not trigger an effect.)
+    Note, the effect is triggered regardless of whether the player desires it or not.
+        Forest: +1 Defense
+        Mountain: +1 Defense/+1 Attack.  Cannot step onto mountain, only Climb or Leap.  Planning cards that would attempt to step into a Mountain space still cost Steam but do not move the IK.
+        Ruins: Draw 2 tokens, keep 1.
+		Barrow:  Draw 2 tokens, keep 2.
+		Mine: Take 1 damage. Draw three tokens, keep 2.
+        Lake: Take 2 water. Must immediately stop (IK phase ends immediately).
+        Wasteland: IK takes 1 damage.
+        
+Legal Space:
+    A Space with no workers that is on the current player's Player Board or on a Map Hex adjacent to the current player's Iron King.
+    
+Planning:
+You may see text that says "Plan 1".
+This means that you may insert a planning card into any position in the planning stack, pushing the rest of the stack to the right.
+This means that you may remove one planning card from any position in the planning stack, putting the card into the planning discard pile.
+This means that you may replace one planning card with one from your hand, putting the old card into the planning discard pile.
+
+Executing Plans:
+    Next to each Player Board is the Planning Track, representing preprogrammed movements that your IK will execute if it has the following:
+        - Enough Steam to pay for the card (Steam cost is in the top-right of each Planning Card).
+        - The ability to resolve the card (e.g. the card requires an item to be equipped, and your IK has one).
+        - A worker currently placed on the Throttle or an equivalent ability.
+    Then do this:
+    - Spend the Steam. 
+    - Resolve the Planning card's effect.
+    - Discard the Planning card.
+    
+Stepping on Workers:
+    If your IK moves into the same space as a worker, that worker is placed in their player's Wilderness space.
+    
+Pushing:
+    If resolving a Planning Card would move one IK into another's space, and there is space behind the other's IK, then the other's IK is pushed back one space without changing facing.
+    
+Combat:
+   If the Pusher has a weapon equipped, and its Attack Value is higher than the other's Defense Value, then place that Attack minus Defense many damage tokens.
+   
+Placing Damage Tokens:
+   Pips on die correspond to position on IK player board.
+   Two worker spaces in each section.
+   Place the damage token right on top of the space.
+   If a worker is in that space, immediately move them to Wilderness.
+   ?In each section, one of the worker spaces has an additional effect when a damage token is placed on it.
+   e.g. Head, remove 1 planning card from the stack
+        Body, lose 2 steam
+        Legs, if Brake is damaged, Throttle is always ON
+   If a position is rolled that is already occupied by a damage token, then the damage token spills over to the next spot until it lands on an empty spot.  If the IK has all 6 spaces damaged and gets another damage token, it is completely destroyed and the player is out of the game.
+   None of the Spaces in a section covered in Damage token can be used until repaired.
+   
+Treasure:
+    Treasure cards take up an equipment slot.  They can be scrapped (e.g.  to make room for a different treasure).
+    Some treasures give resources when scrapped (e.g. coal, iron, wood).
+    Returning a treasure to your Holdfast grants you twice the victory points.  Treasures held by IK at game end are worth normal VP amount.
+    
+    
+    Gold Chalice: pure VPs
+    Intricate Clock: VPs/iron and wood scrap value
+    Legendary Sword: +3 attack + VPs but loses value if actually used.
+    Epic Tapestry: VPs/wood scrap value
+    Ozymandian Stele: VPs/+2 attack but breaks if actually used.
+    Adamantine Tortuga: +3 Defense shield.  Only protects from behind.
+    Domed Temple Roof: +1 Defense shield.  Worn as a buckler.
+    Ballista: +1 Attack from range 2.  Held like a crossbow.
+    Stone of Sisyphus: Huge VPs.  Movement or Steam penalty.
+    Whitespire: Wizard's tower used as a weapon.
+    Boat Shoes: Standing on a lake space doesn't force IK to stop moving.
+    Boarding Hooks: Send one of your workers onto the IK player board of one of the IKs currently adjacent to your IK (e.g. Hit their brakes, hit their throttle, use a Head action to change plans).
+    Coronalith: A ring of standing stones is an excellent addition to your headgear. +1 Defense. +1 VP.
+    Drawbridge Chain: Attacking an enemy imparts a movement penalty.
+    Forbidden Knowledge: VPs/Scrap to draw 5 planning cards.
+	
+Upgrade:
+    Upgrade cards are placed directly over the section they are upgrading.
+    Once upgraded, a section cannot be downgraded.
+    
+    Holdfast Upgrades:
+    - Field Upgrades: IK upgrades can be performed without returning to Holdfast.
+    - Dedicated Repair Shop: twice as effective as default Repair action.
+    - Appraisal Studio: Increased VP from treasure.
+    - Open Market: Increased currency from treasure.
+    - Research Center: Upgrades and repairs are cheaper.
+    - Enchanted Gate: Teleport IK back into the field in any unoccupied space up to 3 spaces away from the HF.
+    - Recharging Station: Give IK 1 Water + 1 Coal.
+    
+    Iron King Upgrades:
+    - Refactoring: Allows player to swap order of cards in planning stack.
+    - Manual override: Remove card from your planning stack.
+    - Caffeine Dispenser: Draw 3, plan 2.
+    - Reverse Engineering: Put your planning discard pile onto the end of your planning stack.
+    - Cheetah Legs: Step + 1
+    - Locomotive Boiler: (image is of an entire train engine stuffed into an IK's torse) Produce additional +2 steam.  Increase maximum steam.
+    - Reinforced Frame: +1 Defense.
+    - Mule Legs: Cannot be pushed.
+    
+    
+Balrog:
+    Expansion Character: Add Balrog tokens to Mine/Barrow bags.  If 3 Balrog tokens, put Balrog on Mine space.
+    Attacks cause big damage.
+    Spreads Wasteland.
+    
+Coldfire:
+    Expansion Character:  IK embedded with crystals that allow it to carry the souls of every serf, thane, and lord in its fallen kingdom.  Looks like a knight with a flaming, blue skull, encrusted with blue gems, with a crown of 4~8 long crystals.
+    Has a starting space but no Holdfast.
+    Gains VP and upgrades through combat.
+    Ultimate goal is to slay the Balrog.
+    Since its workers are ghosts, they return to the Rested Box instead of going to the Wilderness.
+    Doesn't need fuel or water to operate.
+    ? Burns treasure to operate
