@@ -10,9 +10,12 @@ Components:
         - 1 Player Boards
         - 1 Iron King piece
         - 1 Holdfast piece
-        - 5 worker pawns
+        - 4 worker pawns
+        - 1 Big Worker pawn
         - Steam tracker token
         - 20 Planning Cards
+        - 2 coal
+        - 3 water
     - Treasure Cards
     - Upgrade Cards
     - Damage Tokens
