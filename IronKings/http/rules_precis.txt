@@ -11,16 +11,16 @@ Set Up:
 
 On Your Turn:
 - If any of your workers are placed on the map and not adjacent to your Iron King's hex, put them in the Wilderness.
-- If you have no workers in the rested box OR you have a worker on the Brake space, take all of your workers currently placed on the player board and on the map adjacent to your IK and put them in the rested box.
-    - If your IK is currently positioned on your Holdfast, also take all of your workers currently in the Wilderness and put them in the rested box.
+- If you have no workers in the rested box OR you have a worker on the Brake space, take all of your workers currently placed on the player board and on the map adjacent to your Iron King and put them in the rested box.
+    - If your Iron King is currently positioned on your Holdfast, also take all of your workers currently in the Wilderness and put them in the rested box.
 - Place 1 worker on any Legal Space and resolve its effect.
-- If there is a worker on the Throttle and not on the Brake, also resolve their IK phase.
+- If there is a worker on the Throttle and not on the Brake, also resolve their Iron King phase.
 
 Ending the Game:
 ? VP goal
 ? X turns after Balrog rises
 ? X turns
-? First IK to be destroyed/run out of fuel and steam
+? First Iron King to be destroyed/run out of fuel and steam
 
 Workers:
 The smaller worker pawns can be placed in most spaces on the Player Board and map.  They cannot be placed on the Steam 1 space on the player board.
@@ -30,26 +30,27 @@ The bigger worker pawn can be placed in every space on the Player Board.  They c
 
 Spaces:
 Holdfast: A player selects the location for this piece during set up.
-        Returning their IK to this space is how they can cash in their treasures for extra VP, rescue squires from the Wilderness, upgrade, and repair.
-        Holdfast Player Board worker spaces are only available if the IK is currently on the Holdfast map space.
-        Players may choose to rearrange their treasure cards between their IK Equipment Slots and Holdfast Treasure Space while docked.
+        Returning their Iron King to this space is how they can cash in their treasures for extra VP, rescue squires from the Wilderness, upgrade, and repair.
+        Holdfast Player Board worker spaces are only available if the Iron King is currently on the Holdfast map space.
+        Players may choose to rearrange their treasure cards between their Iron King Equipment Slots and Holdfast Treasure Space while docked.
         
-Repair (HF): Repair 1 per uncovered Holdfast space.
-    ? Maybe, damage repaired at HF is converted to VP?
-Steam (HF): Steam 1 per uncovered Holdfast space.
+Repair (Holdfast): Repair 1 per uncovered Holdfast space.
+    ? Maybe, damage repaired at Holdfast is converted to VP?
+Steam (Holdfast): Steam 1 per uncovered Holdfast space.
     ! Added to get up and running faster
-Wilderness:  If a worker is on this space, they have survived a near-mishap and are on their way through the Wilderness back to their Holdfast.
 Rested Box:  If a worker is on this space, the player may take one and place it in a Legal Space during their worker placement phase.
-Throttle: If a worker is on this space, then at the end of the player's worker placement phase, they'll resolve their IK phase.
-Brake:  If a worker is on this space, then no IK phase for this player.
+Plan 1 & Draw 1:  Plan 1 and then draw 1 planning card.
 Burn Fuel For Steam: Spend one pair of water and wood to generate 3 steam.
                         OR
                      Spend one pair of water and coal to generate 4 steam.
                     You cannot build more steam than your max steam meter.  Any steam generated in excess is wasted.
-Plan 1 & Draw 1:  Plan 1 and then draw 1 planning card.
+Throttle: If a worker is on this space, then at the end of the player's worker placement phase, they'll resolve their Iron King phase.
+Brake:  If a worker is on this space, then no Iron King phase for this player.
+Wilderness:  If a worker is on this space, they have survived a near-mishap and are on their way through the Wilderness back to their Holdfast.
 Repair:  Place 1 worker to remove 1 damage counter.  Optionally, also spend 1 Iron to remove 2 additional damage counters.
+
 Map Hex:
-    Players can place workers on map hexes adjacent to their IK in order to resolve the effect on that hex.
+    Players can place workers on map hexes adjacent to their Iron King in order to resolve the effect on that hex.
     Many of these hexes can only be harvested a set number of times, indicated by the stack of tokens placed on the hex at the start of the game.
         Forest: Harvest wood (Take one wood token)
         Mountain: Harvest coal (Take one coal token)
@@ -58,16 +59,16 @@ Map Hex:
         Lake: Harvest water (Take one water token from the bag)
         
     Players can step onto and end their turn on a hex for a different effect.
-    NOTE: IK Must Step onto hex to trigger effect.  Merely turning in place or being Pushed onto a hex does not trigger an effect.
-    NOTE: Any hex that is purple with a skull & crossbones, which will inflict 1 damage to IK stepping onto it.
-    NOTE: Lake stops IK phase even if more moves are available.
+    NOTE: Iron King Must Step onto hex to trigger effect.  Merely turning in place or being Pushed onto a hex does not trigger an effect.
+    NOTE: Any hex that has a skull & crossbones will inflict 1 damage to Iron King stepping onto it or pushed onto it.
+    NOTE: Lake stops Iron King phase even if more moves are available.
     Note, the effect is triggered regardless of whether the player desires it or not.
         Forest: +1 Defense
-        Mountain: +1 Defense/+1 Attack.  Cannot step onto mountain, only Climb or Leap.  Planning cards that would attempt to step into a Mountain space still cost Steam but do not move the IK.
+        Mountain: +1 Defense/+1 Attack.  Cannot step onto mountain, only Climb or Leap.  Planning cards that would attempt to step into a Mountain space still cost Steam but do not move the Iron King.
         Barrow:  Draw two (2) tokens. Keep both.
         Mine: Draw three (3) tokens and keep two (2).  Take 1 damage.
         Ruins: Draw two (2)tokens and keep one (1).
-        Lake: Take 2 water. Must immediately stop IK round.
+        Lake: Take 2 water. Must immediately stop Iron King round.
         Wasteland: Take 1 damage.
         
 Legal Space:
@@ -80,9 +81,9 @@ This means that you may remove one planning card from any position in the planni
 This means that you may replace one planning card in the planning stack with one from your hand, putting the old card into the planning discard pile.
 
 Executing Plans:
-    On each Player Board is the Planning Track, representing preprogrammed movements that your IK will execute if it has the following:
+    On each Player Board is the Planning Track, representing preprogrammed movements that your Iron King will execute if it has the following:
         - Enough Steam to pay for the current card (Steam cost is in the top-right of each Planning Card).
-        - The ability to resolve the card (e.g. the card requires an item to be equipped, and your IK has one).
+        - The ability to resolve the card (e.g. the card requires an item to be equipped, and your Iron King has one).
         - A worker currently placed on the Throttle or an equivalent status.
     Then do this:
     - Spend the Steam. 
@@ -92,32 +93,32 @@ Executing Plans:
     - When complete, reset the instruction pointer to position 0.
     
 Stepping on Workers:
-    If your IK moves into the same space as a worker, that worker is placed in the Wilderness.
+    If your Iron King moves into the same space as a worker, that worker is placed in the Wilderness.
     
 Pushing:
-    If resolving a Planning Card would move one IK into another's space, and there is space behind the other's IK, then the other's IK is pushed back one space in the direction of the active player's IK, without changing facing.
+    If resolving a Planning Card would move one Iron King into another's space, and there is space behind the other's Iron King, then the other's Iron King is pushed back one space in the direction of the active player's Iron King, without changing facing.
     
 Combat:
    If the Pusher has a weapon equipped, and its Attack Value is higher than the other's Defense Value, then place Attack minus Defense many damage tokens.
-   Example:  My IK has an Attack of 1 due to a sword it is carrying.  The other player's IK has no defense.  They will place 1 Damage Token on their IK.
-   My IK has an attack of 3 due to a really good sword it is carrying.  The other player's IK has a combined Defense of 3.  My sword will not damage their IK.
+   Example:  My Iron King has an Attack of 1 due to a sword it is carrying.  The other player's Iron King has no defense.  They will place 1 Damage Token on their Iron King.
+   My Iron King has an attack of 3 due to a really good sword it is carrying.  The other player's Iron King has a combined Defense of 3.  My sword will not damage their Iron King.
    
 Placing Damage Tokens:
-   Pips on die correspond to worker spaces on IK player board (Two worker spaces in each section x 3 sections).
+   Pips on die correspond to worker spaces on Iron King player board (Two worker spaces in each section x 3 sections).
    If there's a worker in the space that is damaged, place that worker in the Wilderness.
    In each section, the right-hand worker spaces have an additional effect when damage tokens are placed on them.
    - Head, remove 1 planning card from the stack
    - Body, lose 2 steam
    - Legs, if Brake is damaged, Throttle is always ON
    If a position is rolled that is already occupied by a damage token, then the damage token spills over to the next spot until it lands on an empty spot.  
-   If the IK has all 6 spaces damaged and gets another damage token, it is completely destroyed and the player is out of the game.
+   If the Iron King has all 6 spaces damaged and gets another damage token, it is completely destroyed and the player is out of the game.
    None of the spaces covered by damage tokens can be used.
 
    
 Treasure:
     Treasure cards take up an equipment slot.  They can be scrapped to make room for a different treasure.
     Some treasures give resources when scrapped (e.g. coal, iron, wood).
-    Returning a treasure to your Holdfast grants you their victory points.  Treasures held by IK at game end are worth half their normal VP amount (rounded down, so 1 VP items will be worth 0 VP).
+    Returning a treasure to your Holdfast grants you their victory points.  Treasures held by Iron King at game end are worth half their normal VP amount (rounded down, so 1 VP items will be worth 0 VP).
     
 Upgrade:
     Upgrade cards are placed directly over the section they are upgrading.
