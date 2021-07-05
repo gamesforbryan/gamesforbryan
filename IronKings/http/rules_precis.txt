@@ -65,14 +65,20 @@ Map Hex:
     Note, the effect is triggered regardless of whether the player desires it or not.
         Forest: +1 Defense
         Mountain: +1 Defense/+1 Attack.  Cannot step onto mountain, only Climb or Leap.  Planning cards that would attempt to step into a Mountain space still cost Steam but do not move the Iron King.
-        Barrow:  Draw two (2) tokens. Keep both.
-        Mine: Draw three (3) tokens and keep two (2).  Take 1 damage.
-        Ruins: Draw two (2)tokens and keep one (1).
+        Barrow:  Draw two (2) tokens. Keep both.*
+        Mine: Draw three (3) tokens and keep two (2).*  Take 1 damage.
+        Ruins: Draw two (2)tokens and keep one (1).*
         Lake: Take 2 water. Must immediately stop Iron King round.
         Wasteland: Take 1 damage.
-        
+    * If the bag does not have sufficient tokens, too bad.
+	
+Tokens:
+	Gear: Worth 1 Iron Scrap.  Place in your inventory.
+	Damage: Place 1 Damage Token on your Iron King.
+	Treasure: Draw 3 Treasure cards and keep one (1) in one of your Iron King's equipment slots.
+		
 Legal Space:
-    A Space with fewer workers than its limit that is on the Player Board or on a Map Hex adjacent to their Iron King.
+    A Space with no workers or Iron Kings placed on it that is on the Player Board or on a Map Hex adjacent to their Iron King.
     
 Planning:
 You may see text that says "Plan 1".
@@ -111,7 +117,7 @@ Placing Damage Tokens:
    - Body, lose 2 steam
    - Legs, if Brake is damaged, Throttle is always ON
    If a position is rolled that is already occupied by a damage token, then the damage token spills over to the next spot until it lands on an empty spot.  
-   If the Iron King has all 6 spaces damaged and gets another damage token, it is completely destroyed and the player is out of the game.
+   ? If the Iron King has all 6 spaces damaged and gets another damage token, it is completely destroyed and the player is out of the game.
    None of the spaces covered by damage tokens can be used.
 
    
