@@ -3,24 +3,55 @@ The Rules of Engagement for Iron Kings
 Overview: The very earth quakes as ancient war machines are awakened by modern Medieval mechanics and set loose upon the ruins of the "Balrog Zone" to see what plunder they can bring back to their Holdfast.
 
 Set Up:
-- Randomly assign Player 1.  Give them the "First Player" token.  Play proceeds clockwise from First Player.
-- In player order, each player picks their starting position and places their Holdfast and Iron King on their starting position.
+- Randomly assign Player 1.  Give them the "First Player" token.  Turn order is clockwise.
+- In player order, each player places their Holdfast and Iron King on their chosen starting position.
 - Shuffle all of the decks.
 - Each player draws 5 planning cards.
-- Each player may choose to mulligan their starting hand.
+* Players can take a mulligan and draw a new hand of planning cards.
 
-On Your Turn:
-- If any of your workers are placed on the map and not adjacent to your Iron King's hex, put them in the Wilderness.
-- If you have no workers in the rested box OR you have a worker on the Brake space, take all of your workers currently placed on the player board and on the map adjacent to your Iron King and put them in the rested box.
-    - If your Iron King is currently positioned on your Holdfast, also take all of your workers currently in the Wilderness and put them in the rested box.
-- Place 1 worker on any Legal Space and resolve its effect.
-- If there is a worker on the Throttle and not on the Brake, also resolve their Iron King phase.
+On Your Turn (Worker Phase):
+If you have no workers in the Rested Box OR you have a worker on the Brake space, move your workers currently on the player board and the map adjacent your Iron King to your Rested Box.
 
-Ending the Game:
-? VP goal
-? X turns after Balrog rises
-? X turns
-? First Iron King to be destroyed/run out of fuel and steam
+If your Iron King is currently on your Holdfast, move all of your workers in the Wilderness to the Rested Box.
+
+If any of your workers are on the map and not adjacent your Iron King's hex, put them in the Wilderness.
+
+Place 1 worker on any Legal Space and resolve its effect.
+Legal Space:
+    A Space with no workers or Iron Kings placed on it that is on the Player Board or on a Map Hex adjacent to their Iron King.
+    Also, Holdfast Player Board spaces are Legal when the player's Iron King is on the player's Holdfast map tile.
+
+If there is a worker on the Throttle and not on the Brake, also play the Iron King Phase.
+
+On Your Turn (Iron King Phase):
+On each Player Board is the Planning Track, representing preprogrammed movements that your Iron King will execute if it has the following:
+        - Enough Steam to pay for the current card (Steam cost is in the top-right of each Planning Card).
+        - The ability to resolve the card (e.g. the card requires an item to be equipped, and your Iron King has one).
+        - A worker currently placed on the Throttle or an equivalent status.
+Then do this:
+    - Spend the Steam. 
+    - Resolve the Planning card's effect.
+    - Advance the instruction pointer.
+    - Repeat until Steam < Planning card's Steam cost or the instruction pointer has moved off past the end of the stack.
+    - When complete, reset the instruction pointer to position 0.
+    
+Stepping on Workers:
+    If an Iron King moves into the same space as a worker, that worker is placed in the Wilderness.
+    
+Pushing:
+    If resolving a Planning Card would move one Iron King into another's space, and there is space behind the other's Iron King, then the other's Iron King is pushed back one space in the direction of the active player's Iron King, without changing facing.
+    
+Combat:
+   If the Pusher has a weapon equipped, it also places a Damage Token on the Pushed Iron King for each Attack Value on the weapons, combined.
+
+Placing Damage Tokens:
+    First, place Damage Tokens on any Shield spaces on your Iron King.  If there are no Shield spaces upon which to place a Damage Token, roll one six-sided die to determine where the Damage Token will be placed in your Iron King.
+ Pips on die correspond to worker spaces on Iron King player board (Two worker spaces in each section x 3 sections).
+ If there's a worker in the space that is damaged, place that worker in the Wilderness.
+ 
+ If a position is rolled that is already occupied by a Damage Token, then the Damage Token spills over to the next spot until it lands on an empty spot. 
+
+ None of the spaces covered by Damage Tokens can be used.
 
 Workers:
 The smaller worker pawns can be placed in most spaces on the Player Board and map.  They cannot be placed on the Steam 1 space on the player board.
@@ -29,17 +60,21 @@ Big Worker:
 The bigger worker pawn can be placed in every space on the Player Board.  They cannot be placed on the map.  If an effect would send them into the Wilderness, they are instead placed into the Rest Box.
 
 Spaces:
-Holdfast: A player selects the location for this piece during set up.
-        Returning their Iron King to this space is how they can cash in their treasures for extra VP, rescue squires from the Wilderness, upgrade, and repair.
-        Holdfast Player Board worker spaces are only available if the Iron King is currently on the Holdfast map space.
-        Players may choose to rearrange their treasure cards between their Iron King Equipment Slots and Holdfast Treasure Space while docked.
+Holdfast: Holdfast: A player selects the location for this piece during set up.
+Returning their Iron King to this space is how they can cash in their treasures for extra VP, rescue squires from the Wilderness, upgrade, and repair.
+Holdfast Player Board worker spaces are only available if the Iron King is currently on the Holdfast map space.
+ Players may choose to rearrange their treasure cards between their Iron King Equipment Slots and Holdfast Treasure Space while docked.
         
 Repair (Holdfast): Repair 1 per uncovered Holdfast space.
-    ? Maybe, damage repaired at Holdfast is converted to VP?
 Steam (Holdfast): Steam 1 per uncovered Holdfast space.
-    ! Added to get up and running faster
 Rested Box:  If a worker is on this space, the player may take one and place it in a Legal Space during their worker placement phase.
 Plan 1 & Draw 1:  Plan 1 and then draw 1 planning card.
+
+"Plan 1" means 1 of the following:
+Insert a planning card into any position in the planning stack, pushing the rest of the stack to the right.  Any cards pushed all the way off the right are put into the planning discard pile.
+Remove one planning card from any position in the planning stack, putting the card into the planning discard pile.
+Replace one planning card in the planning stack with one from your hand, putting the old card into the planning discard pile.
+
 Burn Fuel For Steam: Spend one pair of water and wood to generate 3 steam.
                         OR
                      Spend one pair of water and coal to generate 4 steam.
@@ -65,7 +100,7 @@ Map Hex:
     Note, the effect is triggered regardless of whether the player desires it or not.
         Forest: +1 Defense
         Mountain: +1 Defense/+1 Attack.  Cannot step onto mountain, only Climb or Leap.  Planning cards that would attempt to step into a Mountain space still cost Steam but do not move the Iron King.
-        Barrow:  Draw two (2) tokens. Keep both.*
+        Barrow:  Draw two (2) tokens. Keep all.*
         Mine: Draw three (3) tokens and keep two (2).*  Take 1 damage.
         Ruins: Draw two (2)tokens and keep one (1).*
         Lake: Take 2 water. Must immediately stop Iron King round.
@@ -79,47 +114,13 @@ Tokens:
 		
 Legal Space:
     A Space with no workers or Iron Kings placed on it that is on the Player Board or on a Map Hex adjacent to their Iron King.
+    Also, Holdfast Player Board spaces are Legal when the player's Iron King is on the player's Holdfast map tile.
     
 Planning:
 You may see text that says "Plan 1".
 This means that you may insert a planning card into any position in the planning stack, pushing the rest of the stack to the right.  Any cards pushed all the way off the right are put into the planning discard pile.
 This means that you may remove one planning card from any position in the planning stack, putting the card into the planning discard pile.
 This means that you may replace one planning card in the planning stack with one from your hand, putting the old card into the planning discard pile.
-
-Executing Plans:
-    On each Player Board is the Planning Track, representing preprogrammed movements that your Iron King will execute if it has the following:
-        - Enough Steam to pay for the current card (Steam cost is in the top-right of each Planning Card).
-        - The ability to resolve the card (e.g. the card requires an item to be equipped, and your Iron King has one).
-        - A worker currently placed on the Throttle or an equivalent status.
-    Then do this:
-    - Spend the Steam. 
-    - Resolve the Planning card's effect.
-    - Advance the instruction pointer.
-    - Repeat until Steam < Planning card's Steam cost or the instruction pointer has moved off past the end of the stack.
-    - When complete, reset the instruction pointer to position 0.
-    
-Stepping on Workers:
-    If your Iron King moves into the same space as a worker, that worker is placed in the Wilderness.
-    
-Pushing:
-    If resolving a Planning Card would move one Iron King into another's space, and there is space behind the other's Iron King, then the other's Iron King is pushed back one space in the direction of the active player's Iron King, without changing facing.
-    
-Combat:
-   If the Pusher has a weapon equipped, and its Attack Value is higher than the other's Defense Value, then place Attack minus Defense many damage tokens.
-   Example:  My Iron King has an Attack of 1 due to a sword it is carrying.  The other player's Iron King has no defense.  They will place 1 Damage Token on their Iron King.
-   My Iron King has an attack of 3 due to a really good sword it is carrying.  The other player's Iron King has a combined Defense of 3.  My sword will not damage their Iron King.
-   
-Placing Damage Tokens:
-   Pips on die correspond to worker spaces on Iron King player board (Two worker spaces in each section x 3 sections).
-   If there's a worker in the space that is damaged, place that worker in the Wilderness.
-   In each section, the right-hand worker spaces have an additional effect when damage tokens are placed on them.
-   - Head, remove 1 planning card from the stack
-   - Body, lose 2 steam
-   - Legs, if Brake is damaged, Throttle is always ON
-   If a position is rolled that is already occupied by a damage token, then the damage token spills over to the next spot until it lands on an empty spot.  
-   ? If the Iron King has all 6 spaces damaged and gets another damage token, it is completely destroyed and the player is out of the game.
-   None of the spaces covered by damage tokens can be used.
-
    
 Treasure:
     Treasure cards take up an equipment slot.  They can be scrapped to make room for a different treasure.
@@ -132,3 +133,10 @@ Upgrade:
     Upgrading a section clears all damage on that section.
     Once upgraded, a section cannot be downgraded.
     
+    
+
+Ending the Game:
+? VP goal
+? X turns after Balrog rises
+? X turns
+? First Iron King to be destroyed/run out of fuel and steam
