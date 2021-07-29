@@ -14142,7 +14142,7 @@
         "scaleZ": 1.0
       },
       "Nickname": "The Rules of Engagement for Iron Kings",
-      "Description": "http://gamesforbryan.com/IronKings/http/rules.txt\n",
+      "Description": "http://gamesforbryan.com/IronKings/http/IronKingsRulebook_v.10.pdf",
       "GMNotes": "",
       "ColorDiffuse": {
         "r": 1.0,
@@ -14164,7 +14164,7 @@
       "HideWhenFaceDown": false,
       "Hands": false,
       "Tablet": {
-        "PageURL": "http://gamesforbryan.com/IronKings/http/rules.html"
+        "PageURL": "http://gamesforbryan.com/IronKings/http/IronKingsRulebook_v.10.pdf"
       },
       "LuaScript": "",
       "LuaScriptState": "",
