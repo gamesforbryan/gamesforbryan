@@ -76,7 +76,12 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
 			<div class="p5-holder" ref="p5"></div>
-			
+			<div v-if="io.isHost">
+            Just start typing!
+            </div>
+            <div v-if="io.isGuest">
+            Just start typing!
+            </div>
             <div id="textfield"></div>
             
 			<div class="section">
