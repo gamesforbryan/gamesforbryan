@@ -1,37 +1,6 @@
 let canvasW = 600
 let canvasH = 500
 
-
-
-function createRandomDrawer(hue, onDraw) {
-	let pt = Vector.polar(Math.random()*300, Math.random()*100)
-	pt.id = Math.floor(Math.random()*9999)
-	let color = [hue,100,50]
-	setInterval(() => {
-		if (app.p5 && app.autodraw) {
-
-			let p = app.p5
-		
-			let t = p.millis()*.001
-			
-			let size = 20*p.noise(t)
-			
-			// Randomly walk this point around to test
-			pt.addPolar(size, 20*p.noise(t, pt.id))
-			
-				pt.mult(.96)
-
-			// Change color
-			// color[0] = (500*p.noise(t*.1, pt.id + 100))%360
-			// color[2] = 100*p.noise(t*.1, pt.id + 300)
-			
-			// Center the drawing
-			onDraw(pt, {color:color,size: size})
-		}
-	}, 30)
-
-}
-
 let app = {
     
 	init() {
@@ -115,6 +84,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 					<span style="color:blue">host:</span>
 					<span class="uid">"{{io.roomID}}"</span>
+                    <div>Quick Link to Send to your Guests: http://gamesforbryan.com/Hosted/coauthor/index.html?room={{io.roomID}}&mode=join</div>
 					<div class="section">
 						connected to:
 						<div v-for="connectedPeer in io.guestConnections">
