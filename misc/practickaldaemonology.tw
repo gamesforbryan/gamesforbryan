@@ -1,0 +1,740 @@
+:: StoryTitle
+PracticalDaemonology
+
+
+:: StoryData
+{
+	"ifid": "3128F1D7-B233-41CC-B2BE-0FCE619629B2",
+	"format": "Harlowe",
+	"format-version": "3.1.0",
+	"start": "Prelude",
+	"tag-colors": {
+		"book": "gray",
+		"daemon": "red",
+		"daemon-description": "red",
+		"foray": "yellow",
+		"function": "green",
+		"incense": "red",
+		"journey": "yellow",
+		"npc": "blue",
+		"persona": "blue",
+		"potion": "gray",
+		"reagent": "purple",
+		"rumor": "yellow",
+		"startup": "green"
+	},
+	"zoom": 0.6
+}
+
+
+:: Init [startup] {"position":"3375,2469","size":"100,100"}
+{(set: $LazarusBeaconCharges to 10)
+
+(set: $gold to 1337)
+(set: $reputation to (dm: "West Fires", 0, "South Quarry", 0, "North Harbor", 0, "Eastern Fortress", 0, "Lower Depths", 0, "Upper Castlerock", 0, "publican", -1, "House Guild Mechanika", 0))
+
+(set: $daemons to (ds: "Living Shadow" ))
+(set: $inventory to (ds: "Everfull Flask", "Ethereal Threads", "Blank Scroll", "Ink of Enchantment", "Maintenance Key", "Map Fragment", "Treasure Map", "Damage Ward", "Ex Nobilis Aetherium", "Crystal Prism"))
+(set: $storage to (ds:))
+
+(set: $macroCasterPlates to (a: "Use Ward Press", "Capture Fire Ghost", "Use Healing Draught"))
+
+(set: $mail to (a:
+(dm: "sender", "No one",
+     "message", "My dearest, For you I have found a copy of your favorite childhood book.  Let it remind you of happier days.  <The Signature has been obliterated with tears.>",
+	 "attachment", "A Young Wizard's Primer"
+)
+))
+
+(set: $requests to (dm:))
+(set: $scheduledEvents to (dm:))
+(set: $maxPerception to 2)
+(set: $perception to $maxPerception)
+
+(set: $maxCunning to 5)
+(set: $cunning to $maxCunning)
+
+(set: $maxHealth to 2)
+(set: $health to $maxHealth)
+
+(set: $client to (dm:))
+(set: $clientDescription to "")
+(set: $currentContract to "")
+(set: $currentContractStatus to 0)
+(set: $encounterStack to (a:))
+(set: $encounterIndex to 0)
+(set: $encounterPayout to 0)
+(set: $encounterLength to 0)
+(set: $encounterTimeLimit to 15)
+(set: $encounterLocation to "")
+
+(set: $riftMaxSupplies to 200)
+(set: $riftMaxCrew to 1)
+(set: $riftMaxTreasure to 500)
+(set: $riftSupplies to -20)
+(set: $riftCrew to 10)
+(set: $riftDistance to 0)
+(set: $riftTripDistance to 9999999)
+(set: $riftTreasure to 0)
+(set: $riftCommand to -1)
+(set: $riftNextJourney to "")
+(set: $riftDirection to 1)
+
+
+(set: $miningCommand to 0)
+(set: $miningCrew to 0)
+(set: $miningWage to 0)
+(set: $miningDistance to 0)
+(set: $miningEvent to "")
+(set: $miningEvents to (a:))
+(set: $miningDanger to 0)
+
+
+(set: $forayStack to (a:))
+(set: $forayExploration to 0)
+(set: $forayCommand to 0)
+(set: $forayCrew to 0)
+
+(set: $labyrinthStack to (a:))
+
+(set: $flaskType to "Mystery Draught")
+
+(set: $danger to 1)
+(set: $rumors to (ds:))
+(set: $scryingStoneCooldown to -13)
+
+(set: $element to (either: "fire", "earth", "water", "air"))
+(if: $element is "fire")[
+(set: $inventory to it + (ds: "Neighborhood Door to West Fires"))
+(display: "Init West Fires")]
+(else-if: $element is "earth")[(set: $inventory to it + (ds: "Neighborhood Door to South Quarry"))
+(display: "Init South Quarry")]
+(else-if: $element is "water")[
+(set: $inventory to it + (ds: "Neighborhood Door to North Harbor"))
+(display: "Init North Harbor")]
+(else-if: $element is "air")[
+(set: $inventory to it + (ds: "Neighborhood Door to Eastern Fortress"))
+(display: "Init Eastern Fortress")]
+}
+
+
+:: Prelude {"position":"3506,2468","size":"100,100"}
+You are a wizard.
+You are a wizard in a world where magic is common.
+You are a two-bit hack of a wizard in the gritty underbelly of the capital city of a decadent empire on the edge of ruin.
+(set: $playerHistory to (display: "RandomPlayerHistory"))
+$playerHistory
+
+Now, you've moved into this garrett with nought, determined to make this place your home.
+
+Let's get into it, then...
+[[Home Again]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[[Use the Incredibly Secret Machine]]
+
+
+:: Home Again [tick] {"position":"3632,2406","size":"200,200"}
+{(set: _library to (find: _item where (passage: _item)'s tags contains "book", ...$inventory))
+(set: _furniture to (find: _item where (passage: _item)'s tags contains "furniture", ...$inventory))}
+
+Home-sweet-home.
+
+You enter via the secret door in the back.  You never use the door in the front.
+A quick check on your [[Lazarus Beacon]] shows you have $LazarusBeaconCharges charges left.  (if: $LazarusBeaconCharges is 0)[ The next time is for real, tough guy.  You'd best not slip. ](else-if: $LazarusBeaconCharges < 3)[ You're running low.  Be careful out there, and get some money to the artificer for a recharge as soon as you can. ](else-if: $LazarusBeaconCharges < 7)[ You've taken a few hits, but you're still plenty hale! ](else:)[ You are alive with the raw power afforded you by your arcane artifact! ]
+(if: $currentContract is not "")[$currentContract: (link-goto: "Continue Contract", "Encounter")]
+(unless: _furniture contains "Secret Compartment")[(if: $perception > 3)[You never noticed a loose panel near the floor board before. [[Check the Loose Panel in Your Floor]]]]
+
+(if: $mail's length  > 0)[ [[Read Your Mail]] ]
+
+(if: _library's length > 0)[ [[Read a Book In Your Library]] ]
+
+(if: _furniture's length > 0)[(for: each _item, ..._furniture)[ (link-goto: "Use " + _item)
+]]
+
+
+
+
+
+
+
+Oh, what's this?
+[[Nest of Box Adders]]
+
+
+
+
+
+:: Encounter {"position":"2550,2395","size":"200,100"}
+{(if: $encounterIndex > $encounterStack's length)[
+	(if: $neighborhood's name is "")[(goto: "Home Again")]
+	(goto: "Explore the Neighborhood")
+]
+(display: "Tick")
+(goto: $encounterStack's ($encounterIndex))
+}
+
+
+
+:: Display Random Color {"position":"4121,2990","size":"100,100"}
+You press through the crowd in the (either: "Liar's", "Fool's", "Murderer's", "Bastard's", "Sweet", $element) (either: "Market", "Bazaar", "Exchange", "Soukh"), keeping an eye out for your quarry and any traps or henchmen they've put in your path.
+(either: "Shady transactions.", "Steamy eye contact.", "Little dogs eating rats.")
+(display: "Display Random Color Person")
+
+
+
+:: RenderHeader {"position":"3390,2175","size":"100,100"}
+<p id="header">ASTUS: $cunning SENSU: $perception VITAE: $health KRONO: (print: (floor: $ticks / 169)):(print: (floor: $ticks / 13 % 13)):(print: $ticks % 13) OROS: $gold <a href="#inventory">+</a>
+<b>(print: (passage:)'s name)</b>
+---
+</p>
+
+
+:: Tick [function] {"position":"3503,2175","size":"100,100"}
+{(set: $ticks to it + 1)(display: "Execute Scheduled Events")
+(if: $ticks % 13 is 7)[(display: "TickMining")]
+(if: $ticks % 13 is 3)[//It is Dawn.//(set: $isDay to 1)<br/>]
+(if: $ticks % 13 is 9)[//It is Dusk.//(set: $isDay to 0)<br/>]
+}
+
+
+:: Inventory {"position":"3605,2085","size":"100,100"}
+(if: $inventory's length > 0)[The contents of your various pockets, hidey-holes, and secret pouches contains $gold gold coins and
+(for: each _item, ...($inventory))[(link-reveal: _item)[
+<i>(display: _item)</i>]
+]
+](else:)[You haven't a solitary thing other than your $gold gold coins and the clothes on your back.  Your library is quite bare at the moment.  A spider has written a message in a cobweb for you, but you don't read Lost Veringian pictograms.
+]
+
+(if: $daemons's length > 0)[You currently have the following daemons in your thrall:
+(for: each _daemon, ...$daemons)[(link-reveal: _daemon)[: //(display: _daemon)//]
+]
+](else:)[//You currently have no daemons in your thrall.//
+]
+
+(if: $currentContract != "")[You currently are engaged in the following business:
+$currentContract
+(display: "Description " + $currentContract)
+](else:)[//You are currently looking for employment.//
+]
+
+
+:: Clock {"position":"3617,2166","size":"100,100"}
+(display: "Tick")(display: "RenderHeader") (link-goto: "Inventory")
+
+
+:: Item For Sale {"position":"5257,2244","size":"100,100"}
+(set: _i1 to _item)(set: _i2 to _cost)
+_i1
+(display: _i1)
+It will cost you _i2 gold.(if: $gold >= _i2)[  You can afford it, though.]
+(link-reveal-goto: "Buy It", (history:)'s last)[(set: $inventory to it + (ds: _i1))(set: $gold to it - _i2)](else:)[  Quite a bit too rich for your blood.]
+
+(link-goto: (history:)'s last)
+
+
+:: Read a Book In Your Library {"position":"3654,2609","size":"100,100"}
+A well-kept library makes for a well-kept mind.  Even rereading favorite old tomes can yield surpising new fruit.
+(for: each _item, ...$inventory)[(if: (passage: _item)'s tags contains "book")[
+(link-goto: _item, "Read " + _item)
+]]
+
+[[Home Again]]
+
+
+:: Furniture For Sale {"position":"4583,2437","size":"100,100"}
+$itemName
+(display: $itemName)
+It will cost you $goldCost gold.
+(if: $gold >= $goldCost)[You can afford it, though.
+(link-reveal-goto: "Buy It", (history:)'s last)
+[(set: $inventory to it + (ds: $itemName))
+(set: $gold to it - $goldCost)
+]]
+(else:)[Quite a bit too rich for your blood.
+]
+(link-goto: "Continue Browsing for Furniture", (history:)'s last) 
+
+(display: "NavOptions")
+
+
+:: RandomPlayerHistory {"position":"3284,2285","size":"100,100"}
+(either: "You were a country bumpkin who was orphaned.  You sold your family farm for a pittance to try your luck in the big city.",
+"You were a minor aristocrat of some means, but you disgraced yourself by failing at University.",
+"You came to the city to take a clerking job, but the job did not exist, and your recruiter turned out to be a con artist who took most of your money.")
+
+:: Play With Your Calculator {"position":"3517,2583","size":"100,100"}
+The garrett came with this brass contraption, as the previous occupant had died with it in their possession, and no one could be arsed to move the unspeakably heavy thing that occupies a good fifth of your habitable space.
+
+(set: $d to (dm: "foo", 0))
+(link-repeat: "Adding to Data Maps")[(set: $d's foo to $d's foo + 1)(replace:?output)[$d]]
+|output>[$d]
+
+(set: $a to (a: (dm: "foo", 0)))
+(link-repeat: "Adding to Array of Data Maps")[(set: $a to it + (a:(dm: "foo", (random: 0, 9999))))(replace:?output2)[$a]]
+|output2>[$a]
+
+(set: $s to (ds: (random: 0,999)))(link-repeat: "Adding to Dataset")[
+(set: $s to it + (ds: (random: 0,999)))
+(replace:?output3)[$s]]
+|output3>[$s]
+
+:: TakeDamage [function] {"position":"3616,2286","size":"100,100"}
+{(if: $inventory contains "Damage Ward")
+[
+Your steadfast Damage Ward glows hot and bright for a moment as waves of death lash out at you, and once the danger passes, it becomes once again an inert lump of lead.
+(set: $inventory to $inventory - (ds: "Damage Ward"))
+(set: $inventory to $inventory + (ds: "Lump of Lead"))
+]
+(else:)
+[
+<br/><b>Health - $arg</b>(set: $health to it - $arg)(if: $deathReason is "")[(set: $deathReason to "Health - " + (str:$arg))]
+]
+(if: $health <= 0)[(goto: "Death")]}
+(replace:?clock)[(display: "Tick")(display:"RenderHeader")]
+
+
+:: DealDamage [function] {"position":"5210,3372","size":"100,100"}
+<br/><b>Damage + $arg</b>
+{(set: $enemyHealth to it - $arg)(if: $enemyHealth <= 0)[(replace:?input)[You've defeated your enemy!(set: $deathReason to "")(set: $enemyType to "")]](else:)[Your enemy yet lives.]}
+
+
+:: QuickBuy {"position":"5260,2352","size":"100,100"}
+(unless: $inventory contains _item)[_item
+(display: _item)(set: _i1 to _item)(set: _i2 to _cost)  It will cost you _i2 gold.(if: $gold >= _i2)[ You can afford it. (link-reveal-goto: "Buy It", (passage:)'s name)[(set: $inventory to it + (ds: _i1))(set: $gold to it - _i2)]
+](else:)[ Quite a bit too rich for your blood.]]
+
+
+:: Wander the Neighborhood {"position":"3134,1377","size":"200,200"}
+{(display: "Tick")}
+(display: $neighborhood's name + " Color")
+(set: _reputationTag to "brass-level")
+{(set: _availableContracts to (find: _item where not ((passage: _item)'s tags  contains "unique") or not ((history:) contains _item and (passage: _item)'s tags contains "contract"), ...($neighborhood's contracts)))
+(set: _roll to (random: 0, 10))}
+(if: _availableContracts's length > 0 and $currentContract is "" and _roll < 3)[(set: _potentialContract to (either: ..._availableContracts))
+{(display: "GenerateChar")(set: $clientDescription to $char)(set: _char to $char)}
+<br/>
+(display: (text: ...(a: "Description ", _potentialContract)))
+
+(link-goto: "Accept Contract", _potentialContract)
+
+(display: "NavOptions")
+](else-if: _roll < 6)[Something happens!
+
+(goto: (either: ...($neighborhood's events)))](else:)[
+
+(either: "You happen across something interesting...", "You unearth a hidden secret of the market...", "You hadn't seen this here before...")
+(set: _locations to (find: _item where not ((history:) contains _item and (passage: _item)'s tags contains "bookmark") and (passage: _item)'s tags contains "location", ...($neighborhood's locations)))
+
+(if: _locations's length > 0)[(link-goto: (either: ..._locations))](else:)[No, I guess you'd already seen that, too.]
+
+(display: "NavOptions") ]
+
+
+
+:: QuickChar {"position":"4010,2662","size":"100,100"}
+(if: (random: 0,2) > 1)[
+(either: ...$sizes) (either: ...$genders) (either: ...$races) with (either: ...$clothingColors) (either: ...$clothingMaterials) (either: ...$clothingTypes) and (either: ((either: ...$adornmentMaterials), (either: ...$adornmentTypes)), (either: ...$hairstyles))
+](else-if: (random: 0,2) > 0)[
+(either: ((either: ...$sizes) + " " + (either: ...$genders)), ((either: ...$races) + " " +  (either: ...$genders)), ((either: ...$sizes) + " " +  (either: ...$races)), ((either: ...$sizes) + " " + (either: ...$races) + " " + (either: ...$genders))) with (either: ...$clothingColors) (either: ...$clothingMaterials) (either: ...$clothingTypes) and (either: ((either: ...$adornmentMaterials) + " " + (either: "lip", "ear", "nose", "cheek") + " " + (either: ...$adornmentTypes) + "s"), 
+("a(n) " + (either: ...$adornmentMaterials) + " " + (either: "lip", "ear", "nose", "cheek") + " " + (either: ...$adornmentTypes)),
+(either: ...$hairstyles))
+](else:)[(display: "GenerateChar")(set: _char to $char)(display: "DescribeChar")]
+
+
+:: GenerateChar {"position":"4012,2766","size":"100,100"}
+{(set: $char to 
+	(dm: "size", (either: ...$sizes),
+	     "gender", (either: ...$genders),
+		 "race", (either: ...$races),
+		 "skinColor", (either: ...$skinColors),
+		 "skinType",  (either: ...$skinTypes),
+		 "hairstyle", (either: ...$hairstyles),
+		 "clothingMaterial", (either: ...$clothingMaterials),
+		 "clothingColor", (either: ...$clothingColors),
+		"clothingType", (either: ...$clothingTypes),
+		"adornmentMaterial", (either: ...$adornmentMaterials),
+		"adornmentType", (either: "lip", "ear", "upper ear", "nose", "septum", "cheek", "neck", "wrist", "upper arm", "ankle") + " " + (either: ...$adornmentTypes),
+		"profession", (either: ...$professions)))
+}
+
+
+:: DescribeChar {"position":"4013,2869","size":"100,100"}
+{(set: _generalDescription to (either: ((_char's size) + " " + (_char's gender)), ((_char's race) + " " + (_char's gender)), ((_char's size) + " " + (_char's race)), ((_char's size) + " " + (_char's race) + " " + (_char's gender))))
+(set: _skinDescription to (either: ((_char's skinType) + " " + (_char's skinColor)), (_char's skinColor), (_char's skinType))+"-skinned")
+(set: _adornmentDescription to (either: "a "+(_char's adornmentMaterial)+" "+(_char's adornmentType), (_char's adornmentMaterial)+" "+(_char's adornmentType)+"s"))
+(set: _clothingDescription to (either:
+((_char's clothingColor),
+("a "+(_char's clothingMaterial)+" "+(_char's clothingType))),
+(("a "+_char's clothingColor)+" "+(_char's clothingType))))
+
+(if: (random: 0, 1) > 0)[
+_skinDescription _generalDescription with _adornmentDescription, _clothingDescription, and (print: _char's hairstyle)(either: " that appears to be a " + (_char's profession), "","")
+](else:)[
+(either: _skinDescription+" ","","")_generalDescription (either: (_char's profession)+" ", "","")wearing (either: _adornmentDescription, "a "+_clothingDescription, _char's hairstyle)]
+}
+
+
+
+
+:: QuickSetting {"position":"4014,2986","size":"100,100"}
+(either: "naturally " + (either: ...$environmentColors) + " ", (either: ...$environmentColors) + "painted ", "")(either: ...$environmentMaterials) (either: "garrett", "workshop", "brothel", "tannery", "kiln", "restaurant", "barber","atelier")
+
+
+
+:: UpdateReputation [function] {"position":"3842,2403","size":"100,100"}
+{(if: $neighborhood is 0)[ERROR]
+(else:)[ //(print: $neighborhood's name) Reputation (if: $arg >= 0)[+] $arg//
+(set: $reputation's ($neighborhood's name) to $reputation's ($neighborhood's name) + $arg)<br/><br/>
+(if: $reputation's ($neighborhood's name) > 9)[People know they can count on you.](else-if: $reputation's ($neighborhood's name) > 5)[You're a bit of a known entity about these parts.](else-if: $reputation's ($neighborhood's name) > 0)[You're not particularly well known.](else-if: $reputation's ($neighborhood's name) > -5)[You're a bit of a shifty dodger, innit?]
+(else:)[
+(if: $inventory contains "Badge of Shame")[People know you're not to be trusted.](else:)[You've gone back on your word too many times, and a few of the locals have ganged up to make sure everyone else knows it.  They cut you up with a razor.<br/><br/>(set: $arg to "Badge of Shame")(display: "GetItem")]
+]]}
+
+
+
+:: header [header] {"position":"3262,2470","size":"100,100"}
+|clock>[](if: (passage:)'s tags contains "tick")(display: "Tick")
+
+
+:: footer [footer] {"position":"3272,2582","size":"100,100"}
+<br/>
+---
+<p id="inventory"><a href="#header">^</a>
+(display: "Inventory")</p>
+(display: "UpdateClock")
+
+
+:: Fight {"position":"3778,4206","size":"100,100"}
+{(set: _deck to (a: "Block", "Throw", "Strike") +
+(altered: _i via "Release " + _i, ...$daemons) + 
+(altered: _i via "Use " + _i, ...(find: _i where (passage: _i)'s tags contains "weapon", ...$inventory)))
+(set: _deck to (shuffled: ..._deck)'s (range: 1, (min: $cunning, _deck's length)))}
+(for: each _d, ..._deck)[(set: _id to _d)
+(link-reveal: _id)[(replace:?output)[(display: _id)](replace:?input)[(display: "Fight")]
+]]
+
+
+
+
+:: Use the Incredibly Secret Machine {"position":"3380,2579","size":"100,100"}
+You see a bank of dials and a lever.
+(cycling-link: bind _a, "E","A","T","O","I","N","S","H","R","D","L","U")
+(cycling-link: bind _b, "E","A","T","O","I","N","S","H","R","D","L","U")
+(cycling-link: bind _c, "E","A","T","O","I","N","S","H","R","D","L","U")
+(cycling-link: bind _d, "E","A","T","O","I","N","S","H","R","D","L","U")
+(cycling-link: bind _e, "E","A","T","O","I","N","S","H","R","D","L","U")
+(cycling-link: bind _f, "E","A","T","O","I","N","S","H","R","D","L","U")
+(link-repeat: "Pull Lever")[(if: (a: _a, _b, _c, _d, _e, _f) is (a:"E","A","T","O","I","N"))[Ah, the First Prestige!  You have made quite shrewd investments in the world of transdimensional enchanted finance, and so you shall begin this story with an embarassment of wealth.
+(set: $gold to 9999999)]
+(else-if: (a: _a, _b, _c, _d, _e, _f) is (a:"S","H","R","D","L","U"))[Ah, the Second Prestige!  Known to all neighborhoods, a real cosmopolitan!
+(for: each _item, "West Fires", "Eastern Fortress", "North Harbor", "South Quarry", "Lower Depths", "Upper Castlerock")[(set: $arg to "Neighborhood Door to " + _item)(display: "GetItem")]]
+(else-if: (a: _a, _b, _c, _d, _e, _f) is (a:"T","R","E","A","T","S"))[
+Everything you could ever want is yours.
+(set: $inventory to (ds: (altered: via its name, ...(find: _i where _i's tags contain "item"))))
+]
+(else-if: (a: _a, _b, _c, _d, _e, _f) is (a:"E","T","E","R","N","A"))[
+You've killed Death itself!
+(set: $maxHealth to 9999)(set: $health to $maxHealth)(set: $LazarusBeaconCharges to 9999)
+]
+(else-if: (a: _a, _b, _c, _d, _e, _f) is (a:"S","A","I","N","T","S"))[
+Universally beloved, if only due to an incredibly powerful glamour.
+(set: $reputation to (dm: "public", 9999))
+]
+(else-if: (a: _a, _b, _c, _d, _e, _f) is (a:"U","L","T","R","A","S"))[
+You are the ultimate Magician!
+(set: $maxCunning to 9999)(set: $maxPerception to 9999)
+(set: $cunning to $maxCunning)(set: $perception to $maxPerception)
+]
+(else:)[
+The gears clink and grind in an unpleasant manner, but no result is forthcoming from the machine.
+]
+]
+
+// debug //
+
+(set: $gold to 9999999)
+(set: $inventory to (ds: ...(altered: via its name, ...(passages: where its tags contains any of (a: "item", "book", "furniture")))))
+
+(set: $maxHealth to 9999)(set: $health to $maxHealth)(set: $LazarusBeaconCharges to 9999)
+(set: $reputation's ($neighborhood's name)  9999)
+(set: $maxCunning to 9999)(set: $maxPerception to 9999)
+(set: $cunning to $maxCunning)(set: $perception to $maxPerception)
+
+[[Home Again]]
+
+
+
+:: Check the Loose Panel in Your Floor {"position":"3513,2705","size":"100,100"}
+(set: $inventory to it + (ds: "Secret Compartment"))
+You've found some kind of Secret Compartment in the floor of your apartment.  The loose panel slides apart, revealing a little cranny.
+
+(display: "Secret Compartment")
+
+[[Use Secret Compartment]]
+
+
+:: Use Secret Compartment {"position":"3508,2852","size":"100,100"}
+You reach your hand into the secret compartment and find a Witch Bottle.
+Gross! You try to put it back, but the secret compartment is already full.  Unfortunately, it looks like the compartment is covered up so that an infinite amount of witch bottles from the dimension where everything is witch bottles doesn't accidentally spill over into this universe.
+(set: $arg to "Witch Bottle")(display: "GetItem")
+[[Home Again]]
+
+
+:: Secret Compartment [furniture] {"position":"3398,2853","size":"100,100"}
+A hidey-hole in the floor of your apartment that you found some time ago.
+
+
+
+
+
+:: NavOptions {"position":"3831,2286","size":"100,100"}
+[[Explore the Neighborhood]]
+
+(link-goto: $neighborhood's name)
+
+[[Home Again]]
+
+
+:: UpdateGold [function] {"position":"3835,2179","size":"100,100"}
+(set: $gold to it + $arg)<br/><b>Gold (if: $arg >= 0)[+ ]$arg</b>(display: "UpdateClock")(if: $gold < 0)[You've one into debt!(display: "An Embarassing Display")]
+
+
+:: GetItem [function] {"position":"3946,2177","size":"100,100"}
+(if: $arg is "Map Fragment" and $inventory contains "Map Fragment")[
+(display: "LoseItem")(set: $arg to "Treasure Map")(display: "GetItem")
+You assemble the Map Fragments into an approximation of a Treasure Map.
+]
+(else:)[(set: $inventory to it + (ds: $arg))<br/><b>+ $arg</b>]
+
+
+:: LoseItem [function] {"position":"3946,2285","size":"100,100"}
+(if: $inventory contains $arg)[(set: $inventory to it - (ds: $arg))<br/><b>- $arg</b>]
+
+
+
+:: Explore the Neighborhood [tick] {"position":"3421,1866","size":"200,200"}
+{
+(if: $perception <= 0)[
+(goto: "Staggering Through The Alleys")
+]
+(if: (random: 0, 3) is 0)[(goto: (either: ...($neighborhood's events)))]
+(display: $neighborhood's name + " Color")<br/>
+(if: $reputation's ($neighborhood's name) < 5)[(set: $reputationTag to "brass-level")]
+(else-if: $reputation's ($neighborhood's name) < 15)[(set: $reputationTag to "silver-level")]
+(else:)[(set: $reputationTag to "gold-level")]
+
+(if: $currentContract is "")[
+(display: "GenerateChar")(set: $clientDescription to $char)
+(set: $potentialContracts to (find: _item where (not ((passage: _item)'s tags  contains "unique") or not ((history:) contains _item)) and (passage: _item)'s tags contains all of (a: "contract", $reputationTag), ...($neighborhood's contracts)))
+(if: $potentialContracts's length > 1)[Exploring the neighborhood, you meet many prospective clients...<br/>
+(for: each _i, ...((shuffled: ...$potentialContracts)'s (range: 1, (min: 3, (ceil: $perception/2)))))[
+(link-goto: _i)<br/><br/>
+]](else-if: $potentialContracts's length is 1)[Exploring the neighborhood, you make contact with a client...<br/>
+(link-goto: $potentialContracts's 1st)]
+](else:)[Either no one's looking for contractors or no one's looking for *you*.  Either way, there's no work to be had.]
+}
+
+And you encounter many interesting locations...
+{(set: _locations to (find: _item where not ((history:) contains _item and (passage: _item)'s tags contains "bookmark") and not ((passage: _item)'s tags contains "unlisted"), ...($neighborhood's locations)))
+(if: _locations's length > 0)[
+(if: _locations's length is 1)[(link-goto: _locations's 1st)]
+(else:)[
+(for: each _i, ...((shuffled: ..._locations)'s (range: 1, (min: 3, (ceil: $perception/2)))))[
+(link-goto: _i)<br/><br/>
+]]](else:)[No, I guess you'd already seen that, too.]}
+
+(display: "NavOptions")
+
+
+
+:: Block {"position":"3996,4089","size":"100,100"}
+{(set: _opponentMove to $fightPattern's ($fightIndex))
+(replace:?output)[(if: _opponentMove is "Flee")[(replace:?input)[  ](replace:?output)[They turn and run away at top speed.
+(set: $enemyHealth to 0)]](else-if: _opponentMove is "Block")[You block their attack... but they block, too.  It's awkward.](else-if: _opponentMove is "Throw")[You anticipate an attack and block.  They grab at your locked wrists and throw you about! (set: $arg to (random: 0, 1))(display: "TakeDamage")(if: $inventory contains "Thorn Ward")[Your thorn ward produces sharp spines(set: $arg to (random: 0, 1))(display: "DealDamage")]](else-if: _opponentMove is "Strike")[They strike at you, but you block their attack!
+(if: $inventory contains "Thorn Ward")[Your thorn ward produces sharp spines(set: $arg to (random: 0, 1))(display: "DealDamage")]]]
+(set: $fightIndex to (it + 1))
+(if: $fightIndex > $fightPattern's length)[(set: $fightIndex to 1)(display: "UpdateClock")]
+(if: $inventory contains "Thorn Ward" and (random: 0, 4) is 0)[Your Thorn Ward shatters!<br/>(set: $arg to "Thorn Ward")(display: "LoseItem")]
+}
+
+
+:: Strike {"position":"4104,4089","size":"100,100"}
+{(set: _opponentMove to $fightPattern's ($fightIndex))
+(replace:?output)[You launch a strike at your opponent's temple.(if: _opponentMove is "Flee")[(replace:?input)[ [[Next Encounter]] ](replace:?output)[They turn and run away at top speed.]](else-if: _opponentMove is "Block")[.. but they bat your fist away.](else-if: _opponentMove is "Throw")[  As they dip in to grab your arm, you pop them in the throat.(set: $arg to 2)(display: "DealDamage")](else-if: _opponentMove is "Strike")[  You trade slaps at each other, bloodying each other's noses.(set: $arg to 1)(display: "DealDamage")(display: "TakeDamage")](else:)[  They make no move to avoid it and take the full brunt of your blow.(set: $arg to 2)(display: "DealDamage")]]
+(set: $fightIndex to (it + 1))
+(if: $fightIndex > $fightPattern's length)[(set: $fightIndex to 1)]
+(display: "UpdateClock")}
+
+
+:: Throw {"position":"4210,4089","size":"100,100"}
+{(set: _opponentMove to $fightPattern's ($fightIndex))
+(replace:?output)[You attempt to throw them.(if: _opponentMove is "Flee")[(replace:?input)[ [[Next Encounter]] ](replace:?output)[They turn and run away at top speed.]](else-if: _opponentMove is "Block")[ You get a firm grip on their leg and throw them to the ground. (set: $arg to 1)(display: "DealDamage")](else-if: _opponentMove is "Throw")[  The two of you grapple indecisively for a few seconds before pulling apart again.](else-if: _opponentMove is "Strike")[As you attempt to grapple them, they land a sharp punch to your liver. (set: $arg to 1)(display: "TakeDamage")]]
+(else:)[You flip your opponent onto their back.
+(set: $arg to (random: 0, 1))(display: "DealDamage")]
+(set: $fightIndex to (it + 1))
+(if: $fightIndex > $fightPattern's length)[(set: $fightIndex to 1)]
+(display: "UpdateClock")}
+
+
+
+:: Lazarus Beacon {"position":"3878,2598","size":"100,100"}
+The first night you woke up in this squalid apartment, you found an actual Lazarus Beacon hidden inside a hideous desk lamp.  Once attuned with its owner, it can use a single charge to return them to life.
+
+In a word, you are immortal.
+
+Caveat: These charges are expended each time you are resurrected.  You currently have $LazarusBeaconCharges of them.
+
+(link-goto: (history:)'s last)
+
+
+
+
+
+
+:: UpdateClock [function] {"position":"3711,2054","size":"100,100"}
+(replace:?clock)[(display: "RenderHeader")]
+
+
+:: GainHealth [function] {"position":"3499,2293","size":"100,100"}
+<br/><b>Health + $arg</b>(set: $health to it + $arg)
+(display: "UpdateClock")
+
+
+:: UpdateCunning [function] {"position":"3825,2055","size":"100,100"}
+(set: $cunning to it + $arg)<b>Cunning (if: $arg >= 0)[+] $arg ($cunning)</b>(if: $cunning <= 0)[(set: $deathReason to "It turns out that there is a level of stupidity so great that you become too stupid to keep breathing.  Whatever you've done to yourself, my treasure: That is what killed you this time.")(goto: "Death")]
+
+
+
+:: Math Test [function] {"position":"4878,2672","size":"100,100"}
+(set: $val to 0)
+<div style="display:none">(set: $val to 1)</div>
+-> $val
+
+
+
+:: UpdatePerception [function] {"position":"3943,2060","size":"100,100"}
+(set: $perception to (max: 1, it + $arg))<b>Perception (if: $arg >= 0)[+] $arg</b>
+
+
+:: Execute Scheduled Events [function] {"position":"3119,2755","size":"100,100"}
+(set: _key to (str: $ticks))
+(if: (datanames: $scheduledEvents) contains _key)[
+(if: ($scheduledEvents's (_key))'s length > 0)[
+(for: each _i, ...($scheduledEvents's (_key)))[
+(display: _i)]]]
+
+
+:: Schedule Event [function] {"position":"3119,2862","size":"100,100"}
+(set: _nextTick to (str: $ticks + $arg's delay))(unless: (datanames: $scheduledEvents) contains _nextTick)[(set: ($scheduledEvents's (_nextTick) to (a:)))]
+(set: ($scheduledEvents's (_nextTick) to it + (a: $arg's event)))
+!! EVENT SCHEDULED !!
+(print: $arg's event) at _nextTick
+
+
+
+
+:: UpdateHealth [function] {"position":"4054,2059","size":"100,100"}
+(set: $health to it + $arg)<b>Health (if: $arg >= 0)[+ ]$arg</b>(display: "UpdateClock")
+
+:: GainRumor [function] {"position":"5075,6360","size":"100,100"}
+$arg
+(display: $arg)
+(set: $rumors to it + (ds: $arg))
+
+
+:: Read Your Mail {"position":"3632,2836","size":"100,100"}
+(for: each _mail, ...(reversed: ...$mail))[
+From: (print: _mail's sender)
+Message: (print: _mail's message)
+
+(if: _mail's attachment is not "Nothing")[
+(set: $arg to _mail's attachment)(display: "GetItem")
+(set: _mail's attachment to "Nothing")
+]
+]
+
+(set: $mail to (a:))
+
+[[Home Again]]
+
+
+
+
+
+:: Caffeine Wears Off {"position":"5313,5244","size":"100,100"}
+Your head certainly doesn't feel well.
+Your mouth is dry, and your limbs have an ague.
+The caffeine has worn off.
+
+(set: $arg to -1)(display: "UpdatePerception")
+
+
+:: Staggering Through The Alleys {"position":"3050,1845","size":"100,100"}
+(goto: (either: ...($neighborhood's events)))
+
+
+:: LoseReputation [function] {"position":"3947,2397","size":"100,100"}
+(if: $arg is 0)[No seems to notice the faux pas, but if they had, you might have been in a bit of a bind.]
+(else-if: $arg is 1)[Everyone seems a little miffed at you, lately.]
+(else-if: $arg is 2)[People seem to be extra passive-aggressive-aggressive lately.]
+(else-if: $arg > 3)[You might as well have shat your pants.]
+(set: $reputation's ($neighborhood's name) to $reputation's ($neighborhood's name) - $arg)
+
+
+
+:: An Embarassing Display {"position":"3757,2717","size":"100,100"}
+You (either: "quickly", "slyly", "shyly", "stealthily", "unobtrusively", "awkwardly") look around to see if anyone saw you.
+(if: (random: 0, 6) > $danger)[No one saw anything, or if they did, they aren't saying anything.](else:)[You briefly make eye contact with an accuser.
+(set: $arg to -1)(display: "UpdateReputation")]
+
+
+:: Heal [function] {"position":"4183,2047","size":"100,100"}
+(if: $health >= $maxHealth)[You cannot heal anymore.  You are, in fact, in peak condition.
+]
+(else:)[
+(set: $health to (min: $health + $arg, $maxHealth))
+*Health + $arg -> $health*
+]
+
+
+:: ImproveReputation [function] {"position":"1488,2842","size":"100,100"}
+{(unless: $reputation contains $arg)[(set: $reputation's ($arg) to 0)]
+(set: $reputation's ($arg) to it + 1)}
+*$arg + 1*
+
+
+
+:: InsertEncounter [function] {"position":"4318,2037","size":"100,100"}
+{(set: $encounterStack to
+($encounterStack's (range: 1, $encounterIndex)) + 
+(a: $arg) + 
+($encounterStack's (range: $encounterIndex + 1, $encounterStack's length)))}
+
