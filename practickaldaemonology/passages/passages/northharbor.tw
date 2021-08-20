@@ -1,0 +1,456 @@
+
+
+
+:: North Harbor [tick] {"position":"3342,998","size":"200,200"}
+(display: "Init North Harbor")
+This neighborhood is at the edge of the Northern Rift.  Rift-ships gently bob at the edge of the Abyss.  No one offers contracts out in the open here.  If you want a job, you'll have to go the Riftrunner's Guild.
+(for: each _item, ...($neighborhood's locations))[(if: (history:) contains _item and (passage: _item)'s tags contains "bookmark")[(link-goto: _item)
+
+]]
+(display: "NavOptions")
+
+
+
+:: Init North Harbor [function] {"position":"3220.6666666666665,888.6666666666666","size":"100,100"}
+{(set: $environmentMaterials to (a: "stone", "driftwood", "coral", "siltblock", "concrete", "flagstone", "cobble", "log"))
+(set: $environmentColors to (a: "white", "blue", "seafoam", "gray"))
+(set: $clothingMaterials to (a: "fur", "sealskin", "crabshell", "leather", "flannel"))
+(set: $clothingColors to (a: "brown", "black", "foxred", "gray", "white", "yellowed", "tawny","tan","seableached"))
+(set: $clothingTypes to (a: "overall", "apron", "snowsuit", "sou-ester", "coveralls", "one-piece","great coat"))
+(set: $adornmentMaterials to (a: "bone", "shell", "ivory", "clay", "gold", "silver", "amethyst", "rusty iron", "tin", "coral"))
+(set: $adornmentTypes to (a: "plate", "plug", "tusk", "ring", "stud"))
+(set: $hairstyles to (a: "a shaven scalp", "a bald pate", "a long pony tail", "long dreadlocks", "short dreadlocks", "a pathetic combover", "a shaggy mane","a fur wig"))
+
+(set: $sizes to (a: "grand", "stout", "scrawny", "burly", "rotund", "gaunt", "obese", "muscular", "sculpted"))
+(set: $genders to (a: "man", "woman", "non", "herm"))
+(set: $races to (a: "human", "nereid", "daemonkin", "changeling", "selkie", "merfolk"))
+(set: $skinColors to (a: "black", "tan", "brown", "red", "gray"))
+(set: $skinTypes to (a: "smooth", "lightly furred", "fur-covered", "scaled"))
+(set: $professions to (a: "soldier", "riftrunner", "ragpicker", "stevedore", "insurance agent", "prostitute", "thug", "sailor", "medic", "machine repairman"))
+}
+{(set: $neighborhood to 
+(dm: "name", "North Harbor", 
+"tagname", "northharbor",
+	"locations", (altered: _item via _item's name, ...(find: _item where _item's tags contains all of (a: "northharbor", "location"), ...(passages:))),
+"contracts", (a:),
+		"events", (altered: _item via _item's name, ...(find: _item where _item's tags contains all of (a: "northharbor", "event"), ...(passages:)))))}
+
+
+:: Apothecarium [northharbor bookmark location tick] {"position":"3404,352","size":"100,100"}
+(if: $ticks % 13 >8)[
+You've come at the wrong time of the day for alchemical ingredients.  All of the alchemists and artificers have gone home to get deliriously high on their own concoctions.
+
+(unless: $inventory contains "Tincture of Turmeric")
+[
+You find a nice tincture of turmeric on the ground where the stalls were.  Finders = Keepers.  QED.
+(set: $inventory to it + (ds: "Tincture of Turmeric"))
+]
+](else:)[(display: "Apothecarium Inventory")
+]
+(display: "NavOptions")
+
+:: Apothecarium Inventory {"position":"3520,355","size":"100,100"}
+Potions, weird powders, unguents.
+
+(set: _cost to 25)(set: $marketplace to (a: "Cellar of Salt", "Piece of Pitch", "Tincture of Turmeric"))(for: each _item, ...$marketplace)[(unless: $inventory contains _item)[
+(display: "QuickBuy")
+]]
+
+
+
+:: Down The Pub [bookmark northharbor location tick] {"position":"3393,686.6666666666666","size":"100,100"}
+(if: $reputation's publican > 0)[Jonathon, the Publican, greets you with a beaming smile as you enter.  Ah! A paying customer!]
+(else:)[The publican makes brief eye contact with you as you enter their establishment and then returns to polishing a glass with a threadbare but clean rag.]
+
+[[Buy a Round from The Publican]]
+
+(display: "NavOptions")
+
+
+:: Buy a Round from The Publican [tick] {"position":"3503.6666666666665,686.6666666666666","size":"100,100"}
+(if: $gold < 5)[You don't have two coppers to rub together, so you shan't be having any beer at all.]
+(else:)[You buy a draught of some weak, overpriced beer.  It's fine stuff, it's just not strong enough to get drunk off of.  The Publican is in the business of trading information, not quality quaff.  The sale of alcohol is merely a cover for sale of information.
+(set: $arg to -5)(display: "UpdateGold")(set: $reputation's publican to it + 1)
+(either: "The publican looks you in the eye and says", "The publican mutters as they polish the bar with a cloth", "The publican talks to a patron next to you"), (if: $reputation's publican + $reputation's ($neighborhood's name) > 11)[
+(set: _roll to (random: 0, 6))
+(if: _roll > 3)[Got some useful places here in town:
+(set: _locations to (find: _item where not ((history:) contains _item and (passage: _item)'s tags contains "bookmark") and (passage: _item)'s tags contains "location", ...($neighborhood's locations)))
+(if: _locations's length > 0)[
+(if: _locations's length is 1)[(link-goto: _locations's 1st)]
+(else:)[
+(for: each _i, ...((shuffled: ..._locations)'s (range: 1, (min: 3, (ceil: $perception/2)))))[
+(link-goto: _i)<br/><br/>
+]]](else:)[No, I guess you'd already seen that, too.]
+]
+(else-if: _roll is 3)[(display: "Interesting Rumors")
+]
+(else:)[
+(if: $reputation's ($neighborhood's name) < 5)[(set: $reputationTag to "brass-level")]
+(else-if: $reputation's ($neighborhood's name) < 15)[(set: $reputationTag to "silver-level")]
+(else:)[(set: $reputationTag to "gold-level")]
+
+(if: $currentContract is "")[
+(display: "GenerateChar")(set: $clientDescription to $char)
+(set: $potentialContracts to (find: _item where (not ((passage: _item)'s tags  contains "unique") or not ((history:) contains _item)) and (passage: _item)'s tags contains all of (a: "contract", $reputationTag), ...($neighborhood's contracts)))
+(if: $potentialContracts's length > 0)[People have been asking around for ambitious wizards looking for work...<br/>
+(for: each _i, ...((shuffled: ...$potentialContracts)'s (range: 1, (min: 3, (ceil: $perception/2)))))[
+(link-goto: _i)<br/><br/>
+]](else:)[(display: "Baseless Rumors")]
+]
+]
+](else:)[(display: "Baseless Rumors")]
+]
+
+[[Buy a Round from The Publican]] 
+
+(display: "NavOptions")
+
+
+:: Bulk Scrolls Liquidation Outlet [bookmark location northharbor tick] {"position":"3395.3333333333335,479.6666666666667","size":"100,100"}
+Buy scrolls by the stone.
+These scrolls are brought in on rift ships from distant realms.
+Sadly, they are frequently in completely unreadable languages.
+Suitable for burning or the guest W.C.
+1 coin to buy a try!
+
+Let's take our chances and have some fun.
+Maybe, just maybe, we'll find something very valuable.<br/>
+(link-repeat: "Buy A Batch of Bulk Scrolls")[(replace:?output)[
+(if: $gold > 1)[(set: $arg to -1)(display: "UpdateGold")]
+(unless: (random: 0, 20) > 0 or $inventory contains "The Complete History of Your Time Since Moving to the City")
+[You find an incredible book in the pile of garbage.
+(set: $arg to "The Complete History of Your Time Since Moving to the City")(display: "GetItem")
+(replace:?output)["The Complete History of Your Time Since Moving to the City"
+(display: "The Complete History of Your Time Since Moving to the City")
+]](else:)[(unless: (random: 0, 13) is 0)[(set: $arg to "Blank Scroll")(display: "GetItem")(display: "Random Bulk Scroll")](else:)[(set: $arg to "Map Fragment")(display: "GetItem")]]]]
+
+|output>[]
+
+(display: "NavOptions")
+
+
+:: Dockyard [location northharbor bookmark tick] {"position":"4019,935","size":"100,100"}
+(if: $inventory contains "Passage Ticket")
+[{
+(display: "Reset Rift Journey")
+(set: $inventory to it - (ds: "Passage Ticket"))}
+The scrub captain waves you through the gate and onto an awaiting sail ship.
+
+[[Into the Rift]] 
+]
+(else:)
+[
+The scrub captain at the gate refuses you entry.  "No entry without a Passage Ticket," they cry.  "Go to the Riftrunner's Guild and get a Passage Ticket."
+
+[[Riftrunner's Guild]] 
+]
+
+(display: "NavOptions")
+
+:: North Harbor Color {"position":"3211,1050","size":"100,100"}
+(either: "The docks are a frigid hive of activity.  At various altitudes above and below the sea are the assorted vehicles of many nations.  Brisk trade in transdimensional assets occurs down at the Open Air Marketplace.  For those with a more adventurous bent, there is the Riftrunner's Guild.",
+"A " + (either: "Tlinkit", "Norse", "Ainu", "Magyar", "Khazakh") + " trade delegation " + (either: "hails to you", "jeers at you", "regards you passively") + " from their " + (either: "longboats", "canoes", "wooly mammoths", "elephant seals", "dolphins", "whales") +".", "Apparently, you can scrimshaw just about anything.")
+
+
+:: Riftrunner's Guild [bookmark northharbor location tick] {"position":"3630,930","size":"100,100"}
+The Riftrunner's Guild works out of a ramshackle cabin that acts as a stile at the fence separating North Harbor proper from the Riftport where all of the flying sail ships are moored and anchored.
+
+Tickets for Dockyard can only be accomplished by passage through the cabin.
+(set: _item to "Passage Ticket")(set: _cost to 10000)(display: "QuickBuy")
+(if: $inventory contains "Passage Ticket")[ [[Dockyard]] ]
+
+You can also hire yourself out as a Riftrunner, if you fancy a more rugged journey.
+(unless: $inventory contains "Riftrunner's Badge")[
+[[Register for the Riftrunner's Guild]]
+](else:)[
+(set: $riftCommand to 0)
+
+[[Riftrunner's Orientation]]
+(if: (history:) contains "Riftrunner's Orientation")[ [[Into the Rift]] ]
+]
+
+(display: "NavOptions")
+
+
+:: Register for the Riftrunner's Guild [tick] {"position":"3742,929","size":"100,100"}
+A woman with a large silver lip plug and a network of blue lines tattooed on all of her available surfaces scans you up and down with a cruelly appraising eye.
+
+(if: $inventory contains "Riftrunner's Badge")[Rita clicks her sharpened teeth together menacingly.  "No, I can't take *off* the badge.  You wear it with pride until the end."](else:)[
+(if: $health < 4)[She sneers, exposing teeth filed to points.  "Why don't you come back when you've gotten a little meat on your bones?"  She points the way out.](else:)["Welcome to the Riftrunner's Guild!  Let's get you signed up!" she bellows.  "I'm the local sea hag, Rita.  It's my job to inscribe the cursemark that allows you to travel into the rift."
+
+(set: _item to "Riftrunner's Badge")(set: _cost to 0)(display: "QuickBuy")]]
+
+[[Riftrunner's Guild]] 
+
+(display: "NavOptions")
+
+
+:: Encounter: Drunken Riftrunner [event northharbor] {"position":"3645,4201","size":"100,100"}
+{(set: $enemyHealth to 2)(set: $deathReason to "You were pummeled to death by a blind-drunk riftrunner.")(set: $enemyType to "Riftrunner")
+(set: $fightPattern to (a:(either: "Strike","Flee"),(either: "Strike", "Dodge")))(set: $enemyElementType to "mortal")
+(set: $fightIndex to 1)}A drunken Riftrunner staggers down the lane.
+
+(if: (random: 0, $reputation's ($neighborhood's name)) < 5 and not ($inventory contains "Badge of Shame"))[
+They approach you with abject terror in their eyes.
+|output>[]
+|input>[(display: "Fight")]
+
+](else:)[They squeeze past you without even so much as making eye contact.
+[[Next Encounter]]]
+
+(event: when $enemyHealth <= 0)[ (replace:?input)[ [[Next Encounter]] ]]
+
+
+:: Encounter with Weak Reality [event northharbor] {"position":"3634,1037","size":"100,100"}
+The reality around this corner is unusually weak today.
+
+(if: $inventory contains "Riftrunner's Badge")[Clear as day, a rift opens up around you, (if: (random: 0, $cunning) < 2)[dragging you back to the Siren's Folly.
+{(set: $riftSupplies to (random: 0, 100))
+(set: $riftCrew to (random: 0, 10))
+(set: $riftDistance to (random: 0, 10))
+(set: $riftTreasure to (random: 0, 10))
+(set: $riftCommand to 1)}
+[[Into the Rift]]](else:)[ and you could reach right out and touch it if you wanted.
+{(set: $riftSupplies to (random: 50, 100))
+(set: $riftCrew to (random: 5, 10))
+(set: $riftDistance to (random: 5, 10))
+(set: $riftTreasure to (random: 5, 10))
+(set: $riftCommand to 1)}
+[[Into the Rift]]
+
+(display: "NavOptions")
+]
+](else:)[You feel quite nauseous, like you've heard people get when they accidentally look directly into the Rift.
+
+(display: "NavOptions")]
+
+
+:: Into the Rift {"position":"3741,1038","size":"100,100"}
+(display: "Reset Rift Journey")
+Your nervous system crackles with electric pain as you and your crew pass through the boundary of the Rift.  The City already looks incredibly small and far away as your flying sail ship begins to spiral faster and faster around the interdimensional maelstrom that you have decided to plunge yourself into.
+
+(if: $inventory contains "Riftrunner's Badge")[
+The latent surge from the Rift boundary is grounded out into the aetherium by your guild tattoo.  It must be awful to travel thusly without a Riftrunner's Badge.
+
+(if: $riftCommand > 0)[The crew consult with you about your preferred heading.
+[[Pick Next Heading]]
+](else:)[You follow the lead of the crew captain, tying lines here, adjusting lodestones there.
+(if: (history:) contains "Read Philomender's Book of Excellent Knots")
+[
+You remember a handful of enchantment knots that gives the expedition an excellent starting boost.  (set: $riftDistance to it + 5)
+]
+[[Next Journey]]
+]
+](else:)[(set: $cunning to 1)(set: $perception to 1)(set: $health to (ceil: it / 2))
+The intensity of the raw transdimensional energy whipping through you renders you deaf and dumb.  You're weak in the legs and need help down to your bunk.
+
+(if: $riftCommand > 5)[The crew consult with you about your preferred heading.
+[[Pick Next Heading]]
+](else:)[You uselessly bob about in your bunk, trying not to vomit all over the crew's belongings.
+[[Next Journey]]
+]
+
+]
+
+
+:: Riftrunner's Orientation [tick] {"position":"3851,930","size":"100,100"}
+Rita grins menacingly as she outlines what a Riftrun actually entails.
+"This is the Siren's Folly," she barks.  A heavily beringed hand points at a spot in what appears to be the center of the Rift.  "This is your True North.  Our goal is to strive to reach the Siren's Folly and discover what is there.  It appears to be infinitely far away, but we're not sure which aleph-level of infinity we're dealing with."
+She points at a crew of energetic sailors rapidly battening their ship for a rough launch.  "Why don't you join them?"
+
+Board the ship [[Into the Rift]] 
+
+(display: "NavOptions")
+
+
+:: The Northern Gate to East Fortress [northharbor bookmark] {"position":"5818,364","size":"100,100"}
+You come across a massive gate of tusk, driftwood, and stone.  It separates the North Harbor and Eastern Fortress neighborhoods.
+
+[[North Harbor]] 
+
+[[Eastern Fortress]] 
+
+(display: "NavOptions")
+
+:: Driftwood Fine Rift Furniture [location bookmark northharbor tick] {"position":"3385.3333333333335,891.6666666666667","size":"100,100"}
+This store does not, in fact, sell furniture made out of driftwood from the Rift.
+It sells furniture that drifted here from the Rift.
+
+// \todo: if a player loses an item in the Rift, have it appear back here.
+
+(for: each _i, "Neighborhood Door to South Quarry", "Item Shelf", "Comfortable Bed")[(set: _item to _i)(set: _cost to 1500)
+(display: "QuickBuy")
+]
+
+(display: "NavOptions")
+
+
+:: Basic ChatterMob {"position":"3625.6666666666665,705.6666666666666","size":"100,100"}
+(set: $reputation to (dm:))
+(set: $identity to "Publican")
+(unless: $reputation contains $identity)[(set: $reputation's ($identity) to -1)]
+first, establish your reputation with them
+if they don't know you, you'll have a reputation penalty on all interactions with them
+If you buy from them and share rumors, your reputation with them will eventually become a bonus
+
+(set: $playerRumors to (ds: "Aleph", "Fire Ghosts Are Hypnotized by Gold", "I'm new here.", "My Garrett Is Secretly An Incredibly Powerful Artifact"))
+
+(set: $mobRumors to (ds: "Fire Ghosts Are Hypnotized by Gold", "Damage Ward Broker", "Sirens Carry Great Wisdom", "Industries of West Fires", "Current Boss of West Fires", "Crimes of West Fires", "Ripper's Carnage"))
+
+[[Buy A Round]]
+
+[[Tip the Publican]]
+
+
+:: Buy A Round {"position":"3749.6666666666665,705.6666666666666","size":"100,100"}
+|input>[(set: $reputation's ($identity) to it + (random: 0, 1))
+(for: each _i, ...(shuffled: ...$playerRumors)'s (range: 1,3))[
+(set: _item to _i)(link-reveal: _item)[
+(if: $mobRumors contains _item)[(replace:?input)["_item? I heard it before, friend."]]
+(else:)[(replace:?input)[(set: $reputation's ($identity) to it + 1)(set: _newRumor to (either: ...$mobRumors))"_item? Interesting... ", they say. "_newRumor"(set: $playerRumors to it + (ds: _newRumor))(set: $mobRumors to it + (ds: _item))]]
+]]]
+
+(live:)[(print: $reputation's ($identity))]
+
+[[Buy A Round]] 
+
+[[Tip the Publican]]
+
+
+:: Tip the Publican {"position":"3869.6666666666665,708.6666666666666","size":"100,100"}
+(if: (random: 0, $reputation's ($identity)) > 0)[(set: $reputation's ($identity) to it + 1) The Publican shows their appreciation for your patronage by almost demonstrating any amount of emotion.
+(set: _selectRumors to ($mobRumors - $playerRumors))
+(if: _selectRumors's length is 0)["I've told you all I know."]
+(else:)[(set: _newRumor to (either: ..._selectRumors))"_newRumor"(set: $playerRumors to it + (ds: _newRumor))]
+](else:)[The Publican is too busy polishing glasses to notice your paltry offering.]
+
+(live:)[(print: $reputation's ($identity))]
+
+[[Buy A Round]]
+
+:: Fancy Lad Outfitter [location northharbor bookmark] {"position":"3388,1553.3333333333335","size":"100,100"}
+(set: _cost to 150)
+(for: each _item, "Blunderbuss", "Crystal Prism", "Loaded Dice")[
+(display: "QuickBuy")
+]
+
+(display: "NavOptions")
+
+
+:: Ghidra, the Sea Hag [northharbor persona] {"position":"3407.6666666666665,228.33333333333334","size":"100,100"}
+It's not often you see a Sea Hag not on a boat.
+You've also never seen one so intoxicated.
+
+She challenges you to a drinking contest.
+
+[[That Sounds Like a Superb Idea!!!->Ghidra: Drinking Contest]]
+
+
+
+:: Ghidra: Drinking Contest {"position":"3537.6666666666665,229.33333333333334","size":"100,100"}
+(set: $stamina to $cunning + $perception + $health)
+It's a very simple game.  Each person takes a drink.  If they fall down blind drunk, they lose.
+
+[[Ghidra: Drink Contest (You Win)]]
+
+[[Ghidra: Drink Contest (You Lose)]]
+
+
+:: Ghidra: Drink Contest (You Win) {"position":"3776.6666666666665,244.33333333333334","size":"100,100"}
+You take about 500 coins worth of various knick knacks.
+(set: $arg to 500)(display: "UpdateGold")
+(set: $arg to (random: -1, 0))(display: "UpdateCunning")
+(set: $arg to (random: -1, 0))(display: "UpdatePerception")
+[[Next Encounter]]
+
+
+:: Ghidra: Drink Contest (You Lose) {"position":"3656.6666666666665,245.33333333333334","size":"100,100"}
+You wake up the next day in complete agony.  Not only do you have a headache, but apparently, you decided to get your entire face tattooed while drunk.
+
+(set: $arg to "Mark of the Sea Dweller")(display: "GetItem")
+(set: $arg to "Riftrunner's Badge")(display: "GetItem")
+(set: $arg to (random: -1, 0))(display: "UpdateCunning")
+(set: $arg to (random: -1, 0))(display: "UpdatePerception")
+[[Next Encounter]]
+
+
+:: Old Clem [northharbor persona] {"position":"3416.6666666666665,112.33333333333333","size":"100,100"}
+Clem has lost a bit of just about everything in his voyages.  He might as well have hooks on his hooks and pegs on his pegs.
+
+(set: _selectedClemism to (either: "Old Clem's Crazy Story", "Old Clem's Crazy Advice", "Old Clem's Crazy Theory"))
+(set: $rumors to it + (ds: _selectedClemism))
+(display: _selectedClemism)
+
+
+:: Sir Walter Reginald, Esquire, the III's School for Pugilism [location bookmark northharbor] {"position":"3387,1449","size":"100,100"}
+(if: $maxHealth < 3)[
+Basic Fitness Plan:
+(set: $maxHealth to it + 1)]
+
+(display: "NavOptions")
+
+
+
+:: Old Clem's Crazy Story {"position":"3537.6666666666665,115.33333333333333","size":"100,100"}
+I ran runs on rift ships ever since I was a youngster, and I reckon I'll ride the Rift until I die.
+
+
+:: Old Clem's Crazy Advice {"position":"3769.6666666666665,126.33333333333333","size":"100,100"}
+Get yourself a rift ship and ride it backwards, and you'll get back to where you got started faster.
+
+
+:: Old Clem's Crazy Theory {"position":"3645.6666666666665,133.33333333333334","size":"100,100"}
+Just says crazy bat-shit nonsense, but it's all rumors that you can use later.
+
+
+
+:: Tower Yard [location bookmark northharbor] {"position":"3394.333333333333,599.6666666666667","size":"100,100"}
+You've seen docks.  Usually, they are parallel to the surface of your planet.  In this wondrous case, the dock is a towering edifice with graceful airships lashed to it.
+
+In addition to its port on the Rift Sea, North Harbor also contains a port to the sky.
+
+You can buy passage on a ship up to the Sylphian Archipelago, which lies between the rest of the City and Upper Castlerock.
+
+[[Sylphian Archipelago]]
+
+(display: "NavOptions")
+
+:: Magisterium Local Office: North Harbor [location unlisted northharbor] {"position":"3388.3333333333335,790","size":"100,100"}
+(display: "NavOptions")
+
+
+:: Fisher's Wharf [location northharbor bookmark] {"position":"3384,1218","size":"100,100"}
+Not everyone throws themselves into punching out the Eye of the Rift.  Some folk stay relatively near the shores of the Rift Sea.  Not far off is a patch of relatively stable reality intersection that intersects the migratory path of a school of tuna on a world where no sapient beings ever evolved.  Those tuna produce the best sashimi in The City.  Closer still, you can do a bit of [[Sand Piping]], which is Mudlarking, but on the beach.  Perched on the fence are old salts mending nets.  Some of thems what learned directly from old Philomender, themselves.
+
+(display: "NavOptions")
+
+
+:: Sand Piping [location northharbor tick] {"position":"3396,1330","size":"100,100"}
+Blue-ringed octopus: Not a creature of eldritch terror, but certainly just as dangerous.  The only smart thing to do would be to immediately walk away.  However, these are valuable creatures, and if you could trick one into going into a jar, you could get a lot of money.  Or, it could touch you, schedule a death sentence for you, have you think everything's fine for 10 turns, and then die.
+Species of shellfish evolved to look exactly like the (either: "Sydney Opera House", "Guggenheim Museum", "Burj Kalifa", "State of Nebraska", "Chevy Nova", "moon", "type of sailboat used around here")
+Stinging jellies.  1 point of damage.  If you have a Witch Bottle, you can pour the urine on the wound to prevent damage.  This is a trick.  It does not work.  You will lose public reputation for pouring piss on your leg.
+At night, phosphorescent algae cause the waters to glow
+Bits of sea glass
+Grains of sand, each of which has a just barely scrutable orb inside filled with galaxies.
+Message Bottle
+    (either: "To whomever gets this letter,", "To whoever gets this note,", "Dear Stranger,", "Please Help!") (either: "I want to make an account of my time", "I wish that someone knows of how I'm", "In the hopes that someone sees this before I am") (either: "surviving on rainwater and moss while Set Adrift out in the Rift.", "joining a tribe of islanders and using their support to make it back to port.", "regretting to not purchase a Selkie Skin before being Set Adrift.").
+	
+(display: "NavOptions")
+
+:: RandomMudlark {"position":"4386,2435","size":"100,100"}
+{(if: $ticks % 13 < 7)[
+(display: "Tick")(replace:?clock)[(display: "RenderHeader")]
+(set: _roll to (random: 0, $perception * 2))
+(if: _roll is 0)[(either:"You find a few broken clay pipes.", "You find some old rusty pins.","You find a mummified tobacco pouch.")]
+(else-if: _roll is 1)[(either: "You find an old coin.", "You find a dainty bauble.","You find a small gemstone.")(set: _gold to (random: 1,5))
+<br/><b>Gold + _gold</b>(set: $gold to it + _gold)]
+(else-if: _roll is 2)[You find a shred of paper:
+<br/>(display: "Random Bulk Scroll") ]
+(else-if: _roll < 5)[You find a small piece of unused reagent: (set: _reagent to (either: "Lump of Lead", "Piece of Pitch", "Grain of Gold"))<br/><b>+ _reagent</b>(set: $inventory to it + (ds: _reagent))]
+(else-if: _roll < 7)[You find a valuable antique:
+<br/><b>Gold + 75<b/>(set: $gold to it + 75)]
+(else:)[(if: $inventory contains "Slow Clock")[You find a space where an object should be, but you've already picked it up.](else:)[You find Slow Clock.  It's badly sodden, but it appears to still be in working order.
+(set: $inventory to it + (ds: "Slow Clock"))
+<br/><b>+ Slow Clock</b>]]
+](else:)[(replace:?input)[The canal tide is high.  Come again in the morning if you want to try finding treasures in the mud.]]}
+

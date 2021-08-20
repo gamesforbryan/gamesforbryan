@@ -1,0 +1,1452 @@
+
+:: Damage Ward [item] {"position":"5053,3057","size":"100,100"}
+It is a lead damage ward that will block a single strike from a magical or mundane attack.  It's a good idea to keep one on your body at all times.
+
+
+:: Pamphlet of Cunning [book] {"position":"6080,2124","size":"100,100"}
+(either: "Dr.", "Madame", "The Magnificent") (either: "Faustus", "Cunningham", "Oxlane-Slern")'s (either: "Exclusive", "Impossible", "Essential") Guide to Enchantments.
+
+This appears to be a treatise on increasing your magical cunning.
+(if: $cunning > 3)[ You are already familiar with all of the techniques it has to offer. ]
+
+:: Read Pamphlet of Cunning [tick] {"position":"6193,2123","size":"100,100"}
+(display: "Pamphlet of Cunning")
+
+(either: "Enchantments come in different types: traps, locks, wards, etc.", "Enchantments are a bit like knots.  See also: Philomender's Book of Excellent Knots")
+
+(if: $maxCunning < 3)[
+It's a light pamphlet with only a few basic techniques, but you do learn a bit of cunning from it.
+
+<b>Max Cunning + 1</b>
+(set: $maxCunning to it + 1)(set: $cunning to $maxCunning)
+](else:)[It's a light pamphlet with only a few basic techniques, but you've probably learned everything this book could possible offer.]
+
+(link-goto: "Put the Book Away", (history:)'s last)
+
+
+:: Soul Jar [item] {"position":"5378,2236","size":"100,100"}
+The seemingly-delicate blown glass orb has an intricate wrought-iron cage folded around it.  The lid is bone.  Don't be too curious about what kind.
+(if: $perception > 4)
+[
+Its purpose is to capture aethereal daemons and hold them fast until such time as they become useful, perhaps as a weapon.  A careful fellow will take care that the daemon does not turn on him after being released from captivity.]
+
+
+:: Crystal Spyglass [MagicWeapon item magic-weapon] {"position":"5265,2116","size":"100,100"}
+It is a crystal spyglass, which can be used for tricks like focusing beams of sunlight to burn through things.  You've never seen a serious wizard with one of these.
+
+(if: $perception + $cunning > 7)
+[
+You realize that the polarity of the crystal could be changed to make this a very effective sun-based weapon against almost any aethereal opponent.
+]
+
+:: Use Crystal Spyglass {"position":"5385,2112","size":"100,100"}
+You adjust the aperture and tesellation until a beam of pure aetherial light lances out from the crystal spyglass.(set: $arg to (random: 1,3))(display: "DealDamage")
+(if: $enemyHealth <= 0)[
+(if: $cunning > 3)
+[
+You catch the light of the sun with the spyglass and refract it at such an angle, it becomes a shear beam of darkenss that deftly sears the $enemyType into pitch black threads.  You snatch a handful from the air before they slip between the photons.
+
+(set: $arg to "Shadow Threads")(display: "GetItem")
+
+]
+(else:)
+[
+You wave the spyglass madly, chopping the $enemyType into thousands of tiny fibers that immediately slip away on the wind.
+]
+]
+
+:: Ex Nobilis Aetherium [book] {"position":"6093,2903","size":"100,100"}
+A comprehensive guide to the field of practickal daemonology, including instructions on capturing a daemon.
+
+
+:: Read Ex Nobilis Aetherium {"position":"6212,2902","size":"100,100"}
+"In order to capture a Living Shadow, you will need a Cellar of Salt, this manual, and a Soul Jar in which to receive the aetherial creature."
+
+(set: _daemon to (shuffled: ...(find: _i where _i's tags contains "daemon-description", ...(passages:)))'s 1st's name)
+_daemon
+(display: _daemon)
+
+(link-goto: "Put the Book Away", (history:)'s last)
+
+
+:: Slice of Silver [reagent item] {"position":"5741,2572","size":"100,100"}
+(☽) A coin-like segment of silver that has been cut from a longer cylinder. It is heavy and cool.
+
+
+:: Lump of Lead [reagent item] {"position":"5602,2130","size":"100,100"}
+(♄) A modest lump of lead about the size of a baby's fist.
+(if: $cunning > 2)[You can trade one of these and a few gold for a Damage Ward in the Market.]
+
+
+:: A Young Wizard's Primer [book] {"position":"6084,2243","size":"100,100"}
+It's a children's book.
+(if: $perception > 2)
+[It was the only book your mother was ever able to afford you.  It is a rudimentary text on the fundamentals of magic.
+]
+
+
+
+:: Read A Young Wizard's Primer [tick] {"position":"6193,2247","size":"100,100"}
+(display: "A Young Wizard's Primer")
+(if: $perception > 1)
+[
+(set: _roll to (random: 1, 6))
+(if: _roll is 1 or _roll is 2)[
+Daemons: Spirits of air and earth and all other elements, bound by their own perverse rules and not the Law of Man.(if: $perception > 2)[
+They can be captured by the use of Soul Jars, which can be purchased at the Daemonium in the Marketplace.](if: $perception > 3)[Be forewarned, powerful Archdaemons do not look kindly on humans who imprison their offspring.]]
+(else-if: _roll is 3 or _roll is 4)[
+Enchantments: Hidden traceries of magical influence devised as a trap for those neither perceptive nor cunning.(if: $perception > 2)[  They can be broken at the cost of blood, or they can be unwound and reused by those cunning enough.](if: $perception > 3)[  A truly advanced wizard can reweave an enchantment as your Old Mother can unravel and reweave a scarf.]]
+(else-if: _roll is 5 or _roll is 6)[
+Alchemy: Foul chemicals and bilious smokes make for an unpleasant affair.(if: $perception > 2)[  The market prices on potions are 5 times the price you would pay to make them at home.](if: $perception > 3)[  And you're likely to blow your hands off as make anything useful if you don't know the recipe, and alchemists jealously guard their recipes.]
+]]
+
+[[Read A Young Wizard's Primer]]
+
+(link-goto: "Put the Book Away", "Read a Book In Your Library")
+
+
+:: Pocket Lint [reagent item] {"position":"5495,2234","size":"100,100"}
+Yes.  Pocket Lint.
+
+:: Percepção de Cristal [book] {"position":"6088,2363","size":"100,100"}
+This appears to be a treatise on increasing your magical perception.
+(if: $perception > 3)[You are already familiar with all of the techniques it has to offer.]
+
+
+:: Read Percepção de Cristal [tick] {"position":"6218,2359","size":"100,100"}
+(display: "Percepção de Cristal")
+
+It's a slim guide with a few basic techniques about the use of a Crystal Spyglass to perceive magical traceries.  (if: $maxPerception < 4)[(if: $inventory contains "Crystal Spyglass")[You use your spyglass to practice some techniques of magical perception.
+<b>Perception + 1</b>
+(set: $maxPerception to it + 1)(set: $perception to $maxPerception)
+](else:)[You really must have a spyglass to get any benefit from these techniques.
+]](else:)[You've already mastered these simple techniques, and the additional eye strain has the opposite of the intended effect.
+<b>Perception - 1</b>
+(set: $maxPerception to it - 1)(set: $perception to $maxPerception)
+]
+[[Continue Reading->Read Percepção de Cristal]]
+(link-goto: "Put the Book Away", "Read a Book In Your Library")
+
+:: Vivification Chamber [furniture] {"position":"5381,2379","size":"100,100"}
+It's a glass cylinder with brass fittings large enough for a grown man to climb inside.  It's intended to bombard the user with eldritch energy, instantly refreshing their cunning, perception, and vitality.
+
+
+:: Use Vivification Chamber {"position":"5489,2377","size":"100,100"}
+(set: $cunning to $maxCunning)(set: $perception to $maxPerception)(set: $health to $maxHealth)(display: "UpdateClock")
+You feel immediately rejuvenated.  You'd rather not do this too often, because it does quite make your molars ache.
+
+(link-goto: (history:)'s last)
+
+
+:: Scrying Stone [furniture] {"position":"5381,2497","size":"100,100"}
+It is a classic crystal ball on a wooden stand, perched on top of a little round table, covered in a velveteen table cloth.  Within it are shown glimpses of possibility-space.  Those with the perceptive skills can use this information to warn them of dangers.
+
+
+:: Use Scrying Stone {"position":"5489,2498","size":"100,100"}
+(if: $currentContract is "")[You have to have an active interest in someone for the stone to work.
+]
+(else:)[
+(if: $ticks - $scryingStoneCooldown > 13)[(set: $enchantmentHidden to it - 1)(set: $scryingStoneCooldown to $ticks)
+You gaze into the stone and lock eyes with your quarry.  You see bits of their plan, the back side of their cunning, the weft of their enchantments.
+]
+(else:)[The part of your brain that can interface with this device is still in a state of mild shock from the last time you used it.  You should get more rest.
+]
+]
+
+(link-goto: (history:)'s last)
+
+:: Potion Automixer [furniture] {"position":"5382,2605","size":"100,100"}
+This clever device takes two reagents and combines them into a specific alchemical potion, with no training or dexterity required.
+
+
+:: Use Potion Automixer {"position":"5497,2606","size":"100,100"}
+First, select the left reagent.
+Second, select the right reagent.
+Third, light the burner.
+Four, take the potion. 
+|input>[{
+(if: (find: _item where (passage: _item)'s tags contains "reagent", ...$inventory)'s length < 2)[You've got to get at least two reagents to rub together, my friend.](else:)[
+Left Reagent:	(dropdown: bind _left, ...(find: _item where (passage: _item)'s tags contains "reagent", ...$inventory))	Right Reagent:	(dropdown: bind _right, ...(find: _item where (passage: _item)'s tags contains "reagent", ...$inventory))
+<br/><br/>
+(link-reveal: "Mix Reagents")[(replace:?input)[_left + _right = ]
+(replace:?output)[
+(set: $inventory to $inventory - (ds: _left, _right))
+(if: (ds: _left, _right) contains all of (ds: "Shadow Threads", "Quaff of Quicksilver"))[
+(set: $inventory to it + (ds: "Ink of Enchantment"))You have produced
+[[Ink of Enchantment]]
+]
+(if: (ds: _left, _right) contains all of (ds: "Sack of Sulfur", "Quaff of Quicksilver"))[
+(set: $inventory to it + (ds: "Cunning Draught"))You have produced
+[[Cunning Draught]]
+]
+(else:)[
+(if: (random: 0, 10) > 5)[You have produced nothing.  Thankfully, you've salvaged the reagents.(set: $inventory to $inventory + (ds: _left, _right))](else:)[You have produced a stinking mass of refuse instead of a potion or tincture. (set: $inventory to it + (ds: "Stinking Mass"))]]
+]]]}]
+*|output>[]*
+
+[[Home Again]]
+
+*Recipes sold separately
+
+
+:: Rack of Torment [furniture] {"position":"5378,2711","size":"100,100"}
+A wooden rack for storing daemons in Soul Jars.
+
+
+:: Use Rack of Torment {"position":"5498,2717","size":"100,100"}
+The Rack of Torment is not the kind of the thing that you have to actively use.  You just keep your Soul Jar's full of daemons on it when you're not traipsing about casting lightning bolts at assassins.  It's special wood or something...  daemons seem to like it...
+
+[[Home Again]]
+
+:: Trap Book [book] {"position":"6088,2560","size":"100,100"}
+This is a book with a seemingly innocuous title that is secretly a hedgemaze style encounter.  It will be dangerous, but it will contain information relevant to a high level encounter.
+(if: $perception > 10)[Holy shit, it is dangerous, but totally worth it!]
+
+
+:: Read Trap Book {"position":"6204,2535","size":"100,100"}
+(goto: "Inside the Trap Book")
+
+
+:: Inside the Trap Book [tick] {"position":"6203,2648","size":"100,100"}
+Add a weird branching encounter thing where the player has to use the Back button to get a passcode from one part of the maze to another.
+
+
+:: Grimoire Alchemickal [book] {"position":"6088,2781","size":"100,100"}
+This foul-smelling tome has both water damage and scorch marks testifying to its authenticity as a book that belonged to a former alchemist, current scorch mark.
+
+
+:: Read Grimoire Alchemickal [tick] {"position":"6207,2781","size":"100,100"}
+Even if the book hadn't been soaked in what appears to be urine, the handwriting is already borderline inscrutable.  The best you can find is a chart of which combinations didn't explode:
+
+Lead + Saltpetre = (if: $perception > 4)[Explosion!](else:)[????????]
+Pocket Lint + Saltpetere = (if: $perception > 4)[Explosion!](else:)[????????]
+Lead + Pocket Lint = (if: $perception > 4)[No Explosion :(](else:)[????????]
+
+(link-goto: "Put the Book Away", "Read a Book In Your Library")
+
+
+:: The Compleat History of Magickal Artifacts Vol. I [book] {"position":"6321,2123","size":"100,100"}
+(if: $perception > 3)[The combination of exaggeration, inaccuracies, and outright lies in this book would probably completely ruin your brain if you thought you could trust anyone anymore.
+(if: $cunning > 4)[That said, there's the bones of a few good ideas here.  ]]
+(else:)[It's a fairly respected guide to various magical artifacts and how they work.  You're really having trouble working out how half of these gimmicks are supposed to work. Perhaps a more perceptive wizard could make heads and/or tails of it.]
+
+
+:: Read The Compleat History of Magickal Artifacts Vol. I [tick] {"position":"6429,2122","size":"100,100"}
+Crystal Spyglass: v. good magick for wanton enslayment of creatures aetherial and daemonick
+
+(link-goto: "Put the Book Away", "Read a Book In Your Library")
+
+
+:: The Complete History of History [book] {"position":"6327,2247","size":"100,100"}
+This tome purports to be an exhaustive history of the Universe from the time of the Really Big Explosion to the publication date of the book in the 25th year of the ancient (either: "Blood", "Dark", "Cursed") (either: "War", "Ages", "Times").
+
+
+:: Read The Complete History of History [tick] {"position":"6435,2247","size":"100,100"}
+(unless: (history:) contains "Read The Complete History of History")[Once, long ago, in a cloud of undifferentiated physical particles, one of the particles collided with another particle...]  
+which collided with another particle...
+[[Continue Reading->Read The Complete History of History]]
+
+(link-goto: "Put the Book Away", "Read a Book In Your Library")
+
+:: Sack of Sulfur [reagent item] {"position":"5607,2238","size":"100,100"}
+(🜍|🜏) Inside the coarse sack is lumps of yellow powder that reek of rotten eggs and the Gates of Hell.
+
+
+:: Chunk of Chalk [reagent item] {"position":"5716,2130","size":"100,100"}
+A chunk of white chalk from the cliffs of a seaside village, composed of the uncountable skeletons of tiny sea creatures from beyond human comprehensible time.
+
+
+:: Grain of Gold [reagent item] {"position":"5717,2237","size":"100,100"}
+(☉) A small wax pouch with small pieces of pure gold.
+
+
+:: Piece of Pitch [reagent item] {"position":"5609,2344","size":"100,100"}
+This black lump is technically a liquid, but it flows so slowly at room temperature that it appears to be completely motionless.
+
+
+:: Quaff of Quicksilver [reagent item] {"position":"5718,2342","size":"100,100"}
+(☿) A glass vial of quicksilver sold as a single-use quack remedy drink.
+
+
+:: Healing Draught [item potion] {"position":"5848,2133","size":"100,100"}
+A single dose potion of healing is designed to knit your tissues back together.  There's a nonzero chance that it will knit them together too well and prevent your organs from functioning or your blood from flowing.
+(if: $inventory contains "Healing Draught")[ (link-reveal: "Use Healing Draught")[(display: "Use Healing Draught")] ]
+
+
+:: Use Healing Draught {"position":"5958,2135","size":"100,100"}
+(if: ($ticks % $cunning) is 0)[(set: $health to 0)(set: $deathReason to "Your organs sieze up, essentially strangling everything in your body simultaneously.  The triumphant never eat lotuses.")(goto: "Death")]
+(else:)[(set: $health to $maxHealth + 1)(set: $inventory to it - (ds: "Healing Draught"))You toss back the tiny potion and feel an immediate warming sensation flush through you.  You feel even better than you normally do.  You'd quite fancy another.](display: "UpdateClock")
+
+
+:: Cunning Draught [item potion] {"position":"5848,2247","size":"100,100"}
+Some kind of patent medicine, a "nootropic", guaranteed to give you enhanced cunning!  Unfortunately, one possible side effect is temporary death syndrome.
+
+(if: $inventory contains "Cunning Draught")[
+(link-reveal: "Use Cunning Draught")[(display: "Use Cunning Draught")]]
+
+
+:: Use Cunning Draught {"position":"5962,2248","size":"100,100"}
+(set: $inventory to it - (ds: "Cunning Draught"))You toss back the tiny potion and feel an immediate wave of cool clarity resolve your brain meat.
+(if: ($ticks % $cunning) is 0)[Instead of doing anything useful, you wasted the brief moment of clarity contemplating your belly lint.
+(set: $arg to -1)(display: "UpdateCunning")
+](else:)[(set: $arg to 4)(display: "UpdateCunning")](display: "UpdateClock")
+
+
+:: Stimulating Draught [item potion] {"position":"5848,2350","size":"100,100"}
+A potion to improve perception.
+(if: $inventory contains "Stimulating Draught")[
+(link-reveal: "Use Stimulating Draught")[(display: "Use Stimulating Draught")]]
+
+
+:: Use Stimulating Draught {"position":"5964,2353","size":"100,100"}
+(if: ($ticks % $cunning) is 0)[(set: $perception to 0)Oh, goodness, you're blind.]
+(else:)[(set: $perception to $perception + 4)(set: $inventory to it - (ds: "Stimulating Draught"))You toss back the tiny potion and feel as if you are suddenly aware of the very threads of energy flowing through the air.]
+(display: "UpdateClock")
+
+
+:: Poison Flask [item potion] {"position":"5852,2463","size":"100,100"}
+A crystalline jar of swirling greenish gas.
+
+
+:: Sleeping Phial [item potion] {"position":"5849,2571","size":"100,100"}
+A single dose of powerful sedative for creatures with lungs and blood.
+
+
+:: Potion Replicator [furniture] {"position":"5388,2831","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Use Potion Replicator {"position":"5500,2829","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Gold Loom [furniture] {"position":"5385,2944","size":"100,100"}
+Late game item that makes money irrelevant.
+
+
+:: Aleph [furniture] {"position":"4047,5725","size":"100,100"}
+A portal to every possible location in the Unity.
+
+
+:: Mystery Draught [item potion] {"position":"5838,2691","size":"100,100"}
+This mysterious potion's color is constantly changing.
+
+(if: $inventory contains "Mystery Draught")[ [[Use Mystery Draught]]]
+
+:: Ink of Enchantment [reagent item] {"position":"5618,2464","size":"100,100"}
+The aetherial substance used by mere mortals to physically bind fields of magic to objects and space.  Typically used to create traps, energy sources, prisons, and killing machines.  Also has some scholarly value, which is the only reason it's allowed on the market at all.
+
+
+:: Read The Complete History of Your Time Since Moving to the City [tick] {"position":"6436,2361","size":"100,100"}
+Chapter I:
+(for: each _item, ...(history:))[_item
+]
+
+(link-goto: "Put the Book Away", "Read a Book In Your Library")
+
+
+:: The Complete History of Your Time Since Moving to the City [book] {"position":"6321,2364","size":"100,100"}
+A pamphlet entitled "The Complete History of Your Time Since Moving to the City". From a cursory glance, it appears to be completely accurate in a somewhat workmanlike manner, more like a weird accounting of the details of your life than any kind of real narrative.
+
+
+:: Shadow Threads [reagent item] {"position":"5738,2460","size":"100,100"}
+The strange fibers left behind if a daemon is slain in certain ways, such as with a magical weapon.  Known to be of some use in alchemical craft.
+
+
+:: Ethereal Threads [reagent item] {"position":"5620,2572","size":"100,100"}
+The energized threads of magical energy that remain if the skein of an enchantment is unwoven without breaking any loops.  May also be held in this form prior to casting an echantment, such as when needing to quickly set a trap enchantment while being pursued.
+
+:: Noble Cowl [item] {"position":"6498,2886","size":"100,100"}
+An accessory that signifies you are allowed to walk the streets in the Upper Castlerock.  They are hard to come by.
+
+If you are of the class of people who are, perhaps not Nobles, but are allowed to live in Upper Castlerock *with* the Nobles.
+
+:: Compass of Many Places [item] {"position":"5970,3360","size":"100,100"}
+This artifact tells you the relative direction to your least dangerous location in the current multiversal coordinates...  and the most.
+
+:: Use Compass of Many Places {"position":"6087,3360","size":"100,100"}
+[[Compass of Many Places]]
+
+:: Smoke Bomb [item] {"position":"5841,2801","size":"100,100"}
+A throwable potion bomb that both produces a blinding smoke and teleports you back home.
+(if: $inventory contains "Smoke Bomb")[ [[Use Smoke Bomb]] ]
+
+
+:: Use Smoke Bomb {"position":"5963,2799","size":"100,100"}
+(set: $inventory to it - (ds: "Smoke Bomb"))You smash the smoke potion on the ground, producing a thick cloud of blinding smoke.
+[[Teleport to Safety->Home Again]]
+
+
+:: Badge of Shame [item] {"position":"6395,3200","size":"100,100"}
+As punishment for behavior unbecoming a mercenary magician, your face was mutilated with a razor for all to see.
+
+
+:: Shadow Passenger [item] {"position":"6709,3202","size":"100,100"}
+Ever since you came back from the Afterlife, you've noticed the feeling like you've got a passenger riding around in your body with you.  You've managed to use divination magic to determine that the passenger is real, but not what or who it is.
+
+
+:: Hand of Glory [item] {"position":"5850,3133","size":"100,100"}
+This is the severed hand of a thief prepared with an appallingly specific and complicated technique that we won't bother describing.  It has the property of making you magically invisible to your enemies.  You can use it to bypass encounters.
+(if: (history:)'s last is "Inventory")[
+(link-reveal: "Use Hand of Glory")[
+With a cantrip, you light the Hand of Glory.  Its light somehow makes the air around you even gloomier.
+(if: (random: 0, 6) is 0)[This is the last gasp of the Hand of Glory. (set: $inventory to it - (ds: "Hand of Glory"))](else:)[The old hand still has some fat left in it.]
+[[Sneak Past->Next Encounter]] 
+]]
+
+
+:: Neighborhood Door to North Harbor [furniture] {"position":"5386,3062","size":"100,100"}
+When you want to move to a new neighborhood, you get yourself a new door.  Or, if you're mister fancypants, you can get multiple neighborhoods.
+
+This door takes you to the neighborhood of North Harbor.
+
+
+:: Use Neighborhood Door to North Harbor {"position":"5506,3052","size":"100,100"}
+You open the door to a brisk vista of the North Harbor, a part of the City where ships float through a howling rift in the space-time in search of treasure and adventure.
+
+[[North Harbor]]
+
+
+:: Neighborhood Door to South Quarry [furniture] {"position":"5386,3173","size":"100,100"}
+When you want to move to a new neighborhood, you get yourself a new door.  Or, if you're mister fancypants, you can get multiple neighborhoods.
+
+This door takes you to the neighborhood of South Quarry.
+
+
+:: Use Neighborhood Door to South Quarry {"position":"5499,3172","size":"100,100"}
+You open the door and a silty wind blows through and nearly knocks over your drinks cart.
+Through the frame, you see a vast mining operation carved out of a transcendental mineral deposit.
+
+[[South Quarry]]
+
+
+:: Neighborhood Door to Eastern Fortress [furniture] {"position":"5383,3294","size":"100,100"}
+When you want to move to a new neighborhood, you get yourself a new door.  Or, if you're mister fancypants, you can get multiple neighborhoods.
+
+This door takes you to the neighborhood of Eastern Fortress.
+
+
+:: Use Neighborhood Door to Eastern Fortress {"position":"5502,3296","size":"100,100"}
+When you open the door, you are treated to the smell of fresh, hot food being slowly roasted over braziers.  Hallucinogenic resins are being burned for recreation by enchanted creatures in silver jewelry.
+
+[[Eastern Fortress]]
+
+
+:: Neighborhood Door to Upper Castlerock [furniture] {"position":"5383,3406","size":"100,100"}
+When you want to move to a new neighborhood, you get yourself a new door.  Or, if you're mister fancypants, you can get multiple neighborhoods.
+
+This door takes you to the neighborhood of Upper Castlerock.
+
+
+:: Use Neighborhood Door to Upper Castlerock {"position":"5502,3407","size":"100,100"}
+Everything you see through this door appears to be cast in a golden light, as if the air was full of invisible motes of gold dust.
+
+[[Upper Castlerock]]
+
+
+:: Random Bulk Scroll {"position":"3512.3333333333335,477.6666666666667","size":"100,100"}
+//(either: "You scrape the barnacles off of a bale of scrolls and find the only legible text.", "You crack open a scrollcase and find a fragment of text.", "You open a dainty wooden box and find a document within.", "You unroll a scroll made of troll parchment.")  
+(either: "The scroll is so badly soaked in " + (either: "cometmelt", "narwhal oil", "siren tears", "blood", "saltwater", "ink") + " that it is illegible.", "The sodden logbook tells the tale of a " + (either: "doomed", "cursed", "foolhardy", "forsaken", "glorious", "typical", "relatively uneventful") + " voyage through " + (either: "eternal", "a short segment of", "endless", "rough and choppy", "smooth", "a realm of") + " " + (either: "living", "churning", "synthetic", "waves of", "fractal branches of", "incredibly hot", "relentless") + " " + (either: "darkness","light","ocean","warpscapes","possibility space","hellscape","beauty", "terror", "agony", "adventure") + ".  Mostly lies.", "... " + (either: "mmMMam", "madfMAdfm", "MADfcvijcx", "cometmelt", "eternal", "forsaken", "incredibly hot") + "... " + (either: "MmdasVC", "CVCsddf", "qwerZCVT", "discovered the cure for", "a rare and contagious", "untold wealth", "dire passages") + "... " + (either: "ajkdfoslw", "ADcvxfd", "iozcosdkfja", "interlocutions with archdaemons", "forbidden steps of the shadow temple", "honeyed halls of the bee queen") + "... ",
+"The fevered scratchings of a mad Riftrunner, with... " + (either: "someone's blood", "shite", "ashes") + " as ink.  Sadly, it's in 3rd-Degree Post-factional Esperanto, which hardly anyone speaks.",
+"Memento Mori... Memores sumus vestri in viveret.",
+"I have discovered a truly marvelous proof of this, which this margin is too narrow to contain...",
+"..." + (either: "quid", "bones", "RATS") + "..." + (either: "wouldn't stop screaming", "begged but I wouldn't kill them", "but we thought we could make it out in time") + "..." + (either: "and then the whole thing started to loop again", "beware the sirens and their lies", "it wasn't an iceberg at all but a") + "..."
+)//
+
+
+
+
+:: Macro Caster [furniture] {"position":"5399,3871","size":"100,100"}
+A cute gimmick that let's you reproduce the events of someone's real history in the confines of your own home!
+
+It contains blank gallium plates that you use to imprint an event.  It can then replay the events in any order you choose.
+
+It is currently programmed thusly:
+(print: $macroCasterPlates)
+
+
+:: Use Gold Loom {"position":"5503,2940","size":"100,100"}
+Double-click this passage to edit it.
+
+:: Ward Press [furniture] {"position":"5387,3747","size":"100,100"}
+Lead goes in and Wards come out.
+
+
+:: Use Ward Press {"position":"5503,3748","size":"100,100"}
+(if: $cunning + $perception >= 7)[
+First, select the left reagent (☿).
+Second, select the right reagent (♄).
+Third, light the burner.
+Four, take the ward.*
+ 
+(if: $inventory contains "Lump of Lead" and $inventory contains "Quaff of Quicksilver")[(set: $inventory to it - (ds: "Lump of Lead"))(set: $inventory to it + (ds: "Damage Ward"))
+You have produced
+Damage Ward]
+
+*Recipes sold separately
+]
+(else:)[
+The instructions say that it's easy, but clearly there's some knack to doing it that you haven't cottoned to, yet.
+]
+
+(link-goto: (history:)'s last)
+
+
+:: Stinking Mass [reagent item] {"position":"5627,2682","size":"100,100"}
+This Stinking Mass is a fetid wad of waste product from a potion gone awry.
+
+:: Love Potion [item potion] {"position":"5969,2580","size":"100,100"}
+A powerful placebo.
+
+
+:: Witch Bottle [item] {"position":"5845,3471","size":"100,100"}
+Variations exist: Typically, a jar or bottle filled with a mix of pins and piss.  Make you one and hide it well above a door or beneath a floor.  Its presence is intended to confound and deter witches and witchcraft.
+
+
+:: Riftrunner's Badge [item] {"position":"6498,2992","size":"100,100"}
+This is an enchanted tattoo inscribed on the skin of someone who wishes to cross the Rift to the North without its arcane energies tearing them to shreds.  Typically placed on the back of hand or the throat in glowing blue ink.  Some people complain that even after leaving the Rift, it keeps calling them back.
+
+
+
+:: Slow Clock [item] {"position":"5841,2905","size":"100,100"}
+Trying to tell what time the clock is displaying will cause a severe migraine.  It is housed in an ornate silver case, with a chain that fades into the 4th spatial dimension and a convenient push button that activates its primary ability.
+(if: $inventory contains "Slow Clock")[ [[Use Slow Clock]] ]
+
+
+:: Use Slow Clock {"position":"5961,2911","size":"100,100"}
+(if: $inventory contains "Clockwork Key")[
+You notice that your Clockwork Key fits perfectly into the keyslot in the back of the Clock.  You can set the amount of time.
+|input>[
+
+Time: (cycling-link: bind $arg, 1, 2, 3)
+
+(link-reveal: "Recall To The Past")[(replace:?input)[
+(set: $encounterIndex to it - (num: $arg))(set: $ticks to it - 3 * (num: $arg))
+You get that rubber-faced feel as if falling from a great height as your local time frame moves several minutes into the past.
+
+[[Next Encounter->Encounter]]
+]]
+(link-reveal: "Transport To The Future")[(replace:?input)[
+(set: $encounterIndex to it + (num: $arg))(set: $ticks to it + (num: $arg) * 3)
+Your eyes and skin burn as you accelerate several minutes into the future.  Unfortunately, in this future, you no longer have the Slow Clock. (set: $inventory to it - (ds: "Slow Clock"))
+
+[[Next Encounter->Encounter]]
+]]]
+]
+(else:)[
+(if: (random: 0, 1) is 0)[(set: $encounterIndex to it - 1)(set: $ticks to it - 3)
+You get that rubber-faced feel as if falling from a great height as your local time frame moves several minutes into the past.
+
+[[Next Encounter->Encounter]]
+](else:)[(set: $encounterIndex to it + 1)(set: $ticks to it + 3)
+Your eyes and skin burn as you accelerate several minutes into the future.  Unfortunately, in this future, you no longer have Slow Clock. (set: $inventory to it - (ds: "Slow Clock"))
+
+[[Next Encounter->Encounter]]
+]]
+
+:: Passage Ticket [item] {"position":"6188,3239","size":"100,100"}
+Proof of payment for a full expedition:
+- crew
+- supplies
+- a ship
+
+You'll use this ticket to board the ship, and then you will be on your way into the transdimensional rift to see what exotic treasures you can hopefully return with.
+
+
+:: Captain's Hat [item] {"position":"6201,3135","size":"100,100"}
+Owning this proves that you are capable of commanding a ship.  Worn with pride.
+
+:: Cursed Mirror [item] {"position":"6210,3022","size":"100,100"}
+This mirror reflects a distorted version of the world. (if: $inventory contains "Shadow Passenger")[  When you look at it, you see something that looks and dresses much like you.  Just everything slightly different, slightly off-kilter.  It grins at the same time as you, its teeth like broken razor blades. ](else:)[ When you look at it, you're upside down and backwards in the reflection.]
+
+
+:: Philomender's Book of Excellent Knots [book] {"position":"6341,2535","size":"100,100"}
+A book full of excellent knots, both physical and in the form of enchantments.
+
+
+:: Read Philomender's Book of Excellent Knots [tick] {"position":"6459,2540","size":"100,100"}
+You are fascinated by this book, which explains everything from simple concepts like the Gordian Knot to the true mysteries like why christmas tree lights get tangled even if you don't touch or move them for a year.
+
+(link-goto: "Put the Book Away", "Read a Book In Your Library")
+
+
+:: Hearthstone [item] {"position":"5970,3130","size":"100,100"}
+This slight-warm-to-the-touch red-orange gemstone can instantly transport you from any location in the universe, space and/or time, to your very home.  Self-destructs upon use.
+
+(if: $inventory contains "Hearthstone")[[Use Hearthstone]]]
+
+
+:: Use Hearthstone {"position":"6096,3133","size":"100,100"}
+You crush the stone in your fist.  Each grain of dust in the stone binds with your elemental essence and then immediately collapses a suspended lode enchantment, returning you in your exact current condition back to your home.
+
+(set: $arg to "Hearthstone")(display: "LoseItem")
+
+[[Home Again]]
+
+:: The True History of Leng [book] {"position":"6334,2649","size":"100,100"}
+A purported history of an ancient extinct semi-aquatic species of wizards.
+
+
+:: Read The True History of Leng [tick] {"position":"6449,2656","size":"100,100"}
+Mostly rubbish.  Nice illustrations, though.
+
+(link-goto: "Put the Book Away", "Read a Book In Your Library")
+
+:: Litre of Saltpetre [item reagent] {"position":"5728,2679","size":"100,100"}
+(K2CO3) Keep away from open flame, unless you actually want a big dangerous fire, which is definitely something that comes in handy.
+
+:: Sharpened Teeth [item] {"position":"6497,3097","size":"100,100"}
+You've been given a fine set of sharpened teeth by a tribe of sea dayaks who share some of your hobbies.
+
+
+:: Blank Scroll [reagent book] {"position":"5628,2802","size":"100,100"}
+This is a palimpsest, a page scraped as clean of its old words as possible so that it may be reused again.  Useful for inscribing spells and enchantments.
+
+
+:: Read Blank Scroll {"position":"5736,2802","size":"100,100"}
+(display: "Random Bulk Scroll")
+
+[[Continue Reading->Read Blank Scroll]]
+
+[[Read a Book In Your Library]]
+
+:: Pirate's Cap [item] {"position":"6393,3095","size":"100,100"}
+It may be filthy, but the fleas don't mind it a bit.
+
+Demonstrates a kinship with the ocean's sentient lampreys.
+
+Owning one proves that you're a pirate and/or that you killed a pirate.
+
+
+:: Tablet of Tin [reagent item] {"position":"5624,2920","size":"100,100"}
+(♃) A unit of metallic tin in the industry standard tablet format.
+
+
+:: Ingot of Iron [reagent item] {"position":"5738,2918","size":"100,100"}
+(♂) This solid piece of pure iron can be forged into items and weapons efficacious against charm and enchantment.
+
+
+:: Coil of Copper [reagent item] {"position":"5628,3031","size":"100,100"}
+(♀)
+
+
+:: Half Ounce of Antimony [reagent item] {"position":"5738,3030","size":"100,100"}
+(♁)  A lustrous cluster of silvery crystals that looks like a miniature mountain range.
+
+
+:: Elemental Arsenic [reagent item] {"position":"5628,3140","size":"100,100"}
+(🜺)
+
+
+:: Bit of Bismuth [reagent item] {"position":"5738,3145","size":"100,100"}
+(🜘) Bismuth forms wonderfully labyrinthian cubic crystals in shimmering rainbow reflections.
+
+
+:: Batch of Boron [reagent item] {"position":"5633,3251","size":"100,100"}
+(=)
+
+
+:: Little Bit of Lithium  [reagent item] {"position":"5741,3253","size":"100,100"}
+()
+
+
+:: Metal Magnesium [reagent item] {"position":"5638,3368","size":"100,100"}
+(⊛) Magnesium tape in a convenient roll.  I'm sure there's a practical use for them, but what's most entertaining is to set fire to one end of the roll, drop it, and try not to get burned.
+
+
+:: Phial of Phosphorous [reagent item] {"position":"5744,3364","size":"100,100"}
+A glass phial of reddish granules, highly reactive reagent
+
+
+:: Piece of Potassium [reagent item] {"position":"5641,3485","size":"100,100"}
+()
+
+
+:: Platinum Platelet [reagent item] {"position":"5744,3485","size":"100,100"}
+(☽☉) A small disk of platinum.
+
+
+:: Zest of Zinc [reagent item] {"position":"5644,3597","size":"100,100"}
+() Shavings of zinc in a jute pouch.
+
+
+:: Lodestone [item] {"position":"5853,3585","size":"100,100"}
+(🝓) Carrying one of these can potentially manipulate the magnetic fields around various objects and items.  Mainly, you know how to use them to cheat at dice.
+
+
+:: Sal Ammoniac [reagent item] {"position":"5751,3597","size":"100,100"}
+(🜹)
+
+
+:: Aqua Fortis [reagent item] {"position":"5650,3717","size":"100,100"}
+(🜅)
+
+
+:: Aqua Regia [reagent item] {"position":"5766,3712","size":"100,100"}
+(🜆)
+
+
+:: Aqua Vitae [reagent item] {"position":"5655,3830","size":"100,100"}
+(🜈)
+
+
+:: Cinnabar, not Cinnamon [reagent item] {"position":"5765,3827","size":"100,100"}
+(🜓)
+
+
+:: Vat of Vitriol [reagent item] {"position":"5665,3944","size":"100,100"}
+(🜖) Essential to the alchemical process inasmuch as it makes really cool reactions when you drop reagents into it.
+
+
+:: Vial of Vinegar [reagent item] {"position":"5783,3944","size":"100,100"}
+(🜌) What can't vinegar do?  Mostly used to clean glass.
+
+:: Spool of Daedelus [item] {"position":"5963,3587","size":"100,100"}
+This is a quite clever gimmick, consisting of a self-winding spool and a long, durable filament.
+(if: $perception > 3)[You'd find it quite handy in a labyrinth.]
+
+
+:: Perpetual Motion Machine [item] {"position":"6235,3630","size":"100,100"}
+You can't get this damned thing to turn off no matter how hard you try!
+
+
+:: Brass Cauldron [item] {"position":"6355,3629","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Lucky Horseshoe [item] {"position":"6355,3749","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Iron Bell [item] {"position":"6223,3747","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Silver Bell [item] {"position":"6227,3968","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Gold Bell [item] {"position":"6221,3860","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Enchanted Shackles [item] {"position":"6351,3857","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Crown of Horns [item] {"position":"6601,3093","size":"100,100"}
+Horns erupting from the head.  Different numbers and formations can be found, from a single horn erupting from the center of the forehead to a literal crown of a dozen arched horns.  Frequently found in the classic balanced pair.
+
+
+:: Philosopher's Stone [item reagent] {"position":"5671,4184","size":"100,100"}
+Fabled to grant immortality, it is actually just a precursor to the creation of a Lazarus Beacon charge.
+
+
+:: Vorpal Blade [item weapon magic-weapon] {"position":"6078,4810","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Everlasting Fire [item reagent] {"position":"5805,4054","size":"100,100"}
+This lovely bit of flame can't ever be extinguished, which means you should never use it to start a fire anywhere it could spread, because then you'd only have more Everlasting Fire.  It is, in fact, far too dangerous an item to even exist.  It is also a lovely shade of blue.
+
+
+:: Silver Quill [item] {"position":"6083,3590","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Diamond Inkwell [item] {"position":"6475,3749","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Shadow Lantern [item magic-weapon] {"position":"6361,4364","size":"100,100"}
+This device is a one-shot, grenade-like weapon that can damage creatures of light and fire.
+
+
+:: Bone Pipes [item musical] {"position":"6478,3635","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Loaded Dice [item] {"position":"6583,3636","size":"100,100"}
+If you had these and a Lodestone, you could win just about any dice game you'd like.
+
+
+:: Blow Dart [item weapon] {"position":"6100,5255","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Bone Mask [item] {"position":"6113,3725","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: God's Eye [item] {"position":"6350,3972","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Boondoggle [item] {"position":"6475,3980","size":"100,100"}
+(display: "Tick")(display: "Tick")(display: "Tick")
+
+
+:: Steel Needle [item] {"position":"6476,3864","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Hell Money [item] {"position":"6588,3867","size":"100,100"}
+Frequently burned as an offering to the dead, certain vendors accept payment in this currency but not lucre.
+
+
+:: Goat Skull [item reagent] {"position":"5691,4269","size":"100,100"}
+Certain kinds of sorcery depend on sympathies.  The more the ceremony resembles the intended act, the more coherent the sympathetic magic would be.   Props like Goat Skulls are intended to make the ceremony resemble a very convincing sorcery, thus amping up the magical juice.
+
+
+:: Mechanical Arm [item] {"position":"6590,3982","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Spider Silk Shawl [item] {"position":"6711,3867","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Stone Blood [item reagent] {"position":"5796,4160","size":"100,100"}
+This ebon ichor can be used to bind false gods and add a kick of earth elemental energy to magical spells.
+
+
+:: Deck of Cards [item] {"position":"6705,3632","size":"100,100"}
+A standard deck of playing cards: 1 through 13 in all 5 suits, the Minor Arcana, the Major Arcana, the two Trumps, the secret Anti-Trump, and the Dragon.
+
+
+:: Theorbo [item musical] {"position":"6703,3982","size":"100,100"}
+One of the 14th centuries most badass inventions.
+
+
+:: Straight Razor [weapon item] {"position":"6097,5152","size":"100,100"}
+A simple blade collapsed into a handle, commonly used by barbers but perfectly suited for wizards who wish to boost their attack power.
+
+
+:: Copper Spring [item] {"position":"6086,3480","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Enchanted Flashlight [item magic-weapon] {"position":"6066,4520","size":"100,100"}
+Casts a beam of pure light energy.
+
+
+:: Everfull Flask [item] {"position":"6362,3517","size":"100,100"}
+This flask is eternally full of the last potion poured into it.
+(if: $inventory contains "Everfull Flask")[
+(link-reveal: "Drink From the Everfull Flask")[
+You take a nice deep swig of $flaskType.
+(display: "Use " + $flaskType)]
+
+(link-reveal: "Fill the Everfull Flask")[
+(set: _potions to (find: _i where (passage: _i)'s tags contains "potion", ...$inventory))
+(if: _potions's length > 1)[
+(cycling-link:  bind _item, ..._potions)
+(link-reveal: "Fill It Up!")[(set: $flaskType to _item)
+You pour the $flaskType into the Everfull Flask.(set: $arg to $flaskType)(display: "LoseItem")]](else-if: _potions's length is 1)[(set: $flaskType to _potions's 1st)$flaskType
+(link-reveal: "Fill It Up!")[You pour the $flaskType into the Everfull Flask.(set: $arg to $flaskType)(display: "LoseItem")]](else:)[You don't have anything to fill up the flask.]
+]]
+
+
+:: Crystal Eye [item] {"position":"6481,3514","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Blunderbuss [item weapon] {"position":"6093,5043","size":"100,100"}
+By stuffing the muzzle with random garbage, you can deal a tremendous blast of kinetic damage.
+
+
+:: Ritual Dagger [item weapon magic-weapon] {"position":"6088,4929","size":"100,100"}
+Ah, a Phurpa, which can be used on both deamons, the living, and the Undead.
+
+
+:: Mana Battery [item] {"position":"6238,3389","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Infernal Lens [item magic-weapon] {"position":"6066,4290","size":"100,100"}
+Focuses beams of fire elemental energy.
+
+
+:: Obsidian Lens [item magic-weapon] {"position":"6062,4407","size":"100,100"}
+Focuses beams of dark energy.
+
+
+:: Crystal Prism [item magic-weapon] {"position":"6068,4180","size":"100,100"}
+The raw crystal used in a Crystal Spyglass, it is uncut and unground, which means that its elemental potential is even greater than a spyglass, but utterly out of your control.
+
+
+:: Brass Mirror [item] {"position":"6226,3495","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Fireworks [item weapon] {"position":"6374,4230","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Pet Scorpion [item weapon pet] {"position":"6104,5707","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Stiletto [item weapon] {"position":"6101,5475","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Derringer [item weapon] {"position":"6107,5587","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Lead Sap [item weapon] {"position":"6101,5364","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Portable Pentacle [item magic-weapon] {"position":"6063,4630","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Jar of Baby Teeth [item reagent] {"position":"5668,4064","size":"100,100"}
+Not sure whose teeth they were.  Hopefully they came from multiple sources, because this is a mason jar filled with small specimens.
+
+
+:: Skeleton Key [item] {"position":"6703,3749","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Nepenthe [item incense] {"position":"5922,3819","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Sage [item incense] {"position":"6039,3858","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Ambergris [item reagent] {"position":"5799,4275","size":"100,100"}
+So, it's made inside of whales.  It comes out of their bottoms, usually, but sometimes, they vomit it.  Smells of shite.
+
+Used for... perfume?
+
+
+:: Frankincense [item incense] {"position":"5927,3925","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Ylang Ylang [item incense] {"position":"6039,3966","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Lavender [item incense] {"position":"5927,4037","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Bertram Russell's Teapot [item] {"position":"6918,3868","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Apple of Eden [item] {"position":"6587,3749","size":"100,100"}
+A revealer of worlds.  Eating its flesh gives you great wisdom at the price of losing all illusions.
+
+
+:: Cartiff's Complete Compendium of Codes [item book] {"position":"6690,2655","size":"100,100"}
+This guide contains the solution to every combination lock in the known universes.  If you have one of these on hand, no code can defy you.
+
+
+:: Cartiff's Complete Compendium of Codes (Badly Burned) [item book] {"position":"6689,2769","size":"100,100"}
+This was a complete guide to all codes, but it barely survived a fire.  It might have the code for whatever lock you encounter.
+
+
+:: Silphium [item incense] {"position":"6039,4076","size":"100,100"}
+This sacred panacaea grew only in the wild, and mankind's greed for it annihilated it in many worlds and timelines.
+
+The precious bundle in your purse represents the vanishingly small amount available in this neighborhood.  There's maybe two or three more in the whole City.
+
+
+:: Soul Jar Matryoshka [item] {"position":"5114,2240","size":"100,100"}
+Infinite nesting Soul Jars.
+
+:: Tincture of Turmeric [item] {"position":"6083,2661","size":"100,100"}
+A restorative tonic that can be used to refresh yourself.
+
+:: Chest Key [item] {"position":"6818,3752","size":"100,100"}
+It's an old-fashioned key, intended for the type of chest one might bury treasure in on a deserted island.
+
+
+:: Treasure Map [item] {"position":"6816,3874","size":"100,100"}
+This treasure map is in a state of quantum prolapse.  If you bring it to an area with buried treasure, it will collapse down to the state that will let you find the treasure.  Once collapsed, it will lose its properties.
+
+
+:: Belonging Sign [item] {"position":"6393,2993","size":"100,100"}
+With this enchanted mark upon you, sentient creatures are much more likely to assume that you are friendly and belong.  Not effective against any City-dwellers, as they are all far too jaded.
+
+
+:: Skein of the Deep [item] {"position":"6394,2890","size":"100,100"}
+You've been given this enchanted mark by a Sea Hag.  It allows you to communicate with rift monsters of Shoggoth-level 3 and higher.
+
+:: Perfect Pearl [item reagent] {"position":"5611,2017","size":"100,100"}
+This elegant sphere of nacreous protein positively radiates with light.
+
+
+:: Map Fragment [item] {"position":"6821,3980","size":"100,100"}
+Find another one, and you might end up with an entire map.
+
+
+:: Chameleon Scarf [item] {"position":"6098,2440","size":"100,100"}
+Under the proper circumstances, allows you to replicate the effects of any hat.
+
+
+
+:: Selkie Skin [item] {"position":"6081,2012","size":"100,100"}
+When worn, will allow incredibly agile swimming and the ability to hold ones breath for a prolonged period.
+
+:: Cellar of Salt [item reagent] {"position":"5715,2020","size":"100,100"}
+Salt suitable for snacks or sorcery in a convenient cellar.
+
+
+:: Vampir Krenk [item] {"position":"6603,3200","size":"100,100"}
+You've contracted a mild case of vampirism.
+
+
+:: Use Ritual Dagger {"position":"6203,4934","size":"100,100"}
+(if: $enemyElementType is "Mortal")[
+(set: _opponentMove to $fightPattern's ($fightIndex))
+(replace:?output)[You swing your phurpa at your enemey.
+(if: _opponentMove is "Flee")[(replace:?input)[ [[Next Encounter]] ](replace:?output)[They turn and run away at top speed.]](else-if: _opponentMove is "Block")[... but they bat your attack away.](else-if: _opponentMove is "Throw")[  As they dip in to grab your arm, you slice something vulnerable.(set: $arg to 3)(display: "DealDamage")](else-if: _opponentMove is "Strike")[  They poke at you, and you cut off their poker.(set: $arg to 2)(display: "DealDamage")(set: $arg to 1)(display: "TakeDamage")](else:)[  They make no move to avoid it and take the full brunt of your blow.(set: $arg to 4)(display: "DealDamage")]]
+(set: $fightIndex to (it + 1))
+(if: $fightIndex > $fightPattern's length)[(set: $fightIndex to 1)]
+(display: "UpdateClock")
+]
+(else:)[
+The phurpa can cut through both flesh and more aetherial stuff.
+
+(if: (a: "shadow", "fire") contains $enemyElementType)[ 
+You scratch a line through the daemon.
+(set: $arg to (either: 0,1,1))(display: "DealDamage")
+(if: $enemyHealth <= 0)[
+(if: $cunning > 3)
+[The $enemyType is reduced to a filthy smoke.  You weave the smoke into
+(set: $arg to "Shadow Threads")(display: "GetItem")
+]
+(else:)
+[The $enemyType burns to filthy ash, and the wind blows away the remnants.
+]]]
+(else:)
+[Your arcane weapon is ineffective against this type of enemy.
+(set: $arg to 0)(display: "DealDamage")]
+]
+
+:: Penny Dreadful [item book] {"position":"6191,2005","size":"100,100"}
+A slight periodical telling unlikely tales, highly sensationalized.
+It has advertisements and a help wanted section.
+
+
+:: Read Penny Dreadful {"position":"6313,2001","size":"100,100"}
+You slip the magazine a coin that it delicately champs up and swallows.
+
+(set: $arg to -1)(display: "UpdateGold")
+
+//display random story//
+
+{(set: $reputationTag to "brass-level")}
+(if: $currentContract is "")[
+(display: "GenerateChar")(set: $clientDescription to $char)
+{(set: $potentialContracts to (find: _item where (not ((passage: _item)'s tags  contains "unique") or not ((history:) contains _item)) and (passage: _item)'s tags contains all of (a: "contract", $reputationTag), ...($neighborhood's contracts)))}
+You scan through the available jobs...<br/>
+(if: $potentialContracts's length > 0)[
+(link-goto: (shuffled: ...$potentialContracts)'s 1st)
+](else:)[There's no work for you.]](else:)[You already have a job.]
+
+{(set: _locations to (find: _item where not ((history:) contains _item and (passage: _item)'s tags contains "bookmark") and (passage: _item)'s tags contains "location", ...($neighborhood's locations)))}
+(if: _locations's length > 0)[Your eye skims past the various advertisements...  until you find (link-goto: _locations's 1st)]
+(else:)[I guess you've already seen everything in the (print: $neighborhood's name).]
+
+[[Read a Book In Your Library]] 
+
+[[Home Again]]
+
+
+:: Bit of Bone [item reagent] {"position":"5670,4389","size":"100,100"}
+Double-click this passage to edit it.
+
+:: M.C. Escher: Beginner's Embroidery [item book] {"position":"6193,1890","size":"100,100"}
+In some timelines, M.C. Escher was an artist who created 2D representations of impossible 3D geometry.
+
+In the timeline that produced this classic literature on the topic of enchantment, they were an artist that created 4D representations of impossible 5D geometry with Ethereal Thread embroidery.
+
+
+:: Read M.C. Escher: Beginner's Embroidery {"position":"6318,1897","size":"100,100"}
+(if: $maxCunning > 2)[(if:  $maxCunning < 5)[(set: $maxCunning to it + 2)<b>Max Cunning + 2</b>
+Ahhhhh, now that you've seen it from that perspective, it makes much more sense.](else:)[A classic, but you are too advanced to take any advantage of it.]](else:)[You are not truly cunning enough to understand the concepts in the book.]
+
+[[Read a Book In Your Library]]
+
+
+:: Use Infernal Lens {"position":"6180,4290","size":"100,100"}
+The lens catches the ambient light, projecting a beam of elemental infernium.
+
+(if: (a: "shadow", "bone", "flesh") contains $enemyElementType)[It arcs out, plowing through the center of the hostile daemon.
+(set: $arg to (random: 1,3))(display: "DealDamage")
+(if: $enemyHealth <= 0)[
+(if: $cunning > 3)
+[The $enemyType is reduced to a filthy smoke.  You weave the smoke into
+(set: $arg to "Shadow Threads")(display: "GetItem")
+]
+(else:)
+[The $enemyType burns to filthy ash, and the wind blows away the remnants.
+]]]
+(else:)
+[Your arcane weapon is ineffective against this type of enemy.
+(set: $arg to 0)(display: "DealDamage")]
+
+
+:: Use Obsidian Lens {"position":"6178,4405","size":"100,100"}
+The lens catches the ambient light, projecting a beam of elemental infernium.
+
+(if: (a: "fire", "holy", "flesh") contains $enemyElementType)[
+The daemon's form withers in the presence of an opposing element.
+(set: $arg to (random: 1,3))(display: "DealDamage")
+(if: $enemyHealth <= 0)[
+(if: $cunning > 3)
+[The $enemyType is reduced to a wan glimmer.  You weave the glimmer into
+(set: $arg to "Shadow Threads")(display: "GetItem")
+]
+(else:)
+[The $enemyType shrivels into nothing and disappears with an audible //pfft//.
+]]]
+(else:)
+[Your arcane weapon is ineffective against this type of enemy.
+(set: $arg to 0)(display: "DealDamage")]
+
+
+:: Use Enchanted Flashlight {"position":"6185,4520","size":"100,100"}
+The lens catches the ambient light, projecting a beam of elemental infernium.
+
+(if: (a: "shadow", "crystal") contains $enemyElementType)[ 
+A brilliant shaft of purest hope erupts from the children's flashlight with duct tape and bailing wire modifications.  The enemy shrieks in terror.
+
+(set: $arg to (random: 1,3))(display: "DealDamage")
+(if: $enemyHealth <= 0)[
+(if: $cunning > 3)
+[The $enemyType is reduced to a filthy smoke.  You weave the smoke into
+(set: $arg to "Shadow Threads")(display: "GetItem")
+]
+(else:)
+[The $enemyType burns to filthy ash, and the wind blows away the remnants.
+]]]
+(else:)
+[Your arcane weapon is ineffective against this type of enemy.
+(set: $arg to 0)(display: "DealDamage")]
+
+
+:: Use Portable Pentacle {"position":"6181,4632","size":"100,100"}
+You cast the pentacle out at the enemy.  Springs in the iron and silver apparatus cause it to pop open, surrounding your opponent.
+
+(display: "Capture " + $enemyType)
+
+
+:: Item Shelf [furniture] {"position":"5133,2684","size":"100,100"}
+Storage space for you to manage your inventory.
+
+
+:: Use Item Shelf {"position":"5242,2682","size":"100,100"}
+Inventory:
+(for: each _i, ...$inventory)[(link-reveal: "Put " + _i + " on Shelf")[(set: $inventory to it - (ds: _i))(set: $storage to it + (ds: _i))(goto: "Use Item Shelf")]
+]
+
+Storage:
+(for: each _i, ...$storage)[(link-reveal: "Take " + _i + " off Shelf")[(set: $inventory to it + (ds: _i))(set: $storage to it - (ds: _i))(goto: "Use Item Shelf")]
+]
+
+[[Home Again]]
+
+:: Use Crystal Prism {"position":"6173,4185","size":"100,100"}
+(set: _element to (either: "shadow", "bone", "flesh", "fire", "holy"))
+The lens catches the ambient light, projecting a beam of _element elemental energy.
+
+(if: $enemyElementType is not _element)[
+An erratic sizzle of chaotic energy flings out from the prism, striking the enemy.
+(set: $arg to (random: 0,4))(display: "DealDamage")
+(if: $enemyHealth <= 0)[
+(if: $cunning > 3)
+[The $enemyType is reduced to a swirl of raw chaos.  You weave the chaos into
+(set: $arg to "Shadow Threads")(display: "GetItem")
+]
+(else:)
+[The $enemyType is torn into rudimentary particles, like subquarks and demimuons.
+]]]
+(else:)
+[Your arcane weapon is ineffective against this type of enemy.
+(set: $arg to 0)(display: "DealDamage")]
+
+
+:: Golden Cage [furniture] {"position":"5143,2835","size":"100,100"}
+A delicate network of gold wire elaborately turned into a birdcage.  Perched inside is a little, sapphire bird automata, tweeting and retweeting all of the rumors you've ever heard.
+
+
+:: Use Golden Cage {"position":"5264,2838","size":"100,100"}
+Double-click this passage to edit it.
+
+:: Clump of Coal [item reagent] {"position":"5798,4397","size":"100,100"}
+A nice piece of anthracite the size of a baby's fist.
+
+
+:: Use Macro Caster {"position":"5514,3868","size":"100,100"}
+You pull the lever, triggering a quick series of clicks.
+
+The machine rapidly prints out a glitchy mass of hypertext:
+
+(display: $macroCasterPlates's 1st)
+(display: "Tick")
+(display: $macroCasterPlates's 2nd)
+(display: "Tick")
+(display: $macroCasterPlates's 3rd)
+(display: "Tick")
+
+[[Home Again]]
+
+
+:: Read Cartiff's Complete Compendium of Codes {"position":"6813,2661","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Read Cartiff's Complete Compendium of Codes (Badly Burned) {"position":"6809,2777","size":"100,100"}
+Double-click this passage to edit it.
+
+:: Use Vorpal Blade {"position":"6194,4812","size":"100,100"}
+{(set: _opponentMove to $fightPattern's ($fightIndex))
+(replace:?output)[You swing the Vorpal Blade! Snicker-snack!
+(set: $arg to 3)(display: "DealDamage")
+(if: _opponentMove is "Flee")[(replace:?input)[ [[Next Encounter]] ](replace:?output)[They turn and run away at top speed.]](else-if: _opponentMove is "Block")[They try to block, but it does nothing.](else-if: _opponentMove is "Throw")[  As they dip in to grab your arm, the sword carves an extra line into them.(set: $arg to 2)(display: "DealDamage")](else-if: _opponentMove is "Strike")[  They get a strike in on you, at the cost of their own additional injury.(set: $arg to 1)(display: "DealDamage")(display: "TakeDamage")](else:)[  They make no move to avoid it and take the full brunt of your blow.(set: $arg to 2)(display: "DealDamage")]]
+(set: $fightIndex to (it + 1))
+(if: $fightIndex > $fightPattern's length)[(set: $fightIndex to 1)]
+(display: "UpdateClock")}
+
+:: Clockwork Key [item] {"position":"5843,3023","size":"100,100"}
+It's a key designed for winding and toggling gear-based contraptions.
+
+:: Indestructible Pickaxe [item] {"position":"5837,6404","size":"100,100"}
+Double-click this passage to edit it.
+
+:: Sleeping Mat [item furniture] {"position":"5405,4001","size":"100,100"}
+Barely fit for a human.  This is what you sleep on.
+Consequently, you don't usually sleep on it.
+You don't sleep much, anyway.  Bad Dreams.
+
+
+:: Use Sleeping Mat {"position":"5513,4007","size":"100,100"}
+In between removing nits and cold water dripping on your face from the apartment above, you manage to (if: (random: 0, 1) > 0)[get a bit of rest. (set: $arg to 1)(display: "Heal")](else:)[not sleep at all.](display: "Clock")
+
+(link-goto: (history:)'s last)
+
+:: Pet Raven [item pet] {"position":"5848,3238","size":"100,100"}
+This Raven is named Nevermore.
+It can read your mail for you anywhere in the world.
+
+[[Use Pet Raven]]
+
+
+:: Use Pet Raven {"position":"5978,3240","size":"100,100"}
+(display: "Read Your Mail")
+
+:: Dire Salon Calling Card [item] {"position":"4265,6564","size":"100,100"}
+It's a white rectangular card with the inscription: "Dire Salon".
+You've heard that the inscription is unique for each person that is issued such a card, which makes forgeries... complicated.
+
+:: Meteor Iron [item reagent] {"position":"5685,4505","size":"100,100"}
+This bit of iron is from a shooting star that was captured by a wizard.
+It flew across unimaginable distances to be in your hands today.
+
+
+
+:: Practical Thievery: A Young Rogue's Primer {"position":"4268,6452","size":"100,100"}
+Useful instructions on stealing things.
+
+
+:: Read Practical Thievery: A Young Rogue's Primer {"position":"4380,6454","size":"100,100"}
+It contains useful details on stealing.
+
+:: The Incredibly Secret Machine's User Manual [item book] {"position":"4405,6273","size":"100,100"}
+Codes for the Incredibly Secret Machine
+
+
+:: Patent Filing for Experimental Rift Ship [item] {"position":"4529,6270","size":"100,100"}
+Describes a design for a rift ship based on 4 different rift dwellers.
+It has a few missing details about those rift dwellers that you could fill in.
+Reward is insanely good rift travel.
+
+
+:: Mark of the Sea Dweller {"position":"3891.6666666666665,235.33333333333334","size":"100,100"}
+A full face tattoo that appears to shift as its viewed.  Depending on Longitude and Latitude, it could be interpreted as Tlingit, Maori, Riftish.
+
+:: Use Blunderbuss {"position":"6210,5037","size":"100,100"}
+{(set: _opponentMove to $fightPattern's ($fightIndex))
+(replace:?output)[You fire off a tremendous blast from your blunderbuss, sending shrapnel everywhere!
+(set: $arg to 5)(display: "DealDamage")
+(if: _opponentMove is "Flee")[(replace:?input)[ [[Next Encounter]] ](replace:?output)[They turn and run away at top speed.]](else-if: _opponentMove is "Strike")[  They manage to get a strike in on you before being knocked back. (set: $arg to 1)(display: "DealDamage")(display: "TakeDamage")](else:)[  They make no move to avoid it and take the full brunt of your blow.(set: $arg to 2)(display: "DealDamage")]]
+(set: $fightIndex to (it + 1))
+(if: $fightIndex > $fightPattern's length)[(set: $fightIndex to 1)]
+(display: "UpdateClock")
+
+(if: (random: 0, 6) is 0)[
+You've attracted the attention of the guards!
+(set: $encounterStack to
+($encounterStack's (range: 1, $encounterIndex)) + 
+(a: "Encounter: Guards") + 
+($encounterStack's (range: $encounterIndex + 1, $encounterStack's length)))
+]
+}
+
+
+:: Use Straight Razor {"position":"6207,5152","size":"100,100"}
+{(set: _opponentMove to $fightPattern's ($fightIndex))
+(replace:?output)[You swing your straight razor (either: "at your opponent's eyes", "right at their throat", "perilously close to their fingers")!
+(if: _opponentMove is "Flee")[(replace:?input)[ [[Next Encounter]] ](replace:?output)[They turn and run away at top speed.]](else-if: _opponentMove is "Block")[... but they bat your attack away.](else-if: _opponentMove is "Throw")[  As they dip in to grab your arm, you slice something vulnerable.(set: $arg to 3)(display: "DealDamage")](else-if: _opponentMove is "Strike")[  They poke at you, and you cut off their poker.(set: $arg to 2)(display: "DealDamage")(set: $arg to 1)(display: "TakeDamage")](else:)[  They make no move to avoid it and take the full brunt of your blow.(set: $arg to 4)(display: "DealDamage")]]
+(set: $fightIndex to (it + 1))
+(if: $fightIndex > $fightPattern's length)[(set: $fightIndex to 1)]
+(display: "UpdateClock")}
+
+
+:: Use Blow Dart {"position":"6208,5257","size":"100,100"}
+{(set: _opponentMove to $fightPattern's ($fightIndex))
+(replace:?output)[Swiftly, you raise the pipe to your lips an exhale a tiny blow dart at your opponent's carotid.(if: (random: 0, 3) is 0)[  Sadly, that was the last of your poisoned darts. (set: $arg to "Blow Dart")(display: "LoseItem")]
+(if: _opponentMove is "Flee")[(replace:?input)[ [[Next Encounter]] ](replace:?output)[They turn and run away at top speed.]](else-if: _opponentMove is "Block")[The dart sticks in their clothing, delivering a much less effective dose of poison.](else-if: _opponentMove is "Throw")[  They try to throw you, and the dart ends up in their hand.(set: $arg to 2)(display: "DealDamage")](else-if: _opponentMove is "Strike")[ They strike you while you're delivering the attack. (set: $arg to 1)(display: "DealDamage")(display: "TakeDamage")](else:)[  They make no move to avoid it and take the full brunt of your blow.(set: $arg to 2)(display: "DealDamage")]]
+
+They seem a bit groggy.
+
+(display: "UpdateClock")}
+
+
+:: Use Lead Sap {"position":"6217,5365","size":"100,100"}
+{(set: _opponentMove to $fightPattern's ($fightIndex))
+(replace:?output)[You strike the opponent with a lead sap.
+(if: _opponentMove is "Flee")[(replace:?input)[ [[Next Encounter]] ](replace:?output)[They turn and run away at top speed.]](else-if: _opponentMove is "Block")[.. but they bat your fist away.](else-if: _opponentMove is "Throw")[  As they dip in to grab your arm, you cosh them on the skull.(set: $arg to 3)(display: "DealDamage")](else-if: _opponentMove is "Strike")[  You trade clouts at each other, bloodying each other's foreheads.(set: $arg to 2)(display: "DealDamage")(display: "TakeDamage")](else:)[  They make no move to avoid it and take the full brunt of your blow.(set: $arg to 4)(display: "DealDamage")]]
+
+(set: $fightIndex to (random: 1, $fightPattern's length))
+
+(display: "UpdateClock")}
+
+
+:: Use Stiletto {"position":"6217,5477","size":"100,100"}
+{(set: _opponentMove to $fightPattern's ($fightIndex))
+(replace:?output)[You swing your stiletto (either: "at your opponent's eyes", "right at their throat", "perilously close to their fingers")!
+(if: _opponentMove is "Flee")[(replace:?input)[ [[Next Encounter]] ](replace:?output)[They turn and run away at top speed.]](else-if: _opponentMove is "Block")[... but they bat your attack away.](else-if: _opponentMove is "Throw")[  As they dip in to grab your arm, you slice something vulnerable.(set: $arg to 3)(display: "DealDamage")](else-if: _opponentMove is "Strike")[  They poke at you, and you cut off their poker.(set: $arg to 2)(display: "DealDamage")(set: $arg to 1)(display: "TakeDamage")](else:)[  They make no move to avoid it and take the full brunt of your blow.(set: $arg to 4)(display: "DealDamage")]]
+(set: $fightIndex to (it + 1))
+(if: $fightIndex > $fightPattern's length)[(set: $fightIndex to 1)]
+(display: "UpdateClock")}
+
+
+:: Use Derringer {"position":"6215,5585","size":"100,100"}
+{(set: _opponentMove to $fightPattern's ($fightIndex))
+(replace:?output)[You blast away with your little derringer!
+(set: $arg to 3)(display: "DealDamage")
+(if: _opponentMove is "Flee")[(replace:?input)[ [[Next Encounter]] ](replace:?output)[They turn and run away at top speed.]](else-if: _opponentMove is "Strike")[  They manage to get a strike in on you before being knocked back. (set: $arg to 1)(display: "DealDamage")(display: "TakeDamage")](else:)[  They make no move to avoid it and take the full brunt of your blow.(set: $arg to 2)(display: "DealDamage")]]
+(set: $fightIndex to (it + 1))
+(if: $fightIndex > $fightPattern's length)[(set: $fightIndex to 1)]
+(display: "UpdateClock")
+
+(if: (random: 0, 6) is 0)[
+You've attracted the attention of the guards!
+(set: $encounterStack to
+($encounterStack's (range: 1, $encounterIndex)) + 
+(a: "Encounter: Guards") + 
+($encounterStack's (range: $encounterIndex + 1, $encounterStack's length)))
+]
+}
+
+
+:: Use Pet Scorpion {"position":"6225,5709","size":"100,100"}
+{(set: _opponentMove to $fightPattern's ($fightIndex))
+(replace:?output)[You gently toss your pet scorpion at your opponent's shirt collar.
+(if: _opponentMove is "Flee")[(replace:?input)[ [[Next Encounter]] ](replace:?output)[They turn and run away at top speed.]](else-if: _opponentMove is "Block")[The scorpion gets lost in their clothing, delivering a much less effective dose of poison.](else-if: _opponentMove is "Throw")[  They try to throw you, and the scorpion's stinger ends up in their hand.(set: $arg to 2)(display: "DealDamage")](else-if: _opponentMove is "Strike")[ They strike you while you're delivering the attack. (set: $arg to 1)(display: "DealDamage")(display: "TakeDamage")](else:)[  They make no move to avoid it and take the full brunt of your blow.(set: $arg to 2)(display: "DealDamage")]]
+
+They seem a bit groggy.  (if: (random: 0, 3) is 0)[  Sadly, the scorpion buddy was squished. (set: $arg to "Pet Scorpion")(display: "LoseItem")]
+
+(display: "UpdateClock")}
+
+
+:: Thorn Ward [item] {"position":"5161,3057","size":"100,100"}
+This causes the owner's skin to produce thorn-like spikes when attacked.
+
+:: Maintenance Key [item] {"position":"6938,3750","size":"100,100"}
+This key can manipulate the infrastructure of the actual City itself.
+
+
+
+:: Goofer Dust [item] {"position":"5276,1979","size":"100,100"}
+Protection against daemons and spirits.
+
+:: Mark of the Goblins Lvl 1 {"position":"6868,6552","size":"100,100"}
+The distinguishing mark of a group of goblins.
+
+
+:: Marked Cards [item] {"position":"6816,3635","size":"100,100"}
+A standard deck of playing cards: 1 through 13 in all 5 suits, the Minor Arcana, the Major Arcana, the two Trumps, the secret Anti-Trump, and the Dragon.
+The backs of each card are marked, allowing you to know what your opponent's hand is without requiring high perception.
+
+
+:: Use Shadow Lantern {"position":"6477,4366","size":"100,100"}
+(set: $arg to "Shadow Lantern")(display: "LoseItem")
+// damage to light, fire creatures //
+(if: (a: "light", "fire") contains $enemyType)[(set: $arg to 5)(display: "DealDamage")]
+(else:)[This weapon is ineffective against this type of enemy.]
+
+
+:: Use Mystery Draught {"position":"5971,2693","size":"100,100"}
+(display: (either: "Use Healing Draught", "Use Cunning Draught", "Use Stimulating Draught"))
+(set: $arg to "Mystery Draught")(display: "LoseItem")
+
+:: Dictionary of Unwritten Words [book item] {"position":"6566,2122","size":"100,100"}
+The Dictionary of Unwritten Words
+Just like gently pressing on your closed eyelids during the day causes strange patterns and images to appear in your vision, so too does this book probe the part of your brain that grasps concepts and forms words.
+
+
+:: Comfortable Bed [item furniture] {"position":"5393,4119","size":"100,100"}
+
+
+:: Use Comfortable Bed {"position":"5520,4125","size":"100,100"}
+(set: _roll to (random: 1, 3))
+(if: _roll is 1)[(set: $perception to $maxPerception)Perception MAX]
+(else-if: _roll is 2)[(set: $cunning to $maxCunning)Cunning MAX]
+(else-if: _roll is 3)[(set: $health to $maxHealth)Health MAX]
+
+
+(link-goto: (history:)'s last)
+
+:: Sea Scum [item reagent] {"position":"5804.333333333333,4504.166666666667","size":"100,100"}
+This algae is secretly rich in carageenan, a substance that can give your potions a succulent mouth feel.
+
+
+:: Rusted Key [item] {"position":"7051,3747.5000000000005","size":"100,100"}
+This might be the key you need!  Or, it might not.  It's hard to tell with all of the rust.
+
+
+:: Plague Marks [item] {"position":"6496,3200","size":"100,100"}
+They appear to be buboes, but most buboes are not this...  animated.
+
+:: Silent Ansible [item] {"position":"5845,3364","size":"100,100"}
+This curious device looks like a gyroscope covered in brass and crystals.  It never stops spinning.
+(if: $perception > 5)[The device is a spinning brass pyramid atop four tilted pyramids, each of a different material (ruby, sapphire, granite, sunstone) atop an obsidian pyramid.  In the center is a roiling chaos made of incredibly minute gears.]
+
+(if: $perception > 10)[Its purpose is to orient the possessor absolutely in space, allowing them to travel anywhere in the world if they know how to use it.
+
+You also notice that inside the center is a much smaller version of itself.  When you look at the center of the smaller version, you get an unfathomable sense of vertigo.]
+
+
+:: Neighborhood Door to Lower Depths [furniture] {"position":"5382,3518","size":"100,100"}
+Propped up on the wall, it looks more like a door and less like a coffin lid.  Quite slightly less.
+
+
+:: Use Neighborhood Door to Lower Depths {"position":"5496,3526","size":"100,100"}
+Opening the door, you smell the disconcertingly pleasant smell of mummification.  Despite the Undead nature of the majority of the citizens of the Lower Depths, quite a clamor of noise comes through the portal.
+
+[[Lower Depths]]
+
+
+:: Neighborhood Door to West Fires [furniture] {"position":"5385,3642","size":"100,100"}
+Your apartment came furnished with a door.  Otherwise you'd be unable to leave it.  As it happens, the door let out into the West Fires neighborhood.
+Awful place, full of criminals.
+
+
+:: Use Neighborhood Door to West Fires {"position":"5490,3644","size":"100,100"}
+(goto: "West Fires")
+
+
+:: Magisterium Head Office Calling Card [item] {"position":"4293,6278","size":"100,100"}
+If you are in possession of this, you could teleport to the Magisterium's Head Office whenever you liked.

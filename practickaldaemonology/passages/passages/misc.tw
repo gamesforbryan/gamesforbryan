@@ -1,0 +1,759 @@
+
+
+:: Encounter With An Archdaemon {"position":"8095,411","size":"100,100"}
+The strange geometric shape shifts and reorients itself in front of you in some infernal calculus.  It pulses as word forms force themselves into your speech center.
+
+(if: (history:) contains "Sell a Daemon")[<i>I see you think nothing of selling our many children as slaves of your kind</i>, the voice bellows in your head.  It feels like something warm is leaking from your ears. (set: $maxCunning to it - 1)(set: $cunning to $maxCunning)(set: $maxPerception to it - 1)(set: $perception to $maxPerception)](else:)[<i>Your hands are free from sin</i>, the voice says in your head.  After a brief pause, it continues, <i>Inasmuch as I am not concerned with what you do to your own kind.</i>]
+<i>Regardless, I shall not harm you this day.</i>
+
+
+:: Encounter With An Archdaemon 2 {"position":"8097,522","size":"100,100"}
+The strange geometric shape shifts and reorients itself in front of you in some infernal calculus.  It pulses as word forms force themselves into your speech center.
+
+(if: (history:) contains "Sell a Daemon")[<i>I see you think nothing of selling our many children as slaves of your kind</i>, the voice bellows in your head.  It feels like something warm is leaking from your ears. (set: $maxCunning to it - 1)(set: $cunning to $maxCunning)(set: $maxPerception to it - 1)(set: $perception to $maxPerception)](else:)[<i>Your hands are free from sin</i>, the voice says in your head.  After a brief pause, it continues, <i>Inasmuch as I am not concerned with what you do to your own kind.</i>]
+<i>Regardless, I shall not harm you this day.</i>
+
+
+:: Magistratis Magisterium {"position":"8110,802","size":"100,100"}
+You are before the magistrate of the council of elders that presides over the magicians, wizards, Undead, and arcane in the whole of the empire.
+(if: (history:) contains "Say Hallo to the Semi-Legal Wards Broker")["You purchase black market Damage Wards instead of through imperially-approved Reliquariums?"]
+
+
+:: Rattlecart the Tinker [northharbor location westfires easternfortress southquarry lowerdepths tick] {"position":"4841,2224","size":"100,100"}
+Random, semilegal items sold by a mobile heap of trinkets, knickknacks, wagon wheels, and presumably an actual person as wiry, grey arms do reach out with items for sale and to receive payment, although not always the stereotypical number we associate with humanoids.
+
+(if: visits % 2 is 1)[
+{(set: $marketplace to (shuffled: "Damage Ward", "Noble Cowl", "Mystery Draught", "Lodestone", "Pocket Lint")'s (a: 1, 2))}
+(for: each _item, ...$marketplace)[(unless: $inventory contains _item)[
+(set: _cost to 10 + (random: 0, 6) * 5)(display: "QuickBuy")
+]]
+(unless: $marketplace's length >= 1)[Oh, I've got something around here you might like.  Hold on, hold on!
+[[Rattlecart the Tinker]] 
+]](else:)[They've nothing of interest for you today.]
+
+(display: "NavOptions")
+(display: "Tick")
+
+
+:: EncounterRewind1or2 {"position":"3658,3848","size":"100,100"}
+(set: $encounterIndex to it - (random: 1, 2))
+(goto: "Encounter")
+
+
+:: Encounter Select Random Daemon Encounter {"position":"4117,3475","size":"100,100"}
+(goto: (either: "Encounter: Solar Spark", "Encounter: Fire Ghost", "Encounter: Living Shadow", "Encounter: Rattle Bones"))
+
+
+:: Encounter: Wizard Duel {"position":"3779,3969","size":"100,100"}
+(set: $enemyHealth to 5)(set: $enemyType to "Wizard")(set: $enemyElementType to (either: "Shadow", "Fire", "Bone", "Holy", "Stone", "Water", "Air", "Poison", "Curse", "Rift"))
+Your opponent is another wizard for hire, a $enemyElementType mage.  You will fight until one of you succumbs.  The loser's fate is then up to the winner's discretion.
+
+
+[[Wizard Duel: Grant Mercy]]
+[[Wizard Duel: Finish Them]]
+[[Wizard Duel: Beg for Mercy]]
+[[Wizard Duel: Succumb]]
+
+
+:: The Wandering Market [location northharbor westfires easternfortress southquarry lowerdepths uppercastlerock] {"position":"6668,4225","size":"100,100"}
+(display: "Tick")
+This street-long phenomena crawls through the City like a wyrm.  The shops available at The Wandering Market appear spontaneously in the place of the original buildings. The shopowners are not locals, and the shops sell items no one else sells.  As a new segment of The Wandering Market appears, a previous segment disappers, leaving behind the old shop and the old owner who has no recollection of the minutes spent "away".
+
+You must make your choice quickly:
+
+(for: each _item, ...(subarray: (shuffled: "Esso's Fine Goods",
+"Inglam & Co, LLC etc.",
+"Forbidden Texts",
+"Nven's Primordial Essence Outlet",
+"Hilorco's Potionarium"), 1, 3))[
+(link-goto: _item)]
+
+(display: "NavOptions")
+
+
+
+:: Trigger Enchantment {"position":"4260,4485","size":"100,100"}
+You stumble across the tight web of an enchantment!  It whips up around you with a thousand thousand fine threads, threatening to slice you into as many ribbons.
+
+(set: $arg to 3)(set: $deathReason to "You stumble across the tight web of an enchantment!  It whips up around you with a thousand thousand fine threads, threatening to slice you into as many ribbons.
+
+Your corrupt, human flesh is lashed by razor-wire fine strands of arcane energy that cannot be stopped by your mortal armor.
+
+It's all too much.  You slump to the ground in a ragged, red mass.")(display: "TakeDamage")
+
+You survive the blast with blood to spare.  Next time, you might lose an eye, my good waif.
+
+[[Next Encounter]]
+
+
+
+:: Encounter: Dropped Purse {"position":"3658,3740","size":"100,100"}
+A gentlecreature has dropped their coin purse on the ground.
+|input>[(link-reveal: "Take the Coin Purse")[(replace:?input)["Take the Coin Purse"](replace:?output)[(if: $cunning + $perception > (random: 2, 7))[You deftly pocket the purse with none the wiser. (set: $gold to it + 10 * (random: 1, 10))](else:)[You are caught trying to pocket the purse and must scarper! (display: "An Embarassing Display")]
+
+[[Next Encounter]]]]
+(link-reveal: "Return the Coin Purse")[(replace:?input)["Return the Coin Purse"](replace:?output)[You pick up the purse (if: $reputation + $perception > (random: 0, 6))[and hand it to a grateful minor noble who rewards you with accolades and lucre. (set: $gold to it + 10)(set: $arg to 1)(display: "UpdateReputation")](else:)[but they mistakenly believe that you are trying to steal the purse and chase you through the streets.  (display: "An Embarassing Display")]
+
+[[Next Encounter]]]]
+(link-reveal: "Leave the Coin Purse")[(replace:?input)["Leave the Coin Purse"](replace:?output)[You studiously avoid making eye contact with anyone as you walk away from the purse.
+
+[[Next Encounter]]]]]
+|output>[]
+
+:: Esso's Fine Goods {"position":"6788,4338","size":"100,100"}
+A mekkannin woman composed of gold, brass, and ruby sells mechanisms of her own design.  (if: $inventory contains "Ward Press")[You can personally attest to her skill, but you already have everything she has of interest to your particular domain.](else:)[She has devices of incredible complexity, but only one can you comprehend its purpose.]
+
+(set: _item to "Ward Press")(set: _cost to 200)(display: "QuickBuy")
+
+(display: "NavOptions")
+
+
+:: Inglam & Co, LLC etc. {"position":"6789,4453","size":"100,100"}
+An enchantment of such complexity that it became self-aware, it is naturally a Darwinian Capitalist.  That means "It sells things".  (if: $inventory contains "Silent Ansible")[It decided to sell you the Silent Ansible as the most perfect thing you could ever own.  No returns; no refunds.](else:)[It uses a highly advanced algorithm to decide which item it will sell to which person.  It never changes its mind about the correctness of its decision.  That means "No refunds."]
+
+(set: _item to "Silent Ansible")(set: _cost to 1337)(display: "QuickBuy")
+
+(display: "NavOptions")
+
+
+:: Forbidden Texts {"position":"6783,4221","size":"100,100"}
+A strange, little creature burrows its way out of an ancient tome and offers you his wares.  (if: $inventory contains "Trap Book")[It has nothing of value to offer you.](else:)[Only one book, off in the corner, is unravaged by this libriovore.]
+
+(set: _item to "Trap Book")(set: _cost to 150)(display: "QuickBuy")
+
+(display: "NavOptions")
+
+
+:: Nven's Primordial Essence Outlet [tick] {"position":"6793,4569","size":"100,100"}
+Nven offers you a bowl full of raw primordial essence.  It is a repellant but effective way to rejuvenate your body after enduring the rigors of your trade (e.g. being stabbed, burned, electrocuted, cursed, etc.).
+(set: _cost to 15)
+(if: $health > $maxHealth + 2)[You're completely stuffed and don't think you could have another bite of...  whatever that is.](else:)[
+(link-reveal: "Buy a Bowl")[
+(if: $gold < _cost)[Nven hands you a bowl for free.  Clearly, you need the money more than he does.
+You quaff the essense and immediately feel it stitch your meat and bones back together.
+(set: $arg to 1)(display: "UpdateHealth")](else:)[You quaff the essense and immediately feel it stitch your meat and bones back together.
+(set: $arg to 1)(display: "UpdateHealth")
+(set: $arg to -(_cost))(display: "UpdateGold")]
+]]
+
+(display: "NavOptions")
+
+
+:: Hilorco's Potionarium {"position":"6896,4222","size":"100,100"}
+A purple djinn sells various potions, but they aren't very organized.  Mostly, you buy directly from the bins of random bottles and pots.
+(if: visits % 2 is 1)[
+(set: _threshold to 8)
+(for: each _item, ...(shuffled: "Mystery Draught",
+"Cunning Draught",
+"Stimulating Draught",
+"Healing Draught",
+"Poison Flask",
+"Sleeping Phial",
+"Love Potion"))[(if: (random: 0, 10) < _threshold)[
+(set: _cost to 10 + (random: 0,5) * 5)(display: "QuickBuy")](set: _threshold to it / 2)]](else:)[Now that you've made your purchase, they hastily wave you away.]
+
+(display: "NavOptions")
+
+
+:: Encounter: Assassin [event easternfortress uppercastlerock westfires lowerdepths] {"position":"3774,4090","size":"100,100"}
+{(set: $enemyHealth to 3)(set: $enemyType to "Assassin")(set: $enemyElementType to (either: "Mortal", "Shadow", "Poison"))
+(set: $fightPattern to (a:"Strike","Strike",(either: "Strike", "Throw"),"Rest"))
+(set: $fightIndex to 1)
+(set: $deathReason to "You were garrotted in a back alley by a professional killer.")
+}You see a (either: "cloaked", "shadowy", "zealous") (either: "strangler", "assassin", "strongarm") with their weapon levelled at you.
+They demand your life.
+
+|output>[]
+
+|input>[(display: "Fight")]
+
+(event: when $enemyHealth <= 0)[ (replace:?input)[ [[Next Encounter]] ]]
+
+:: Suspiciously Cheap Meat Pies [location westfires northharbor southquarry tick] {"position":"4127,2428","size":"100,100"}
+Depending on how fresh the pies are, and how recently the protein was slain, largely determines whether the pie will be hot and wholesome or bordering on lethal.
+
+(either: "On the cutting board is a mass of", "In the gutter next to the pop-up shop is", "The garbage bin is stuffed to the brim with") (either: "blood", "bones", "tripe") and (either: "feathers", "blubber", "tentacles").
+
+"10 coins a pie, love," sez the vendor.
+(set: _cost to 10)
+(if: _cost >= 10)[
+(link-reveal: "Buy A Pie")[
+(set: $arg to -(_cost))(display: "UpdateGold")
+(if: $ticks % 32 is 0)[
+You don't feel very well at all. (set: $deathReason to "You have reason to believe that you were devoured by worms from the inside out.")
+(set: $arg to 2)(display: "TakeDamage")
+](else:)[
+Hot gravy and mysterious lumps make this pie an especial treat.
+(if: $health <= $maxHealth)[(set: $arg to 1)(display: "GainHealth")](else:)[Oh, but you're far too full to indulge.]
+]]](else:)["Sorry, love, no gold, no pies."]
+(display: "UpdateClock")
+(display: "NavOptions")
+
+
+:: Buy a Cup of Coffee [tick] {"position":"5203,5246","size":"100,100"}
+You sip gingerly at the coffee while eavesdropping on fevered courtesans.
+
+(display: (either: "Baseless Rumors", "Interesting Rumors"))
+(if: $perception <= $maxPerception)[(set: $arg to 1)]
+(else:)[(set: $arg to (random: 0, 1))](display: "UpdatePerception")
+(set: $arg to (dm: "delay", 13, "event", "Caffeine Wears Off"))(display: "Schedule Event")
+
+(if: $perception < 9)[
+
+[[Buy a Cup of Coffee]] 
+
+(display: "NavOptions")]
+(else:)
+[
+You pass out from the toxic amount of caffeine in your system.
+
+(set: $perception to 1)
+[[Home Again]] 
+]
+
+
+:: Some Careers {"position":"3393,3536","size":"100,100"}
+Death Seeker
+Lizard Trainer
+Bridge Troll
+Trader of Fine Spices
+Minion
+Test Dummy
+Butter Churner
+Grave Robber
+Blood Salesman
+Horse-mounted Police
+Professional Gambler
+Evil Clone
+Food Photographer
+Animal Handler
+Art Theft Coordinator
+Unpaid Intern
+Paranormal Detective
+Wig Model
+Battle Orc
+Professional Mourner
+Competitive Eater
+Lute Player
+Insurance Agent
+Forest Witch
+Ghost Therapist
+Crafter of Fine Talismans
+Soul Reaper
+Drug Dealer
+Singer
+Bird Salesman
+Cult Leader
+Sad Clown
+Animal Breeder
+Pickle Artisan
+Human Scarecrow
+Capitalist Viking
+Voodoo Priestess
+Sentient Animal
+Sentient Animal Groomer
+Fortune Cookie Writer
+Werewolf
+Snail Expert
+Time Wizard
+Failed Artist
+Hunger Artist
+Construction Worker
+
+
+
+:: Use Aleph [tick] {"position":"4164,5721","size":"100,100"}
+(link-goto: "Random Point in My History", (shuffled: ...(history:))'s 1st)
+
+(link-goto: "Random Point Anywhere In Time or Space", (shuffled: ...(altered: _i via _i's name, ...(find: _location where (passage: _location's name)'s tags contains "location", ...(passages:))))'s 1st)
+
+(if: $inventory contains "Silent Ansible")[
+(set: _possibleLocations to (find: _location where (passage: _location's name)'s tags contains "location", ...(passages:)))
+(for: each _item, ...((shuffled: 
+...(altered: _i via _i's name, ...(_possibleLocations's (range: 1, (min: _possibleLocations's length, $cunning)))))))[
+(link-goto: _item)]
+]
+
+(display: "NavOptions")
+
+
+:: Hansom Cab [location westfires northharbor easternfortress southquarry tick] {"position":"4728,2437","size":"100,100"}
+(if: $gold > 25)[
+For the price of 25 gold, you could take a trip to any of the other neighborhoods.
+             [[North Harbor]] 
+[[West Fires]]               [[Eastern Fortress]] 
+            [[South Quarry]] 
+](else:)[
+You take a step back as a hansom cab speeds by from one of the other neighborhoods.
+]
+
+(display: "NavOptions")
+
+
+:: Wizard Shuffle {"position":"3888,3969","size":"100,100"}
+{(set: _options to (shuffled: ...((a: "Block", "Throw", "Strike") + (altered: _i via "Release " + _i, ...$daemons)))'s (range: 1, $cunning))
+(for: each _i, ..._options)[(set: _i2 to _i)<br/><br/>
+(link-reveal: _i)[(replace:?output)[(display: _i2)](replace:?input)[
+(if: $enemyHealth <= 0)[(replace:?input)[You've defeated your enemy!(set: $deathReason to "")]](else:)[Your enemy still lives.
+{(if: $fightPattern's ($fightIndex) is "Summon")[
+(set: $encounterIndex to it - 1)(if: $encounterIndex <= 0)[(set: $encounterIndex to 1)(goto: "Encounter Select Random Daemon Encounter")
+]]}
+(display: "Wizard Shuffle")]]]
+]
+}
+
+
+:: Rotator Puzzle {"position":"9470,3159","size":"100,100"}
+(set: $dialLimit to (random: 1, 10))
+(set: $dialValue to (shuffled: ...(range: 0, $dialLimit)))
+|input>[]
+(replace:?input)[(display: "Rotator Input")]
+
+
+:: Rotator Input {"position":"9590,3194","size":"100,100"}
+(for: each _i, ...(range: 1, $dialValue's length))[(set: _temp to _i)(link-reveal: (str: $dialValue's (_temp)))[
+
+(set: _nextIndex to (_temp - 1 + $dialValue's (_temp)) % $dialValue's length + 1)
+(set: _swap to ($dialValue's (_nextIndex)))
+(set: $dialValue's (_nextIndex) to ($dialValue's (_temp)))
+(set: $dialValue's (_temp) to _swap)
+
+(replace:?input)[(display: "Rotator Input")(display: "Rotator Puzzle Unlocked?")]] |- ]
+
+
+:: Rotator Puzzle Unlocked? {"position":"9710,3195","size":"100,100"}
+(if: (range: 0, $dialLimit) matches $dialValue)[
+You have unlocked the dial!
+]
+
+
+:: Card Game {"position":"4824,7410","size":"100,100"}
+{(set: $deck to (shuffled: "A 1", "B 1", "A 2", "B 2", "A 3","B 3","A 4","B 4","A 5","B 5","A 6","B 6","A 7","B 7","A 8","B 8","A 9","B 9","A 10","B 10","A 11","B 11","A 12","B 12","A 13","B 13"))
+(set: $deckIndex to 1)
+(set: $playerHand to (a:))
+(set: $opponentHand to (a:))
+(for: each _i, ...(range: 1,5))[
+(set: $playerHand to it + (a: $deck's ($deckIndex)))
+(set: $deckIndex to it + 1)
+(set: $opponentHand to it + (a: $deck's ($deckIndex)))
+(set: $deckIndex to it + 1)]
+(set: $potTotal to 0)
+(set: $playerScore to 4)
+(set: $opponentScore to 4)
+}
+|input>[
+(display: "Display Hand")
+]
+
+|output>[You -> $playerScore -+- Total -> $potTotal -+- Them -> $opponentScore]
+
+
+:: Play Card {"position":"4942,7406","size":"100,100"}
+{(link-reveal: (str: _item))[(replace:?output)[You play the _item,
+(set: $playerHand to it - (a: _item))
+(set: $potTotal to (it + (num: (words: _item)'s 2nd)) % 31)
+making the pot total $potTotal.
+(if: $potTotal is 0)[(set: $opponentScore to it - 1)You score a hit on your opponent with 31. Total reset to 0.]
+(if: $potTotal is 15)[(set: $opponentScore to it - 1)You score a hit on your opponent with 15.]
+(if: $opponentScore <= 0)[You have won by knocking your opponent down to 0 points.]
+(set: _opponentChoice to (either: ...$opponentHand))
+Opponent plays _opponentChoice,
+(set: $opponentHand to it - (a: _opponentChoice))
+(set: $potTotal to (it + (num: (words: _opponentChoice)'s 2nd)) % 31)
+making the pot total $potTotal.
+(if: $potTotal is 0)[(set: $playerScore to it - 1)They score a hit on you with 31.  Total reset to 0.]
+(if: $potTotal is 15)[(set: $playerScore to it - 1)They score a hit on you with 15]
+(if: $deckIndex < $deck's length)[
+(set: $playerHand to it + (a: $deck's ($deckIndex)))
+(set: $deckIndex to it + 1)
+(set: $opponentHand to it + (a: $deck's ($deckIndex)))
+(set: $deckIndex to it + 1)
+](else:)[
+The deck is empty.
+]
+<br/>You -> $playerScore -+- Total -> $potTotal -+- Them -> $opponentScore
+You can see your opponent's cards through their eyes with a touch of clairvoyance -> $opponentHand
+
+(replace:?input)[(display: "Display Hand")]
+]]
+}
+
+
+:: Display Hand {"position":"5064,7415","size":"100,100"}
+(for: each _item, ...$playerHand)[(display: "Play Card")
+]
+
+
+:: Card Game 2 {"position":"4797,7520","size":"100,100"}
+{(set: $deck to (shuffled: "A 1", "B 1", "A 2", "B 2", "A 3","B 3","A 4","B 4","A 5","B 5","A 6","B 6","A 7","B 7","A 8","B 8","A 9","B 9","A 10","B 10","A 11","B 11","A 12","B 12","A 13","B 13", "A 1", "B 1", "A 2", "B 2", "A 3","B 3","A 4","B 4","A 5","B 5","A 6","B 6","A 7","B 7","A 8","B 8","A 9","B 9","A 10","B 10","A 11","B 11","A 12","B 12","A 13","B 13"))
+(set: $deckIndex to 1)
+(set: $playerHand to (a:))
+(set: $opponentHand to (a:))
+(for: each _i, ...(range: 1,5))[
+(set: $playerHand to it + (a: $deck's ($deckIndex)))
+(set: $deckIndex to it + 1)
+(set: $opponentHand to it + (a: $deck's ($deckIndex)))
+(set: $deckIndex to it + 1)]
+(set: $potTotal to (dm: "A", 0, "B", 0))
+(set: $playerScore to 4)
+(set: $opponentScore to 4)
+}
+|input>[
+(display: "Display Hand2")
+]
+
+|output>[You -> $playerScore -+- Total A -> 0 -+- Total B -> 0 -+- Them -> $opponentScore]
+
+
+:: Display Hand2 {"position":"5059,7525","size":"100,100"}
+(for: each _item, ...$playerHand)[(display: "Play Card2")
+]
+
+
+:: Play Card2 {"position":"4935,7521","size":"100,100"}
+{(link-reveal: (str: _item))[(replace:?output)[You play the _item,
+(set: $playerHand to it - (a: _item))
+(set: _potKey to (words: _item)'s 1st)
+(set: $potTotal's (_potKey) to (it + (num: (words: _item)'s 2nd)) % 31)
+making the pot total _potKey (print: $potTotal's (_potKey)).
+(if: $potTotal's (_potKey) is 0)[(set: $opponentScore to it - 1)You score a hit on your opponent with 31. Total reset to 0.]
+(if: $potTotal's (_potKey) is 15)[(set: $opponentScore to it - 1)You score a hit on your opponent with 15.]
+(if: $opponentScore <= 0)[You have won by knocking your opponent down to 0 points.]
+(set: _opponentChoice to (either: ...$opponentHand))
+Opponent plays _opponentChoice,
+
+(set: _potKey to (words: _opponentChoice)'s 1st)
+(set: $opponentHand to it - (a: _opponentChoice))
+(set: $potTotal's (_potKey) to (it + (num: (words: _opponentChoice)'s 2nd)) % 31)
+making the pot total _potKey (print: $potTotal's (_potKey)).
+(if: $potTotal's (_potKey) is 0)[(set: $playerScore to it - 1)They score a hit on you with 31.  Total reset to 0.]
+(if: $potTotal's (_potKey) is 15)[(set: $playerScore to it - 1)They score a hit on you with 15]
+(if: $deckIndex < $deck's length)[
+(set: $playerHand to it + (a: $deck's ($deckIndex)))
+(set: $deckIndex to it + 1)
+(set: $opponentHand to it + (a: $deck's ($deckIndex)))
+(set: $deckIndex to it + 1)
+](else:)[
+The deck is empty.
+]
+<br/>You -> $playerScore -+- Total A -> (print: $potTotal's A) -+- Total B -> (print: $potTotal's B) -+- Them -> $opponentScore
+You can see your opponent's cards through their eyes with a touch of clairvoyance -> $opponentHand
+
+(replace:?input)[(display: "Display Hand2")]
+]]
+}
+
+
+:: Dice Game #1 {"position":"5273,722","size":"100,100"}
+Roll your die.  They roll theirs.
+Highest roll wins.
+If you're carrying a Lodestone and Loaded Dice, you will add 1 to the roll.
+{
+(set: $ante to 3)(set: $opponentGold to 100)
+(set: $pot to 0)}
+|input>[(display: "Roll Dice #1")]
+
+Gold: (live:)[$gold]  Their Gold: (live:)[$opponentGold]
+Ante: (live:)[$ante] Pot: (live:)[$pot]
+Yours ->  (live:)[$yourRoll]  -+-  (live:)[$theirRoll]  <- Theirs
+
+|output>[  ]
+
+
+:: Roll Dice #1 {"position":"5393,722","size":"100,100"}
+{(link-reveal: "Roll the Bones!")[(replace:?output)[
+(if: $gold >= $ante)[(set: $pot to it + $ante * 2)(set: $gold to it - $ante)(set: $opponentGold to it - $ante)]
+(set: $yourRoll to (random: 1, 6))
+(if: $inventory contains all of (ds: "Lodestone", "Loaded Dice"))[(set: $yourRoll to it + 1)]
+(set: $theirRoll to (random: 1, 6))
+(if: $yourRoll > $theirRoll)[
+  (if: $yourRoll is 7)[You've been caught for a cheat!  <b>Command - 1</b>(set: $riftCommand to it - 1)]
+  (else:)[You win! (set: $arg to $pot)(display: "UpdateGold")](set: $pot to 0)]
+(else-if: $yourRoll < $theirRoll)[They've won the roll off! <b>Opponent Gold + $pot</b>(set: $opponentGold to it + $pot)(set: $pot to 0)]
+(else:)[You've both tied!  If you have the gold, you can roll off for the combined pot.]
+(set: $ante to it * 2)
+(if: $opponentGold <= 0 or $opponentGold < $ante)[<br/>Your opponent pushes themselves away from the table with an exhausted sigh.
+(if: $pot > 0)[(set: $arg to $pot)(display: "UpdateGold")]]
+(else-if: $gold <= 0 or $gold < $ante)[<br/>You reach for your purse, but it is empty.  You retire for the time being.]
+(else:)[
+(replace:?input)[(display: "Roll Dice #1")]]
+]]
+(display: "UpdateClock")}
+
+
+
+:: Encounter: The Lovers [encounter] {"position":"418,3390","size":"100,100"}
+(set: _idealMatch to (either: true, false))
+(if: (random: 0, $perception) > 0)[
+They are a (if: _idealMatch)[fine couple who would be happy together.](else:)[terrible fit and would be at each others throats for decades if they were to be married.]
+]
+(else:)[
+They are a (if: not _idealMatch)[fine couple who would be happy together.](else:)[terrible fit and would be at each others throats for decades if they were to be married.]
+]
+
+(if: $inventory contains "Love Potion")[
+??? \todo: you can only use the Love Potion to get them to break up?
+]
+
+
+
+:: Some Languages {"position":"3379,3664","size":"100,100"}
+Sir Thomas More's Utopian Alphabet
+
+
+:: Encounter: Deranged Mob [event] {"position":"3655,4547","size":"100,100"}
+
+
+
+:: Wizard Duel: Grant Mercy {"position":"4137,3771","size":"100,100"}
+You grant them mercy.  People applaud you.  
+(set: $arg to (random: 0, 1, 1, 2))(display: "UpdateReputation")
+
+[[Next Encounter]]
+
+
+:: Wizard Duel: Finish Them {"position":"4005,3766","size":"100,100"}
+You finish them off with (either: "professional", "sadistic", "maniacal", "uncomfortable") (either: "ease", "glee", "fervor").
+
+
+[[Next Encounter]]
+
+
+:: Wizard Duel: Beg for Mercy {"position":"4002,3886","size":"100,100"}
+They have you at their mercy and could kill you for the slightest provocation.
+
+You beg for mercy.
+(display: "An Embarassing Display")
+
+They allow you to live with your life and your humiliation.
+
+[[Next Encounter]]
+
+
+:: Wizard Duel: Succumb {"position":"4140,3885","size":"100,100"}
+(set: $deathReason to "You slump to the greedy earth for it to drink your heart's blood.  Your opponent wrenched the very life out of you.")
+(goto: "Death")
+
+
+:: Encounter: Corrupt Guard [event] {"position":"3556,4064","size":"100,100"}
+The guard displays the universal symbol of an upturned palm.
+How much lucre are you going to place in that palm.
+(cycling-link: bind _factorA, ...(altered: _i via (string: _i), ...(range: 0, 10))) x (cycling-link: bind _factorB, "1", "5", "10", "100")
+
+(link-reveal: "Bribe Attempt")[
+(set: _desiredBribe to $danger * 10)
+(set: _offeredBribe to (num: _factorA ) * (num: _factorB))
+(if: _factorA is "0")[
+(if: (random: 1, 100) is 1)[They smile and let you through.
+[[Next Encounter]] 
+](else:)[They are furious at your lack of understanding.  But you haven't actually committed a crime, so they can't arrest you.
+
+[[Away With You!->Cancel Contract]] 
+]]
+(else-if: _offeredBribe >= _desiredBribe * 10)
+[
+The guard takes your money, lets you through, and then drops a cage trap on you.
+
+[[Kafka Gaol]] 
+](else-if: _offeredBribe < _desiredBribe / 5)
+[
+The guard is furious at the shameful amount you've offered and calls for backup.
+
+[[Encounter: Guards]]
+](else:)[
+The guard is satisfied with the amount of lucre you've given them.
+
+[[Next Encounter]] 
+]]
+
+
+
+:: Encounter Calamity {"position":"1579,6086","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Take a postcard {"position":"1097,6098","size":"100,100"}
+You take the postcard wedged into the door and leave.
+(set $inventory to it + "Suspicious Postcard")
+[[Next Encounter]]
+
+
+
+:: Encounter: Guardian Beast (Mechanical) {"position":"3908,4324","size":"100,100"}
+{(set: $enemyType to "Guardian Beast (Mechanical)")
+(set: $deathReason to "You are ground to shreds of meat by the cruel beasts uncaring gears.")
+(set: $enemyHealth to 5)
+(set: $enemyElementType to "mechanical")
+(set: $enemyBribeType to "None")
+(set: $options to (a:))
+(if: $rumors contains "Maintenance Key (Works on Everything)" and $inventory contains "Maintenance Key")[(set: $options to it + (a: "Deactivate Beast"))
+(display: "Encounter Guardian")
+
+
+:: Encounter Guardian {"position":"4021,4319","size":"100,100"}
+|output>[]
+|input>[(display: "Guardian Shuffle")]
+
+(event: when $enemyHealth <= 0)[ (replace:?input)[ [[Next Encounter]] ]]
+
+
+:: Guardian Shuffle {"position":"4142,4329","size":"100,100"}
+(set: _weapons to (find: _item where (passage: _item)'s tags contains any of (a: "magic-weapon", "weapon"), ...$inventory))
+(set: $options to $options + (altered: _weapon via "Use " + _weapon, ..._weapons))
+(set: $options to $options + (altered: _item via "Release " + _item, ...$daemons))
+(if: $options's length <= 0)[]
+(else-if: $options's length > 1)[
+(set: $options to (shuffled: ...$options))]
+(else:)[]
+
+(replace:?input)[(if: $options's length > 0)[(for: each _i, ...(range: 1, (min: $cunning, $options's length)))[
+(set: _item to ($options's (_i)))
+(link-reveal: _item)[(replace:?output)[(display: _item)(if: (passage: _item)'s tags contains "weapon")[Striking out at the guardian's armored surface causes you to be injured in kind.(set: $deathReason to "Striking out at the guardian's armored surface causes you to be injured in kind.  You overextended so much, you practically fed yourself into it like it was a woodchipper.")(set: $arg to 1)(display: "TakeDamage")]
+]]]
+
+(link-reveal: "Shuffle")[(replace:?output)[You are torn and brutalized by your foe as you prepare for another assault.(set: $arg to (either: 0,1, 1))(display: "TakeDamage")(set: $options to (a:))(display: "Guardian Shuffle")
+]]](else:)[
+[[Succumb->Death]] 
+]]
+
+
+
+:: Magisterium Local Office [location westfires easternfortress northharbor southquarry uppercastlerock unlisted] {"position":"4553,2940","size":"100,100"}
+If you go here, you must prove your innocence before you're allowed to leave.  It doesn't matter if they brought you here, or you happened to come here yourself.
+
+The style is cribbed from Roman Architecture, distilled down into Brutalism, with a hint of displeasure at the existence of the possibility of dissent.  It is beautiful in the same way that a praying mantis is beautiful.
+
+//iterated prisoner's dilemma//
+
+(display: "NavOptions")
+
+:: Cannibal's Feast [location] {"position":"4035,6174","size":"100,100"}
+Double-click this passage to edit it.
+
+
+
+:: Encounter: A Friendly Goblin [event] {"position":"6615,6442","size":"100,100"}
+The goblin greets you with your tribes secret handshake and passes you
+(set: _roll to (random: 0,3))(if: _roll < 3)[(set: $arg to (random: 5, 25))$arg coins.
+(display: "UpdateGold")](else:)[(set: $arg to (either: "Crypt Key", "Stone Blood", "Jar of Baby Teeth"))(display: "GainItem")]
+
+
+:: Encounter: An Angry Goblin [event] {"position":"6738,6445","size":"100,100"}
+The goblin looks familiar to you.  Remember when you were temporarily a member of a tribe of goblins, and you wondered why no one ever tried to leave?
+
+This might be why.
+
+{(set: $enemyHealth to 3)(set: $enemyType to "Goblin")(set: $enemyElementType to (either: "mortal", "shadow", "poison"))
+(set: $fightPattern to (a:"Strike",(either: "Strike", "Throw"),"Block"))
+(set: $fightIndex to 1)
+(set: $deathReason to "You were torn to shreds by a furious goblin.")
+}They prepare to attack!
+
+|output>[]
+
+|input>[(display: "Fight")]
+
+(event: when $enemyHealth <= 0)[ (replace:?input)[ [[Next Encounter]] ]]
+
+
+:: Untitled Passage {"position":"6681,2114","size":"100,100"}
+kraalspace, n.  The highest level of space, the physical realm of space that is the lowest energy of the electromagnetic spectrum, used in the scientific study of color.
+
+Usage: "a black-and-white image taken by a quantum quantum laser just reaches the kraalspace of visible light.
+
+chokkaboo, n. a simple, thick, heavy knit Japanese shirt made of cloth, with a pattern of five buttons hanging behind the arm
+
+ noun.
+knotlock
+knotÂ·lock
+
+    the knotted knot that locks up a garment, especially one used for sewing
+    "he made his knotlock on her sweater"
+
+ adjective.
+abaricious
+abariÂ·cious
+
+    (of a product) adulterated, including many adulterated varieties
+    "abaricious names and photographs"
+
+ noun.
+harpophlemium
+harÂ·pophlemium
+
+    a sporangic freshwater fish of the canary family that has reddish plates on a broad body with spines on the tips. It typically lives near lakes and canyons
+    "a collection of the most endangered harpophlemiums"
+
+ adjective.
+sorvicious
+sorÂ·viÂ·cious
+
+    characterized by a sinner or wickedness
+    "the sorvicious creatures that pursued them"
+
+You see a wizard accidentally drop an artifact into a pile of garbage.  The value of the artifact scales from trivial to priceless.
+You can dig through the garbage to try to find the artifact, but if anyone sees you, your reputation will suffer.
+You might also trigger an attack by a Rattle Bones.
+
+Construction on the tower halted.  Where they had expected more open sky was a smooth, metallic dome studded with brilliant gemstones.
+"Get me the biggest diamond drill bit we have and the collected works of Ted Chiang!" the fore boss cried.
+
+Your ship crashes against an invisible wall as subtle as a soap bubble and as unyielding as the will of SuperGod.  Where you encounter the wall, it appears gently curved, so that your vessel is gravely damaged but possibly not mortally.
+
+Deep below the nests of the (now extinct) Balrogs, your team has reached a layer of impenetrable earth.  Unable to continue down, they spread out in all directions.  Suddenly, a hew and cry rise up from one of the branches.  More crew rush to that branch to help clear it out.  With stunning efficiency, they dig out a 100 x 100 meter room, 10 meters high around a giant vault door.  Within a very complex series of physical leaf springs and enchantments sits a device that is unmistakably a lock.
+
+Deep within the Eastern Fortress, you are on the edge of what appears to be an endless Emptiness.  The elaborate network of buildings terminates all above and all below you in a fractal sponge.  But in front of you for as far as you can see is nothing.  Colorless, oppressive Emptiness.
+
+The distant suburbs all look the same.  It's easy to get turned around.  By the time you manage to untangle the loop, you end up right back where you started from.
+
+
+
+:: Encounter: Shortcut {"position":"3658,3501","size":"100,100"}
+You've come to a fork.  One of these is faster than the other, but which one?!
+{
+(set: $correctPath to (random: 0, 1))
+(if: $correctPath is 0)[
+	(if: $perception > $enchantmentHidden)[<br/>(link-reveal-goto: "This Way!", "Encounter")[(set: $encounterIndex to it + 2)]]
+	(else:)[<br/>(link-reveal-goto: "This Way?", "Encounter")[(set: $encounterIndex to it + 2)]]
+	[[<br/>No, This Way?->Next Encounter]] 
+](else:)[ <br/>[[This Way?->Next Encounter]]
+(if: $perception > $enchantmentHidden)[<br/>(link-reveal-goto: "No, This Way!", "Encounter")[(set: $encounterIndex to it + 2)]]
+	(else:)[<br/>(link-reveal-goto: "No, This Way?", "Encounter")[(set: $encounterIndex to it + 2)]]
+]}
+
+:: Alckymie Inventory {"position":"1335,1690","size":"100,100"}
+The alckymists and their suppliers trade in vast open sacks and pots of chemical components of various toxicities and inflammibilities.  It says much about their trade that the free mix of various powdered chemicals around open flames have resulted in as many legitimate breakthroughs as the solitary efforts of a thousand alckymists working in their labs.
+
+(set: _cost to 150)(set: $marketplace to (a: "Lump of Lead", "Sack of Sulfur", "Chunk of Chalk", "Grain of Gold", "Quaff of Quicksilver"))(for: each _item, ...$marketplace)[(unless: $inventory contains _item)[
+(display: "QuickBuy")
+]]
+
+
+:: Display Random Market Color {"position":"4239,3121","size":"100,100"}
+(set: _dieroll to (random: 0, 2))(if: _dieroll is 0)[(display: "Display Random Color Person") offering to sell a (either: "live", "roast", "metallic") (either: "homunculus", "pixie", "dragon egg") to a (display: "Display Random Color Person")](else-if: _dieroll is 1)[(display: "Display Random Color Person") is haggling with a (either: "furious", "stone-faced", "laughing", "bored") (display: "Display Random Color Person")]
+(else-if: _dieroll is 2)[(either: "smiling", "bored", "dozing", "aggressive") (display: "Display Random Color Person") hawking their (either: "wares", "false idols", "scrolls", "fish and chips")]
+
+
+
+:: Display Random Color Person {"position":"4126,3113","size":"100,100"}
+(either: "lady", "gentleman", "creature") of (either: (either: "great", "small") + " size", (either: "dark", "ruddy", "pale", "blue", "translucent", "scaly", "tattooed") + " skin") (either: "wearing", "with", "in") a (display: "Random Jewelry")
+
+
+:: Display Random Client {"position":"4451,3118","size":"100,100"}
+(set: $generalType to (a: "slim fellow in a cheap suit", "fat cephalopod with a beaver hat", "plain lady in a brown dress", "a spiny brownie in mouse leathers"))
+(set: $characteristics to (a: "extremely regrettable facial tattoos", "the subtle tracework of surgery scars", "more pride than teeth", "a pronounced limp", "a probably very illegal weapon clutched behind their back"))
+
+
+
+
+:: Random Jewelry {"position":"4558,3114","size":"100,100"}
+(set: _material to (a: "copper", "gold", "silver", "ash", "iron", "clay", "hardwood", "bone", "antler"))(set: _dieroll to (random: 0, 2))(if: _dieroll is 0)[(either: ..._material) (either: "bracelet", "anklet", "armlet", "torque", "girdle")](else-if: _dieroll is 1)[(either: "ear", "nose", "lip", "cheek", "septum", "conch", "horn") (either: "stud", "ring", "plug", "tusk", "plate")](else-if: _dieroll is 2)[(either: "simple", "intricate", "delicate", "chunky") amulet made of (either: ..._material)]
+
+
+:: Market Color {"position":"4350,3102","size":"100,100"}
+You see (set: _dieroll to (random: 0, 2))(if: _dieroll is 0)[(display: "Display Random Color Person") offering to sell a (either: "live", "roast", "metallic") (either: "homunculus", "pixie", "dragon egg") to a (display: "Display Random Color Person")](else-if: _dieroll is 1)[(display: "Display Random Color Person") is haggling with a (either: "furious", "stone-faced", "laughing", "bored") (display: "Display Random Color Person")]
+(else-if: _dieroll is 2)[(either: "smiling", "bored", "dozing", "aggressive") (display: "Display Random Color Person") hawking their (either: "wares", "false idols", "scrolls", "fish and chips")].
+
+
+
+

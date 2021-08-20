@@ -1,0 +1,59 @@
+
+
+:: Encounter: Enchantment Trap Lock {"position":"3905,4594","size":"100,100"}
+You see the tracery of an Enchantment Lock.  This is a more cunning working than an Enchantment Trap, because if you don't unwind it in the correct order, it will either bind the object forever or spontaneously unravel through you, rendering you into thin slices of former wizard.
+
+Which thread will you snip first?
+{(set: _alphabet to (a: "A","B","C","D","E","F","G","H","I","J","K","L"))
+(set: $puzzleLength to $enchantmentHidden)
+(set: _puzzle to (shuffled: ...((range: 1, $puzzleLength) + (repeated: 12 - $puzzleLength, 0))))
+(set: $puzzleIndex to 1)
+(set: _puzzleButtons to (a:))
+(set: $puzzle to _puzzle)
+(set: $remainingPuzzleAttempts to 2)
+}
+<pre>
+(live: 0.5s)[(print: $puzzle's (1) + $puzzle's (3) + $puzzle's (4))] -(set: _index to 1)(display: "PuzzleButton")- (live: 0.5s)[(print: $puzzle's (1) + $puzzle's (2) + $puzzle's (5))] -(set: _index to 2)(display: "PuzzleButton")- (live: 0.5s)[(print: $puzzle's (7) + $puzzle's (2) + $puzzle's (6))]
+| \   |   / |
+|  (set: _index to 4)(display: "PuzzleButton")  (set: _index to 5)(display: "PuzzleButton")  (set: _index to 6)(display: "PuzzleButton")  |
+|   \ | /   |
+(set: _index to 3)(display: "PuzzleButton")     (live: 0.5s)[(print: $puzzle's (4) + $puzzle's (5) + $puzzle's (6) + $puzzle's (8) + $puzzle's (9) + $puzzle's (10))]     (set: _index to 7)(display: "PuzzleButton")
+|   / | \   |
+|  (set: _index to 8)(display: "PuzzleButton")  (set: _index to 9)(display: "PuzzleButton")  (set: _index to 10)(display: "PuzzleButton")  |
+| /   |   \ |
+(live: 0.5s)[(print: $puzzle's (3) + $puzzle's (8) + $puzzle's (11))] -(set: _index to 11)(display: "PuzzleButton")- (live: 0.5s)[(print: $puzzle's (9) + $puzzle's (11) + $puzzle's (12))] -(set: _index to 12)(display: "PuzzleButton")- (live: 0.5s)[(print: $puzzle's (7) + $puzzle's (10) + $puzzle's (12))]
+</pre>
+|output>[]
+
+<pre>
+0 -A- 0 -B- 0
+| \   |   / |
+|  D  E  F  |
+|   \ | /   |
+C     0     G
+|   / | \   |
+|  H  I  J  |
+| /   |   \ |
+0 -K- 0 -L- 0
+</pre>
+
+
+:: PuzzleButton {"position":"4012,4595","size":"100,100"}
+{(set: _i to _index)(link: _alphabet's (_index))[*(if: $puzzle's (_i) is $puzzleIndex)[(replace:?output)[The strand loosens.(set: $puzzle's (_i) to 0)  (if: $puzzleIndex >= $puzzleLength)[The enchantment slips apart. (set: $inventory to it + (ds: "Ethereal Threads"))    
+[[Next Encounter]]]
+(set: $puzzleIndex to it + 1)
+(if: $puzzle contains ($puzzleIndex * -1))
+[
+	(set: $puzzleIndex to it + 1)
+]
+]
+](else:)[(replace:?output)[
+{(set: $remainingPuzzleAttempts to it - 1)
+(if: $remainingPuzzleAttempts <= 0 and $puzzle's (_i) is not 0)[
+(if: (random: 0, $danger) < 3)[The enchantment snaps along the wrong axis, causing a run of nodes to overtighten.  The object held in the enchantment is warped and ruined.  You would need to destroy the whole thing with an enchanted blade to get it open again.
+
+[[Next Encounter]]](else:)[The enchantment violently ruptures, doing horrific damage to you.(set: $deathReason to "The enchantment violently ruptures, tearing you into a pink ruin.")(set: $arg to $danger)(display: "TakeDamage")
+
+[[Next Encounter]]]]
+(else:)[The thread thrums threateningly. (set: $puzzle's (_i) to it * -1) ]
+}]]]}

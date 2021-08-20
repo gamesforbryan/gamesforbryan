@@ -1,0 +1,25 @@
+
+
+:: Interesting Rumors {"position":"5300,6502","size":"100,100"}
+(if: (random: 0, 1) > 0)[
+(set: _newRumor to (either: "Fire Ghosts Crave Coal", "Fire Ghosts Crave Coal"))
+(set: $arg to _newRumor)(display: "GainRumor")
+]
+(else:)[
+(either: "A Compass of Many Places is a fine thing to have if you're a Riftrunner!", "Get yourself a copy of Philomender's Book of Excellent Knots at any price!", "Potions can be quite dangerous at certain times of day, but those times aren't labelled anywhere.")]
+
+
+:: Baseless Rumors {"position":"4798,6505","size":"100,100"}
+"(either: "Sirens will trade secrets of great value with you.", "Witch Bottles are an excellent protective ward for your home.", "I'm a natural blonde!")"
+
+:: Fire Ghosts Crave Coal [rumor] {"position":"5305,6607","size":"100,100"}
+A Fire Ghost just wants to devour anything they can.  A small piece of coal could easily distract them.
+
+
+:: Iceberg Spiders [rumor] {"position":"5416,6604","size":"100,100"}
+You've heard of trap-door spiders, but have you heard of the Great Northern Iceberg Spiders?
+
+
+:: North Harbor Has Massive Fleets of Treasure Hunters [rumor] {"position":"5667,6606","size":"100,100"}
+Get yourself to North Harbor and register to be a Rift Runner.  You'll be able to bring back vast fortunes from distant branes.
+

@@ -1,0 +1,200 @@
+
+
+:: Init Upper Castlerock [function] {"position":"7640,289","size":"100,100"}
+{(set: $environmentMaterials to (a: "stone", "brick", "mahogany", "marble", "gold-veined quartz", "ivory", "ebony", "raw glass"))
+(set: $environmentColors to (a: "white", "blue", "emerald green", "black", "gold-leafed"))
+(set: $clothingMaterials to (a: "leather", "linen", "cotton", "fleece", "down", "tailfeather"))
+(set: $clothingColors to (a: "tan", "white", "cyan", "golden", "black"))
+(set: $clothingTypes to (a: "tabard", "toga", "dressing gown", "uniform", "evening dress", "gown", "pant suit", "girdle"))
+(set: $adornmentMaterials to (a: "ivory", "gold", "silver", "pearl", "gold", "silver", "sapphire", "platinum", "ebony", "lead"))
+(set: $adornmentTypes to (a: "spool", "ring", "stud", "implant"))
+(set: $hairstyles to (a: "a shaven scalp", "a tonsured pate", "a short bob", "an elegant braid", "waist-length locks", "a lacquered headdress", "a shaggy mane"))
+
+(set: $sizes to (a: "grand", "stout", "muscular", "sculpted", "slender", "twisted"))
+(set: $genders to (a: "man", "woman", "non", "herm"))
+(set: $races to (a: "human", "sylph", "daemonkin", "changeling", "angelic", "mekannin", "archdaemon"))
+(set: $skinColors to (a: "black", "blue", "green", "golden", "tan", "brown", "red", "gray"))
+(set: $skinTypes to (a: "smooth", "lightly furred", "fur-covered", "scaled", "lightly feathered"))
+(set: $professions to (a: "soldier", "courtesan", "clerk", "beaureaucrat", "cursekeeper", "accountant", "reformed thug", "student", "bodyguard", "minor noble"))
+(set: $neighborhood to 
+(dm: "name", "Upper Castlerock", 
+"tagname", "uppercastlerock",
+	"locations", (altered: _item via _item's name, ...(find: _item where _item's tags contains all of (a: "uppercastlerock", "location"), ...(passages:))),
+"contracts", (altered: _item via _item's name, ...(find: _item where _item's tags contains all of (a: "uppercastlerock", "contract"), ...(passages:))),
+		"events", (altered: _item via _item's name, ...(find: _item where _item's tags contains all of (a: "uppercastlerock", "event"), ...(passages:)))))}
+
+
+:: Madame Shireen's Salon [bookmark location uppercastlerock tick] {"position":"7637,725","size":"100,100"}
+[[Sip a Dainty Liquer in Madam Shireen's Salon]]
+
+(display: "NavOptions")
+
+
+:: Sip a Dainty Liquer in Madam Shireen's Salon [tick] {"position":"7783,724","size":"100,100"}
+...(display: "Baseless Rumors")...
+
+
+[[Sip a Dainty Liquer in Madam Shireen's Salon]] 
+
+(display: "NavOptions")
+
+
+:: Donec Inferos [bookmark uppercastlerock location tick] {"position":"7634,619","size":"100,100"}
+The Donec Inferos, the Department of the Infernal, has its majestic halls here in Upper Castlerock.
+
+(display: "NavOptions")
+
+
+:: Sanctum Sanctorum [bookmark uppercastlerock location tick] {"position":"7638,841","size":"100,100"}
+The most precious artifact in the world is housed here, behind a garrison of wizards, soldiers, and daemons.
+
+(set: _item to "Aleph")(set: _cost to 1)(display: "QuickBuy")
+
+[[Begone!->Home Again]]
+
+
+
+:: Upper Castlerock [tick] {"position":"7577,412","size":"200,200"}
+(display: "Init Upper Castlerock")
+If the Noble City were the Emperor, Upper Castlerock would be his mitre crown.  The rocky spire hovers, slowly rotating, held aloft by magic or powerful electromagnets or enslaved Ifriti (or maybe all three).  The gates are well-guarded and relatively inaccessible. You will need a Gate Pass and a Rift Ship or Ferry to access it.
+Uninvited guests are given a short walk off the ramparts back to the City below.
+
+(for: each _item, ...($neighborhood's locations))[(if: (history:) contains _item and (passage: _item)'s tags contains "bookmark")[(link-goto: _item)
+
+]]
+
+[[Board the Upper Castlerock Tram]]
+
+(if: $gold > 99999 or $inventory contains "Noble Cowl")[ [[Explore the Neighborhood]] ](else:)[This is a gated community.  It's at least partially gated by money.  Of which, you don't have enough.
+[[Home Again]] 
+]
+
+
+:: Upper Castlerock Color {"position":"7453,458","size":"100,100"}
+Elegant aristocrats.
+
+
+:: Encounter: Danger Boost [event uppercastlerock] {"position":"3658,4330","size":"100,100"}
+(set: $danger to it + 1)
+You feel a shiver of electric fear run through you, as you become suddenly aware of the giant eye in the sky that is always watching the citizens of the City.  Moments later, you have once again forgotten about its existence.
+[[Next Encounter]]
+
+
+
+:: Kafka Gaol [uppercastlerock bookmark tick] {"position":"7638,953","size":"100,100"}
+Iterated Prisoner's Dilemma
+Iterated Knights & Knaves
+
+(display: "NavOptions")
+
+
+
+:: Board the Upper Castlerock Tram [tick] {"position":"7852,445","size":"100,100"}
+All citizens of the City in good standing, regardless of neighborhood, are allowed on the Upper Castlerock Tram.  
+
+(if: $inventory contains "Badge of Shame" or $reptuation's public < 1)[
+Sadly, you are not in good standing, and you are being sent [[Home Again]].
+](else:)[
+You enter the tram and walk over to the control panel.  It thrums as you make contact with the keyboard.
+Enter your station # and click GO.
+
+
+
+[[Never Mind!->Home Again]]
+]
+
+
+
+
+:: Climb the Tower [tick] {"position":"8099,253","size":"100,100"}
+The tower to the throne is infinitely tall, but a clever magician like you ought to be able to find a loophole.
+
+[[Climb the Tower]]
+
+
+:: Ludvig's Palace [uppercastlerock tick] {"position":"7638,1070","size":"100,100"}
+Mad King Ludwig via Jorge Luis Borges
+
+(display: "NavOptions")
+
+
+:: Corpus, The Master Librarian [uppercastlerock tick persona] {"position":"7636,1183","size":"100,100"}
+Corpus wears books, scrolls, cuneiform tablets all over their body like an articulated suit of armor.
+
+
+
+:: Borges Memorial Library [location uppercastlerock tick] {"position":"7505,1365","size":"100,100"}
+The best part of the Borges Memorial Library is that it has every possible book within its walls.
+
+The worst part of the Borges Memorial Library is that it has every possible biography (and autobiography) of Jorge Luis Borges within its walls but no card catalog.
+
+(display: "NavOptions")
+
+:: Cell A64 of The Library of Borges [tick] {"position":"7630,1371","size":"100,100"}
+(for: each _book, ...(find: _item where _item's tags contains "book", ...(passages:)))[(link-goto: "Read " + _book's name)
+]
+
+[[Borges Memorial Library]]
+
+:: Tram Station #1 [tick] {"position":"7858,342","size":"100,100"}
+The station is a smooth stone monolith suspended over darkness and void without end.  The tram gently approaches, the doors slide open, and you are ushered off by the mekkanin porters.
+
+Here you are to wait until the next tram arrives.
+
+
+:: Tram Station #2 [tick] {"position":"7893,230","size":"100,100"}
+This station feels identical to the previous, except for the number 2 emblazoned on the plinth.  With no other feature in sight, you wait here for the next tram to pick you up.
+
+
+:: Tram Station #N [tick] {"position":"7955,15","size":"100,100"}
+No more stations lie before you.  Only the void remains.
+
+And the return line.
+
+[[Upper Castlerock]]
+
+
+:: Tram Station #... [tick] {"position":"7925,117","size":"100,100"}
+You've completely lost track of the station numbers.  Long ago, they stopped being represented in standard Arabic numerals and were replaced with scientific notation, and then "Tower of Power" notation.  Now, it's all Elder runes.  You really should have studied Elder runes at university.
+
+
+
+:: Sky Dock [location uppercastlerock bookmark tick] {"position":"7378,700","size":"100,100"}
+Free passage to [[North Harbor]].
+
+
+
+
+:: Glorious Goods [location uppercastlerock bookmark] {"position":"7630,1484","size":"100,100"}
+(set: _cost to 1500)
+(for: each _item, "Brass Mirror", "Mana Battery")[
+(display: "QuickBuy")
+]
+
+(display: "NavOptions")
+
+
+:: Mavis, Lady of the Sun [uppercastlerock persona] {"position":"7485,1182","size":"100,100"}
+Emerging from thick, metallic curls is a crown of gold.  Her gold cloth toga is draped over a body kept physically perfect by a concert of powerful enchantments.  And by "physically perfect", I mean "a sphere".
+
+
+:: Build A Floor {"position":"8245,147","size":"100,100"}
+Build the tower higher and higher.
+
+
+:: Lower Castlerock {"position":"7026,327.66666666666663","size":"100,100"}
+(display: "Init Upper Castlerock")
+
+[[Upper Castlerock]] 
+
+[[Sylphian Archipelago]]
+
+
+
+
+:: Magisterium Head Office [location unlisted uppercastlerock] {"position":"7824,1012","size":"100,100"}
+(display: "NavOptions")
+
+
+:: Magisterium Local Office: Upper Castlerock [location unlisted uppercastlerock] {"position":"7823,1149","size":"100,100"}
+(display: "NavOptions")

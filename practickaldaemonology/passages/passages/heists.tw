@@ -1,0 +1,329 @@
+
+:: Vault Heist [heist easternfortress] {"position":"8271,3201","size":"100,100"}
+{(set: $moments to 13)
+(set: $cunning to 4)(set: $perception to 4)(set: $health to 5)
+(set: $inventory to (ds: "Sleeping Phial", "Flask of Poison", "Liter of Acid", "Ritual Dagger", "Damage Ward", "Crystal of Detonation", "Crystal Spyglass", "Safecracking Kit", "Belonging Sign"))
+(set: $daemons to (ds: "Fire Ghost", "Living Shadow"))
+(set: $disguise to 1)(set: $reputation to (dm: "public", 7))
+(set: $guardHealth to 4)(set: $tellerHealth to 3)(set: $barrierHealth to 0)(set: $vaultCode to 0)(set: $guardianHealth to 5)}
+You're to enter the vault foyer posing as customers.
+Once inside the building, you have $moments moments to subdue the two guards on duty.
+The tellers will attempt to bring down the anti-theft shield, but we've given you a Crystal of Detonation to blast through it.
+They should be pretty shook up by that and will be unlikely to put up a fight.
+We then have to crack the vault before offsite support becomes onsite support, and you get thrown in gaol.
+Inside the vault may be a guardian creature.  Whatever moments remaining can be spent fighting the creature.
+Remaining time is converted into liberated treasure.
+If you can avoid getting caught, we'll pull you out with the same portal as all of that sweet, sweet treasure.
+
+[[Let's Go!]]
+
+
+:: Let's Go! {"position":"8419,3234","size":"100,100"}
+Moments Remaining: $moments
+
+You are standing outside the vault office's front door.  (if: $inventory contains "Belonging Sign")[ A glamour provides you with the requisite fineries.  Every passerby who sees you perceives you as someone different, someone they trust.  Someone who belongs.(set: $disguise to it + 5)]
+
+In front of the foyer door, you note that your compatriots have inscribed invisible runes of a teleportation spell at the entrance.  If you can get back here with the treasure from the vault, they will transport you and the gold back to the safe house.
+(set: $guardOutFront to (either: true, false))
+(if: $guardOutFront is true)[
+You see a courtesy guard at the front of the vault.(set: $guardHealth to it + 1)
+(if: $disguise > 3)[
+They allow you to pass unmolested.
+
+[[Enter the Foyer]]
+
+](else:)[
+They put up a stink right off the bat!
+(set: $guardHealth to it + 2)
+[[Fight the Guards]] 
+]
+](else:)[
+[[Enter the Foyer]] 
+]
+
+
+:: Enter the Foyer {"position":"8543,3236","size":"100,100"}
+Moments Remaining: $moments
+
+You press the intercom button and announce yourself.
+The door unlocks itself and swings open to invite you into the foyer of the vault.
+You stride into the foyer, and the door swings shut behind you.
+
+You cannot back out now.  Next up is the front desk:
+- Subdue the Two Guards
+- Take out the Anti-Theft Barrier
+
+
+[[Front Desk]]
+
+
+:: Front Desk {"position":"8684,3236","size":"100,100"}
+(display: "MomentTick")
+|input>[
+
+You see two portly guards dozing off in front of a trio of bored tellers.
+(if: $perception > 3)[They don't even know, yet, that they're being robbed.
+
+[[Surprise Attack!]]]
+
+(if: $inventory contains "Sleeping Phial")[
+(link-reveal: "Throw Sleeping Phial")[
+(replace:?input)[You throw the glass phial full of compressed sleeping gas.  It shatters (if: (either: true, false))[in front of the guards, knocking them unconscious!  The tellers manage to drop the enchanted barrier.(set: $barrierHealth to 10)(set: $guardHealth to 0)
+[[Examine the Enchanted Barrier]]](else:)[into the tellers' pit, rendering them unconscious.(set: $tellerHealth to 0)
+[[Fight the Guards]]]]]]
+
+(if: $inventory contains "Flask of Poison")[
+(link-reveal: "Throw Flask of Poison")[
+(replace:?input)[You throw the glass flask full of compressed poison gas.  It shatters in the midst of the front desk, instantly killing everyone inside. (set: $guardHealth to 0)(set: $tellerHealth to 0)
+"A Shameful Display"
+
+[[Examine the Vault Door]] 
+]]]]
+
+
+:: Surprise Attack! {"position":"8883,3323","size":"100,100"}
+Moments Remaining: $moments
+
+(set: $guardHealth to it - (random: 1, $guardHealth))
+(if: $guardHealth <= 0)[
+You manage to dispatch all sentinels with a swift attack!
+
+[[Subdue the Tellers]]
+](else:)[The guard presence is somewhat reduced, but you'll still need to now fight them!
+
+[[Fight the Guards]] 
+]
+
+[[Flee the Heist!]]
+
+
+:: Examine the Enchanted Barrier {"position":"8997,3317","size":"100,100"}
+(display: "MomentTick")
+
+It's essentially a very large, very durable version of the enchantment traps that wizards place for each other in the back alleys of the West Fires.  Anything strong enough to smash through it will release a few tonnes of energy right back at the smasher.
+
+(if: $inventory contains "Crystal of Detonation")[
+The Crystal of Detonation will cut a hole right through that barrier, and the folks on the other side will feel it, too.
+
+[[Use the Crystal of Detonation on the Enchanted Barrier]]
+]
+
+In your other hand, you pull out a (set: _offHand to (either: ...($inventory - (ds: "Crystal of Detonation"))))_offHand.
+
+If _offHand is something that can do damage, then you can attempt to destroy it with that and then body the blast.
+[[Shatter the Enchanted Barrier]]
+
+[[Flee the Heist!]]
+
+
+:: Fight the Guards {"position":"8890,3214","size":"100,100"}
+(display: "MomentTick")
+(set: $guardHealth to it - (random: 1, 3))
+(if: $tellerHealth > 0 and (either: true, false))[
+x(set: $barrierHealth to 10)]
+(if: $guardHealth <= 0)[
+(if: $barrierHealth > 0)[
+While you were dealing with the guards, the tellers were able to get the Enchanted Barrier in place.
+[[Examine the Enchanted Barrier]]](else:)[
+You hop right over the teller desk.
+
+(if: $tellerHealth > 0)[
+[[Subdue the Tellers]] ]
+
+[[Examine the Vault Door]] 
+] 
+](else:)[
+They're wounded, but still standing.
+
+[[Fight the Guards]] 
+]
+
+[[Flee the Heist!]]
+
+
+:: Use the Crystal of Detonation on the Enchanted Barrier {"position":"9105,3313","size":"100,100"}
+(display: "MomentTick")
+(set: $guardHealth to 0)(set: $tellerHealth to 0)(set: $inventory to it - (ds: "Crystal of Detonation"))(set: $barrierHealth to 0)
+The barrier is obliterated in a wholly satisfying cascade of ruined threadwork.  Anyone in the room that had been standing are now in a stupor all about on the floor.  The front desk has been annihilated, allowing you to step through to the vault door beyond.
+
+[[Examine the Vault Door]]
+
+
+:: Shatter the Enchanted Barrier {"position":"8997,3467","size":"100,100"}
+(display: "MomentTick")
+
+(if: $inventory contains "Crystal Spyglass")[
+You could use your Crystal Spyglass to pluck on a harmonic flaw in the barrier.
+
+[[Use the Crystal Spyglass to Shatter the Enchanted Barrier]]
+](else:)[
+You won't be able to summon enough focused energy to break a shield of that strength without something to use as a lens.
+]
+
+[[Flee the Heist!]]
+
+
+:: Flee the Heist! {"position":"9147,3467","size":"100,100"}
+(if: $loot > 0)[Once you hit the teleportation sigil, you and your haul are warped into the confines of the safe house, guarded by wards against true sight and seers.
+[[In the Safe House]] ](else:)[
+You leave empty-handed!
+Reputation - 2
+]
+
+
+:: Examine the Vault Door {"position":"9262,3317","size":"100,100"}
+(display: "MomentTick")
+
+You are in front of a vast (either: "stone", "iron", "steel", "brass", "vanadium", "adamantium", "fossil") vault door, inscribed with runes of protection, runes of safety.
+
+(if: (either: true, false))[
+But the runes of safety don't do much if they left the vault door open during business hours.
+
+(if: (either: true, false))[
+[[Loot the Vault->Fight the Vault Guardian]]
+](else:)[
+[[Loot the Vault]] 
+]
+](else:)[
+(if: $inventory contains "Crystal of Detonation")[
+You still have the Crystal of Detonation left over.  You want to use it to shortcut this crappe?
+
+[[Use the Crystal of Detonation to Blow The Vault Door]]
+]
+
+(if: $inventory contains "Safecracking Kit")[
+[[Crack the Safe]]
+]
+
+(if: $vaultCode is 1)[
+Of course, you do have the vault code.
+[[Loot the Vault]] 
+]
+]
+
+
+[[Flee the Heist!]]
+
+
+:: Loot the Vault {"position":"9272,3465","size":"100,100"}
+(set: $moments to it - (random: 0, 2))(display: "MomentTick")
+
+You grab a vague amount of treasure in satchels of slight-holding.
+(set: $loot to it + (random: 10, 30) * 5)
+
+[[Loot the Vault]] 
+
+[[Flee the Heist!]]
+
+
+:: Use the Crystal of Detonation to Blow The Vault Door {"position":"9387,3467","size":"100,100"}
+(display: "MomentTick")
+The vault door blows inward with a mighty GUFF!
+
+(either: "The vault had a guardian, but it's now crushed under three-tonne of vault door.", "The vault was empty.")
+
+[[Loot the Vault]]
+
+[[Flee the Heist!]]
+
+
+:: MomentTick {"position":"9277,3587","size":"100,100"}
+(set: $moments to it - 1)Moments Remaining: $moments(if: $moments <= 0)[(goto: "Down to the Gaol")]
+
+
+:: Down to the Gaol {"position":"9397,3587","size":"100,100"}
+You dillied when you should've been dallying, or vice versa, or neither.
+Either way, you've been clapped in irons and dragged through the crowded streets to the local gaol, where you'll rot for a while until they feel you've learned your lesson or conveniently died.
+
+
+The End?
+
+
+:: Use the Crystal Spyglass to Shatter the Enchanted Barrier {"position":"8997,3617","size":"100,100"}
+You focus a beam of raw aetherium into what you think is a weak spot in the Barrier's Pattern.  You guessed right about the weak spot, but you did not correctly predict the subsequent reaction, as deadly forces.
+(set: $arg to 5)(set: $deathReason to "The Barrier ruptured outward towards you, shredding everything softer than an oak beam.")$deathReason
+(display: "TakeDamage")(set: $guardsHealth to 0)(set: $tellerHealth to 0)
+
+[[Examine the Vault Door]] 
+
+[[Flee the Heist!]]
+
+
+:: Fight the Vault Guardian {"position":"9507,3467","size":"100,100"}
+(display: "MomentTick")
+(set: $guardianHealth to 5)
+
+(display: "Encounter Random Guardian Daemon")
+
+
+
+(event: when $guardianHealth <= 0)[
+[[Loot the Vault]] ]
+
+[[Flee the Heist!]] 
+
+(event: when $health <= 0)[(goto: "Down to the Gaol")]
+
+
+:: In the Safe House {"position":"9147,3617","size":"100,100"}
+You ended up holding $loot treasure.
+
+After your fence takes their viggerish, your cut is (print: $loot * (1 + (random: 1, 5))) gold.
+
+(if: $loot > 300)[
+Your fence throws in a bonus for you!
+(set: $arg to "M.C. Escher: Beginner's Embroidery")(display: "GetItem")
+]
+
+(display: "NavOptions")
+
+
+:: Subdue the Tellers {"position":"8882,3468","size":"100,100"}
+(display: "MomentTick")
+You manage to cow the tellers with some flashy cantrips.  They quickly fill up your satchels with loose treasure that wasn't yet in the vault.
+(set: $loot to it + (random: 2, 15))
+Loot -> $loot
+
+[[Demand the Vault Code]]
+
+[[Examine the Vault Door]] 
+
+[[Flee the Heist!]]
+
+
+:: Demand the Vault Code {"position":"8883,3623","size":"100,100"}
+(display: "MomentTick")
+You use a specialized technique to induce the truth from the terrified teller.
+
+(if: (either: true, false))[
+They quickly rattle off the vault code for you.
+(set: $vaultCode to 1)
+(if: (either: true, false))[ [[Loot the Vault->Fight the Vault Guardian]]](else:)[ [[Loot the Vault]]]
+](else:)[
+They don't seem to know the code!
+
+[[Examine the Vault Door]] 
+
+[[Demand the Vault Code]] 
+]
+
+[[Flee the Heist!]]
+
+
+:: Encounter Random Guardian Daemon {"position":"9516,3577","size":"100,100"}
+|input>[(link-repeat: "Fight the Guardian Daemon")[
+(display: "MomentTick")
+(set: $guardianHealth to it - (random: 0, 3))
+(set: $health to it - (random: 0, 3))Health -> $health
+]
+(event: when $guardianHealth <= 0)[(replace:?input)[The guardian daemon slumps to the floor, its body crumbling into dust.]]]
+
+
+:: Crack the Safe {"position":"9468,3279","size":"100,100"}
+//safecracking minigame//
+
+(if: (either: true, false))[
+[[Loot the Vault->Fight the Vault Guardian]]
+](else:)[
+[[Loot the Vault]] 
+]

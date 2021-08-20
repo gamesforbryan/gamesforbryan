@@ -1,0 +1,134 @@
+
+:: Heart of the City [location] {"position":"4533,2782","size":"200,100"}
+A vast, geared structure, resembling the inside of the Silent Ansible.
+Borders all districts.
+
+[[Upper Castlerock]] 
+
+[[Sylphian Archipelago]]
+
+[[North Harbor]] 
+
+[[Canals]] 
+
+[[Hell Hole]] 
+
+[[West Fires]] 
+
+[[Wastelands]] 
+
+[[Eastern Fortress]] 
+
+[[Dunes]]
+
+[[South Quarry]] 
+
+[[Catacombs]] 
+
+[[Lower Depths]]
+
+
+
+:: Uri, the Keeper [persona] {"position":"4803,2897","size":"100,100"}
+The old man scowls at you, more out of habit than any real ill will.
+
+"Have you noticed a single *living* plant in your entire time here?  Any animal more gentle and kind than a rat, a cockroach...  or a wizard?
+This City is a pirate ship drifting through all realities, consuming them bit by bit until they are ruined and empty, then moving on."
+
+(if: $inventory contains "Silent Ansible")[Efraim's eyes softens as he looks upon your Silent Ansible.  "Oh, goodness. It was a clever idea, though.  What you're holding is just a model, but it has the same capabilities.  Just at a much smaller scale.  Say, you might move one lost traveller through the seas of reality at will...  if you had something strong enough to power it, like The Aleph."]
+(if: $inventory contains "The Aleph")["God's breasts! You have it!"
+"Use the Silent Ansible to maintain control of your position in the multiverse, and then The Aleph will take you to exactly where you need to go, any location at all."
+]
+The City itself is a prison.  A prison ship gone pirate.
+Somehow, something in this place is so dangerous to the multiverse that an abomination such as this should exist just to keep it from escaping.
+And if it's so dangerous, why not just kill it?  What if you just can't?  What if it keeps coming back, over and over again, unkillable?
+
+Uri.  Short for Uriel.  My parents were //old school//!
+
+
+
+:: Maintenance Hatch [location easternfortress northharbor westfires southquarry lowerdepths] {"position":"4301,2622","size":"100,100"}
+Embedded in concrete and an arch of broad stones is a hatch leading into the maintenance tunnels of The City.  
+(if: $hatchStatus < 1)[
+The hatch is sealed up tight.  You'd need some kind of Maintenance Key to open it.
+(if: $inventory contains "Maintenance Key")[(link-reveal: "Use Maintenance Key")[The Maintenance Key slots perfectly into the latch on the hatch.
+You get a properly-leveraged grip (don't lift with your back!) and swing the hatch open on (either: "creaky, rusted", "well-oiled", "off-kilter") hinges.
+(set: $hatchStatus to 1)
+You can pop right into the hatch, entering the labyrinthian maintenance tunnels.
+(if: $inventory contains "Maintenance Key")[You make sure to take the Maintenance Key with you when you leave.]
+
+[[Enter the Maintenance Tunnels]]
+]]](else:)[
+Usually, you would need a key to unlock the hatch, but this one appears to have already been opened for you.
+
+You can pop right into the hatch, entering the labyrinthian maintenance tunnels.
+(if: $inventory contains "Maintenance Key")[You make sure to take the Maintenance Key with you when you leave.]
+
+[[Enter the Maintenance Tunnels]]]
+
+(display: "NavOptions")
+
+
+:: Enter the Maintenance Tunnels {"position":"4413,2631","size":"100,100"}
+The hatch latches behind you, and there's no place to fit a Maintenance Key (if you have one) to open it back up.  You appear to be committed to your choice.
+
+(set: $maintenanceTunnelIndex to 1)
+(set: $maintenanceTunnelStack to (a: "Maintenance Tunnel") + (shuffled: ...(repeated: 8, "Maintenance Tunnel"), "The Grinder", ...(repeated: 2, "Transreality Hazard"), "Entrance to the Heart of The City"))
+
+(link-goto: $maintenanceTunnelStack's ($maintenanceTunnelIndex))
+
+
+:: Maintenance Tunnel {"position":"4300,2734","size":"100,100"}
+Printed on the wall is the current distance to the next Grinder and/or Transreality Hazard
+The maintenance tunnels are truly a labyrinthian place, but your cunning allows you to progress at a more or less steady rate.
+As you pass down the tunnels, you note a 3-digit code on the doors.
+(set: _roll to (random: 0, 99))The door in this section of tunnel is "_roll".
+You could open one of those doors and go down a Sub Tunnel, or you could keep going forward towards the Center.
+(link-reveal: "Go Down Sub Tunnel")[(set: $arg to _roll)(goto: "Sub Tunnel")]
+(link-reveal: "Go Forward to the Center")[(set: $maintenanceTunnelIndex to it + 1)(goto: $maintenanceTunnelStack's ($maintenanceTunnelIndex))]
+
+
+:: The Grinder {"position":"4416,2736","size":"100,100"}
+Enormous cylinders of automatic tunnel cleaning, covered in drill bits, bristles, and barbs, leaving no organic matter in its wake.  Chiefly for cleaning out pockets of Hazard World.  Will not stop even if a human is in front of it.  If you saw it coming, you could try running away, but it would eventually catch up with you.
+If you saw a door you would be willing to jump through, then you could escape it that way.
+
+(link-reveal: "Run Away!")[
+(set: $maintenanceTunnelStack to it's (range: 1, $maintenanceTunnelIndex) + (a: "The Grinder"))
+(set: $maintenanceTunnelIndex to it - 1)
+(goto: $maintenanceTunnelStack's ($maintenanceTunnelIndex))
+]
+
+
+:: Transreality Hazard {"position":"4305,2846","size":"100,100"}
+Transreality hazard where a chunk of another world being used as fuel for The City's infernal combustion engine is projecting into local reality space.
+As such, it would not be unusual to see roving bands of (either: "plumed", "barbaric", "humanoid", "cybernetic", "parasitic", "mutant") (either: "bikers", "dinosaurs", "robots", "scorpions", "cowboys") with (either: "matching skull rings", "outfits made of human flesh", "massive decorative scarring", "gig-economy lifestyles", "tiny pilots sitting in a cockpit in their chests", "orbiting haloes of magestones").
+Travel to these worlds is very exciting and correspondingly deadly.  Early attempts at Hazard World tourism all went very horribly, with entire new Orders of liability law being generated to cover the various grievances encountered by the highly litigious surviving family members.
+These hazards are typically cleaned up by the Grinders, so do your best to avoid them in the meantime.
+
+Environmental Hazard:
+Eruptions, nuclear bombs, hail storms, gamma-ray storms, etc.  A lot of direct damage without protection like a Damage Ward or possibly some other protective or divertive.
+
+Personal Hazard:
+Groups of bonkers transreal mutants.
+Attack on Sight (very likely)
+The mutants immediately attack.  Will need new Encounter: Group of Thugs (more health, random pattern)
+Parlay (very unlikely)
+They immediately decide to make peace with you.  Can use this opportunity to get something you want from them.
+Ambivalent
+Could go any other way.  Give the player a chance to nudge in the right direction.
+Betrayal
+They feign collaboration, but when you let your guard down, they immediately attack you at an advantage.
+
+(link-reveal: "Go Forward to the Center")[(set: $maintenanceTunnelIndex to it + 1)(goto: $maintenanceTunnelStack's ($maintenanceTunnelIndex))]
+
+
+:: Entrance to the Heart of The City {"position":"4415,2847","size":"100,100"}
+[[Heart of the City]]
+
+
+:: Sub Tunnel {"position":"4531,2641","size":"100,100"}
+The hatch latches behind you, and there's no place to fit a Maintenance Key (if you have one) to open it back up.  You appear to be committed to your choice.
+(set: _destination to (find: _i where _i's tags contains "location", ...(passages:))'s ($arg))
+In front of you is a shimmering portal with a location in the material world outside.
+
+(link-goto: _destination's name)

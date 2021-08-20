@@ -1,0 +1,72 @@
+
+:: VR Ending {"position":"8264,736","size":"100,100"}
+You take your VR helmet off to find that you are a wage slave in a dystopian future where everyone uses immersive sims to distract themselves from the horror that is their actual lives.
+
+
+:: Bad Acid Trip Ending {"position":"8264,851","size":"100,100"}
+You were having a psychedelic experience the entire time.  You return to your old life, but the City never stops haunting you.
+
+
+:: The Shadow Passenger Ending {"position":"8266,961","size":"100,100"}
+This time is different.
+Instead of the vast, featureless plain of obsidian sand that you're used to, you're in the playroom of a creature that looks and dresses much like you.  Just everything slightly different, slightly off-kilter.  It grins at the same time as you and matches your stride around the room, each of you seeking an advantage over the other.
+"I have power here," the creature asks. "And what would you say if I offered it to you?"
+
+(link-reveal: "Let me live again!")[The creature grins, its teeth like broken razor blades.  "Do you not remember, my wonderful treasure?  Who do you think gave you that wonderful Lazarus Beacon?"
+
+"No, it is time for you pay for my investment."
+
+A million years later, your torn and brutalized psychic essence is finally eroded thin enough that it can no longer suffer or feel anything else either.
+
+The end.]
+
+
+
+:: Big Loop Ending {"position":"8379,962","size":"100,100"}
+If you have the Silent Ansible and the Aleph and go to the Veil of the Void, you can safely go out there, where you meet an old version of yourself.
+
+"I've been waiting," they say, pointing to an exhausted Silent Ansible next to them.
+
+They take your Silent Ansible and start walking in the same direction you were going.
+
+You sit down on the obsidian sand and start waiting for the next few hundred years or so.
+
+:: The Sea Dayaks [journey] {"position":"5577,1044","size":"100,100"}
+Sea Dayaks are an ancient people who ply the world between the material plane and the land of the dead.  Their teeth are sharpened, and they bear enchantment marks that give them power in this tributary.
+(if: (history:) contains "Cannibalism")[
+They are fierce people known to hunt heads and eat the flesh of their dead enemies.
+They sense a kinship with you.
+They insist on giving you a gift before you leave.
+<b>+ Sharpened Teeth</b>(set: $inventory to it + (ds: "Sharpened Teeth"))
+](else:)[
+They smile knowingly at your sea hag and let you get on your way.
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+]
+
+[[Next Journey]]
+
+:: True Death Ending {"position":"4145,2654","size":"100,100"}
+You were told there would be choruses of angels and daemons triumphant in Heaven or Hell or wherever you were supposed to go.  Instead, there is nothingness eternal.
+
+:: King of Hell Ending {"position":"8262,399","size":"100,100"}
+$playerHistory
+
+You were all of these things.
+
+But now you reign over the Multitudes as the King of Hell.
+
+:: Magisterium Ending {"position":"8264,511","size":"100,100"}
+$playerHistory
+
+You were all of these things.
+
+But now you reign over the City as the freshly-minted Magisterium
+
+
+:: Immortal Ending {"position":"8264,626","size":"100,100"}
+$playerHistory
+
+You were all of these things.
+ And now you are one of the Immortals who lives in the cracks between the worlds of Mortals and Gods.
+

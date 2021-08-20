@@ -1,0 +1,337 @@
+
+
+:: Eastern Fortress [tick] {"position":"7407,3199","size":"200,200"}
+(display: "Init Eastern Fortress")
+This neighborhood is built into the ruins of a fortress of some ancient species that was approximately three times as large as humans.  Accomodations have been made for human-sized creatures, including ramps across giant stairsteps and bedrooms converted into apartment blocks.
+
+It is also an effective vault, so all of the City's major banks are here.
+
+(for: each _item, ...($neighborhood's locations))[(if: (history:) contains _item and (passage: _item)'s tags contains "bookmark")[(link-goto: _item)
+
+]]
+
+(display: "NavOptions")
+
+
+
+:: Init Eastern Fortress [function] {"position":"7457,3081","size":"100,100"}
+{(set: $environmentMaterials to (a: "stone", "brick", "charcoal", "driftwood", "log and post", "concrete", "flagstone", "cobble", "tile", "recovered crossbeam"))
+(set: $environmentColors to (a: "brown", "ochre", "tan", "gray"))
+(set: $clothingMaterials to (a: "silk", "satin", "linen", "rag", "wooden plate", "leather", "hemp"))
+(set: $clothingColors to (a: "brown", "dun", "gray", "yellowed", "tawny"))
+(set: $clothingTypes to (a: "kilt", "apron", "loincloth", "girdle", "tunic", "dressing gown","coveralls", "one-piece", "armor"))
+(set: $adornmentMaterials to (a: "stone", "copper", "ceramic", "gold", "silver", "dolemite", "pyrite", "bronze","chitin"))
+(set: $adornmentTypes to (a: "plate", "plug", "spool", "ring", "stud", "chain"))
+(set: $hairstyles to (a: "a shaven scalp", "a bald pate", "shaven sides and a top knot", "a brief top knot", "a top knot", "a lacquered headdress", "a shaggy mane"))
+
+(set: $sizes to (a: "stout", "scrawny", "burly", "rotund", "gaunt", "obese", "muscular", "sculpted", "compact", "lithe"))
+(set: $genders to (a: "man", "woman", "non", "herm"))
+(set: $races to (a: "human", "gnome", "daemonkin", "changeling", "drakish", "mekannin","insekvolk"))
+(set: $skinColors to (a: "black", "tan", "brown", "pink", "pale", "silver"))
+(set: $skinTypes to (a: "smooth", "lightly furred", "fur-covered", "scaled", "chitinous"))
+(set: $professions to (a: "soldier", "thief", "ragpicker", "sineater", "cursekeeper", "prostitute", "thug", "student", "alckymist", "blacksmith","explorer","archeologist","technoresurrectionist"))
+}
+{(set: $neighborhood to 
+(dm: "name", "Eastern Fortress", 
+"tagname", "easternfortress",
+	"locations", (altered: _item via _item's name, ...(find: _item where _item's tags contains all of (a: "easternfortress", "location"), ...(passages:))),
+"contracts", (altered: _item via _item's name, ...(find: _item where _item's tags contains all of (a: "easternfortress", "contract"), ...(passages:))),
+		"events", (altered: _item via _item's name, ...(find: _item where _item's tags contains all of (a: "easternfortress", "event"), ...(passages:)))))}
+
+:: Eastern Fortress Color {"position":"7618,3223","size":"100,100"}
+(either: "Upstanding fortress dwellers.",
+"You see a group wearing loincloths or loose tunics playing a game played with stones on a board scratched into stones of the sidewalk.",
+"A gaggle of youngsters scampers by adorned in colorful ritual clothes.",
+"A frothing religious zealot writhes around on the ground, speaking in tongues.  If you were to dip down and listen, you'd make out the sound of yesterday's stock market prices.",
+((either: "Gigantic birds", "Broad-headed ruminants", "Long-legged pachyderms", "Stocky equines") + ", " + (either: "about the size of an ostrich", "about the size of a Buick", "about the size of a camel", "about the size of a mammoth") + ", " + (either: "carrying packs of dry goods.", "laden with oil for the temple", "with saddlebags full of anthracite and frankincense")),
+"Monastic cohort with " + (either: "diagrammatic", "elaborate", "simple") + " tonsures " + (either: "examing lost scrolls written in Low Enochian.",
+"sifting through potsherds engraved with elaborate geometric diagrams.",
+"burning incense and chanting prayers in Pig Latin.",
+"sprinkling water on the dusty street and reciting the Ineffable Names of the Void.",
+"staring directly at the giant eyeball that constantly watches everyone but we never talk about."),
+"a troupe of veil dancers with flaming batons",
+"whirling dervishes each with a Damascene sabre balanced on top of their heads",
+"street performers demonstrating balance and contortion to a radical degree",
+"a geometric swarm of very small mekannin insects",
+"a team of laborers dragging a cart overloaded with bales of alfalfa",
+"reams of parchment, piles of unopened crates, reams of silk, satin, lace, bubble wrap, fishnet",
+"remaindered shellac records of every permutation of " + (either: "The Ramones's Blitzkrieg Bop.", "Ode To Joy."),
+"children playing knucklebones on top of a half-wall",
+"a tattoist has a small pop-up stand near an ornamental manticore sculpture a quick scan of their wares reveals weak toy charms and ineffectual curses.",
+"A street merchant is schlepping arthropods on a stick roasted in a brazier full of anthracite",
+"a puppet maker assembling sinew and bone into terrifying homunculi",
+"a " + (either: ...$races ) + " is currently getting their " +(either: "nostril", "septum", "lip", "cheek", "bridge", "eyebrow", "forehead", "earlobe", "conch", "upper ear", "tongue", "sternum", "chin", "cheekbone", "finger webbing") + " pierced with a " + (either: "tiny ", "giant ", "")+" "+(either: "spike", "ring", "barbell", "bone", "wooden needle") + ".",
+"Two red-faced merchants are screaming at each other over imagined slights.  One wears a khaffia, and the other wears a cybernetic neural interface, but they are as like siblings.",
+"A group of off-duty mercenaries briefly make eye contact with you, but quickly wave you away.
+\"We're not taking any new jobs right now, friend.  Maybe later.\"",
+"Old folk are doing the laundry and hanging it to dry on rebar jutting from a wall that is surely a ruined freeway overpass.",
+"A teacher is using the side of a building as a grand chalk board.  The gaggle of children arrayed before him are serious and attentive."
+
+)
+
+
+:: Fortuna's Tea House [bookmark location easternfortress tick] {"position":"7474,3522","size":"100,100"}
+Fortuna is an animated and sentient fortune teller novelty booth.  She eats and smokes cigarettes constantly.
+
+"I want some of your gold, but I won't tell you how much.  In exchange, I'll give you access to a future of your choosing!"
+
+[[Lady Fortuna's Predictions]]
+
+(display: "NavOptions")
+
+
+:: Lady Fortuna's Predictions [tick] {"position":"7586,3522","size":"100,100"}
+(set: $arg to -(random: 0, $gold))(display: "UpdateGold")
+(set: _possibles to (find: _item where _item's tags contains "event", ...(passages:)))
+(for: each _i, ...(shuffled: ..._possibles)'s (range: 1, (min: _possibles's length, $cunning + $perception)))[
+(link-goto: _i's name)
+]
+
+
+:: Vivificarium [bookmark location easternfortress tick] {"position":"7481,3628","size":"100,100"}
+"Please, enter the chamber and be renewed!" a strangely well-preserved proprietor invokes.
+Vivification chamber as a service.
+(if: $gold >= 30)[(link-reveal-goto: "Use Vivification Chamber")[(set: $gold to it - 30)]]
+
+(display: "NavOptions")
+
+
+:: Artefaktuen Ganga [bookmark location easternfortress tick] {"position":"7468,3411","size":"100,100"}
+Once a vault built into the mountain, used to hide away the most dangerous artifacts in the known worlds, now a luxurious shopping plaza.
+
+(for: each _item, ...((shuffled: "Sharpened Teeth", "Vampir Krenk", "Badge of Shame", "Mark of the Goblins Lvl 1", "Loaded Dice", "Hell Money", "Shadow Lantern", "Everfull Flask", "Deck of Cards", "Chest Key")'s (range: 1, 3)))[
+(unless: $inventory contains _item)[(set: _cost to 35)(display: "QuickBuy")]
+]
+
+(display: "NavOptions")
+
+
+
+
+:: Encounter: Guards [event easternfortress uppercastlerock] {"position":"3664,3968","size":"100,100"}
+{(set: $enemyHealth to 5)(set: $enemyType to "Guards")(set: $deathReason to "You are crushed to a thin, red gruel by the guards.  Justice served?!")
+(set: $fightPattern to (a:(either: "Strike","Block"),(either: "Strike", "Throw")))(set: $enemyElementType to "Holy")
+(set: $fightIndex to 1)}
+You see a guard in the imperial tabard approaching.
+
+(if: $reputation's ($neighborhood's name) > 7)[
+They nod slightly as they pass you by.
+
+[[Next Encounter]] 
+]
+(else-if: (random: 0, $reputation's ($neighborhood's name)) < 5 or ($inventory contains "Badge of Shame"))[
+They approach you with weapons drawn.  Either they have mistaken you for someone else, or they know exactly who you are.  Either is bad.
+|output>[]
+
+|input>[
+(display: "Fight")
+(link-goto: "Go Along Quietly", "Magisterium Local Office")
+]
+
+
+](else:)[They push past you without even so much as making eye contact.
+[[Next Encounter]]]
+
+(event: when $enemyHealth <= 0)[ (replace:?input)[ [[Next Encounter]] ]]
+
+
+
+:: Encounter: Aura of Illusion [eastfortress event] {"position":"4243,4204","size":"100,100"}
+The City is full of magicians, witches, conjurors, warlocks, necromancers of all stripes.
+Each one has spells, counterspells, wards, counterwards, and enchantments surrounding them at all times.
+Any one of them would be dangerous on its own, but when they interact with each other, they can interfere with each other.
+(either:
+"As you watch, the traces of enchantment become finer and more subtle."
+,"As if a fog has descended upon you, the lattice of enchantment that surrounds you becomes harder to discern."
+,"It feels as if someone has cast a cloaking spell to hide enchantments from mortal senses.")
+
+(set: $enchantmentHidden to it + 1)Illusion + 1 ($enchantmentHidden)
+
+[[Next Encounter]]
+
+
+
+
+
+
+:: Sameera's Superior Documents [bookmark location easternfortress tick] {"position":"7476,3857","size":"100,100"}
+Sameera invites you into her store with a delicate gesture.
+You duck through the low entrance and are immediately intoxicated with the smell of old paper.
+
+You peruse her excellent collection of antiquities and identify a few that hold your interest.
+
+(set: _arg to "Philomender's Book of Excellent Knots")
+(unless: $inventory contains _arg)[(if: $perception < 7)[(set: _item to _arg)(set: _cost to 150)(display: "QuickBuy")]
+(else:)[(set: _item to _arg)(set: _cost to 120)(display: "QuickBuy")]]
+
+(set: _arg to "Ex Nobilis Aetherium")
+(unless: $inventory contains _arg)[(if: $perception < 7)[(set: _item to _arg)(set: _cost to 150)(display: "QuickBuy")]
+(else:)[(set: _item to _arg)(set: _cost to 120)(display: "QuickBuy")]]
+
+(set: _arg to "The True History of Leng")
+(unless: $inventory contains _arg)[(if: $perception < 7)[(set: _item to _arg)(set: _cost to 150)(display: "QuickBuy")]
+(else:)[(set: _item to _arg)(set: _cost to 120)(display: "QuickBuy")]]
+
+(display: "NavOptions")
+
+
+:: Eastern Fortress Foray Gate [tick location bookmark easternfortress] {"position":"7478,3751","size":"100,100"}
+You are astride the Foray Gate.  Out there is untold treasure: both gold and forbidden scrolls.
+
+Also death.  Mainly death.
+
+[[Embark on a Foray]] 
+
+(display: "NavOptions")
+
+
+
+:: Encounter: Sparring Duel [encounter easternfortress] {"position":"441,3710","size":"100,100"}
+Two wizards face off and challenge each other strictly within an arena and without attempting to harm their opponent.
+
+The winner gains rank and the loser falls in rank.
+|input>[
+(link-reveal: "Accept the Loss")[(replace:?input)[
+(display: "An Embarassing Display")
+[[Next Encounter]] ]
+]
+[[I'd Rather Not Be Humiliated In Public->Encounter: Wizard Duel]]
+]
+
+
+:: Eternal Ephemera [location easternfortress bookmark] {"position":"7480,3980","size":"100,100"}
+(set: _cost to 1500)
+(for: each _item, "Cursed Mirror", "God's Eye", "Neighborhood Door to West Fires")[
+(display: "QuickBuy")
+]
+
+(display: "NavOptions")
+
+
+
+:: Zenoarcheological Society [location easternfortress bookmark] {"position":"7490,4097","size":"100,100"}
+Not to be confused with the "Xenoarcheological Society".  Quite a different group of folk.
+
+
+(if: (random: 0, 6) is 6)[(display:  "Lord Hubris")]
+
+(set: _recruitCost to 100)
+(if: $reputation's ($neighborhood's name) > 5 and $gold >= _recruitCost)[
+You can purchase supplies and provisions for a foray directly from the society's general store.
+(link-reveal: "Stock Up")[Supplies per worker per day will cost _recruitCost lucre.  This is non-refundable, but you can store supplies in between forays.
+
+How much would you like to buy?
+(cycling-link: bind _recruit, (altered: _i via (str: _i), ...(range: 1, $gold/_recruitCost)))
+(link-reveal: "Sold!")[
+(set: $arg to -((num: _recruit) * _recruitCost))(display: "UpdateGold")(set: $arg to (num: _recruit))(display: "UpdateForaySupplies")
+]]]
+
+[[Embark on a Sanctioned Foray]]
+
+(display: "NavOptions")
+
+:: Astrid Joiner [easternfortress southquarry persona] {"position":"7484,4205","size":"100,100"}
+Astrid is a determined digger, looking for the Ancestors who created Eastern Fortress.  Steely-grey eyes shaded by a sopping pith helmet, curly brown hair, and deeply tanned skin.
+
+You're free to run off on a foray all by yourself, but you should be really careful.  If you don't have any supplies, you can starve to death in a very short amount of time.  If you don't have any crew, you're not going to get the most out of any discoveries you make.
+
+We don't know who created this place.  Isn't it incredible that we, the apparent pinnacle of civilization, don't even know who created this place?  We call them The Ancients, and we find their trinkets and riddles all over the place, but we still don't really know who they really were.
+
+You should go to Oasis Refreshments if you want to find folk to hire for your foray crew.  There's always a crowd of mysterious strangers who will work with anyone who has gold and doesn't ask questions.
+
+
+I don't much have use for this anymore. //She hands you her Zenoarcheological Society membership card//  The name's all blurry, so they won't know it's not really yours.
+Hey, I'll loan you one of my books so long as you promise to read it before you see me next, okay?  I'm serious! //She hands you some rare book//
+Hey, did you read the book or not? //If history contains "Read <Book Name>"//Very good, my friend.  I'd love to dish with you over the details, but I'm off on a very well researched, very well funded foray, and I need a partner along to do the dirty work.  She winks.
+//else//You didn't even bother, did you?  Well, you missed out, innit? //She takes back the book//
+//If you lost or sold the book// What?! <legitimately furious> You lost a book!  That is sacrilege!
+//After successfully foraying with her//
+Even though I am the rightful owner of this <important artifact>, I feel that you should have half of it. <she proceeds to cut it in half and give you the slightly smaller piece>  Don't worry, it's the material that the <importan artifact> is made out of, not the shape of it.  Half an artifact still works just fine.
+
+
+:: Lord Hubris [easternfortress persona] {"position":"7487,4330","size":"100,100"}
+Mekannin head of the Zenoarcheological Society.
+
+You should go to the Zenoarcheological Society if you wish to engage in a *Sanctioned* Foray.  None of that *winging it* nonsense.
+No, not the Xenoarcheological Society.  Those are a completely different society.
+
+My memories are etched onto unobtanium plates.  When they fill up, I have to determine which memory plate I must sacrifice if I must form new long term memories.  As a consequence, I rarely choose to form new long term memories.  Therefore, I will never remember this conversation.  Not to be rude, but you must understand my predicament.
+
+We have evidence suggesting that I was created during the Era of The Ancients.  That means that I must have known them.  Alas, my irreplaceable memory plates are short precisely 7 plates, presumably stolen.
+
+
+
+:: Oasis Refreshments [location easternfortress bookmark] {"position":"7488,4455","size":"100,100"}
+Friendly faces... mostly mercenaries.
+(set: _roll to (random: 2,7))About _roll of them.
+
+(if: (random: 0, 6) is 6)[(display:  "Astrid Joiner")]
+
+(link-reveal: "Buy A Round")[(set: _roll to it * (random: 1, 3))(if: _roll > $gold)["That ain't enough ducats, friend", sneers the barkeep.
+(display: "An Embarassing Display")](else:)[A round of watery, room temperature bhanga certainly lightens the mood.(set: $arg to -_roll)(display: "UpdateGold")(set: $arg to (either: 0, 1,1))(display: "UpdateReputation")]]
+(set: _recruitCost to 100)
+(if: $reputation's ($neighborhood's name) > 5 and $gold >= _recruitCost)[
+You can recruit from the locals to attend your forays.
+(link-reveal: "Recruit")[Each foray worker will charge you _recruitCost lucre per foray.  If the foray doesn't produce enough treasure and ancient arcane knowledge to be profitable, that's not our problem.
+
+How many would you like to recruit?
+(cycling-link: bind _recruit, (altered: _i via (str: _i), ...(range: 1, (min: (random: 1, _roll), $gold/_recruitCost))))
+(link-reveal: "You're Hired!")[
+(set: $arg to -((num: _recruit) * _recruitCost))(display: "UpdateGold")(set: $arg to (num: _recruit))(display: "UpdateForayCrew")
+]]]
+
+
+(display: "NavOptions")
+
+:: Feorag's Fungibles [location easternfortress tick bookmark] {"position":"7490,4570","size":"100,100"}
+Feorag is a commodities broker for aetherial reagents, specifically:
+(unless: $feorag is not 0)[
+(set: $feorag to (dm: "Shadow Threads", 90, "Ethereal Threads", 90, "Infernal Threads", 90, "Mortal Threads", 90))]
+|input>[(for: each _i, ...(datanames: $feorag))[(set: _item to _i)(set: _value to $feorag's (_i))(print: _item) - (print: _value)
+(if: $gold >= _value + 5)[(unless: $inventory contains _item)[
+(link-reveal: "Buy For " + (string: _value + 5))[(replace:?input)[Bought 1 _item for _value lucre.
+(set: $arg to -(_value + 5))(display: "UpdateGold")
+(set: $arg to _item)(display: "GetItem")
+(set: $feorag to it + (dm: _item, _value + 5))]]]]
+(if: $inventory contains _item)[
+(link-reveal: "Sell For " + (string: _value))[(replace:?input)[Sold 1 _item for _value lucre.
+(set: $arg to _value)(display: "UpdateGold")
+(set: $arg to _item)(display: "LoseItem")
+(set: $feorag to it + (dm: _item, (max: _value - 5, 5)))]]]
+]]
+
+(display: "NavOptions")
+
+
+
+:: Rare Crates Emporium [location bookmark easternfortress] {"position":"7495,4910","size":"100,100"}
+Stacked up in great, teetering towers are crates being offloaded from various excursions to and from the Eastern Fortress Foray Gate.  You can buy one for 75 coins, crack it open, and see what you've bought!
+(if: $gold >= 75)[
+(link-repeat: "Crack Open a Crate")[
+(if: $gold >= 75)[(set: $arg to -75)(display: "UpdateGold")
+(set: _roll to (random: 0, 3))
+(if: _roll is 0)[A load of pottery, but... ah! //This// jug happens to be a Soul Jar containing a (set: $arg to (either: "Fire Ghost", "Shadow Daemon"))$arg.
+(display: "GetDaemon")]
+(else-if: _roll is 1)[(set: $arg to (either: "Piece of Pitch", "Quaff of Quicksilver"))(display: "GetItem")]
+(else:)[
+It's mostly worthless rubbish, but there's enough valuables in there that you recover some of your investment.(set: $arg to (random: 1,74))(display: "UpdateGold")
+]](else:)[You've gambled away all of your coins.]]](else:)[If you had any dosh, you could burn a little here.  But you don't, so you can't.]
+
+
+(display: "NavOptions")
+
+
+
+:: Spice Market [location easternfortress bookmark tick] {"position":"7495,4794","size":"100,100"}
+The Spice Market is the gathering of merchants from all over the branes.
+You can get any reagent available to mortals such as yourself, and maybe a few more besides.
+// \todo: make the price double each time you use it each day
+The (either: "odor", "aroma", "stench") is quite (either: "terrible", "delightful", "sickly", "invigorating", "seductive", "nauseating", "heavenly", "amazing").
+
+(set: _options to (altered: _v via _v's name, ...(shuffled: ...(find: _i where _i's tags contains "reagent", ...(passages:)))'s (range: 1, 3)))
+
+(for: each _item, ..._options)[
+(unless: $inventory contains _item)[(set: _cost to (random: 5, 15) * 10)(display: "QuickBuy")]
+]
+
+(display: "NavOptions")

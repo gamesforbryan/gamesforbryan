@@ -1,0 +1,238 @@
+
+:: Trove: Monster Attack [mining-status] {"position":"6195,7100","size":"100,100"}
+(if: (passage:)'s name is not "Monster Attack")
+[(set: $miningEvents to (a: ))
+(set: $miningGoldYieldRate to 0)
+(set: $miningDanger to it + 5)
+(set: $miningCrew to it - (random: 1, 3))
+// Send mail //
+(set: $mail to it + (a:
+(dm: "sender", "Dig Site #3",
+     "message", "Health & Safety has shut down the dig site until you clear out a guardian beast infestation.",
+	 "attachment", "Nothing"
+)
+))
+]
+(else:)
+[Something has begun picking off members of your crew!
+They refuse to work until you fend off the creature.
+
+// Fight with a guardian monster/daemon/automaton, etc. //
+[[Slay The Beast In The Mines!]]
+
+
+[[Seal off the Mine->Dig Cancelled]]
+]
+
+
+:: Slay The Beast In The Mines! {"position":"6319,7107","size":"100,100"}
+[[Trove: Army of the Dead]] 
+[[Trove: Basilisk]] 
+[[Trove: Blind Cave Serpent]] 
+[[Trove: Giant Mechanical Homonculus]] 
+[[Trove: Elder Gnome]] 
+[[Trove: Sentient Arachnid]]
+
+
+:: Seal Up The Trove {"position":"6078,6685","size":"100,100"}
+You order the foreman and a large portion of your crew to seal off the trove.
+
+(set: $miningEvents to (a: "Deeper We Dig...  But No Yield",
+"Deeper We Dig...  But No Yield",
+"Deeper We Dig...  But No Yield",
+"Deeper We Dig...  But No Yield",
+"Trove Discovered",
+"Deeper We Dig...  With Some Yield"))
+(display: "TickMining")
+(display: "NavOptions")
+
+
+:: Enter the Trove {"position":"6286,6807","size":"100,100"}
+You set out with an expeditionary force of your most seasoned crew.
+They wear sturdy mining helmets and padding quite like a suit of leather armor.  They are armed with pickaxes and shovels, with a demolitions expert also carrying various high explosives in a durable case.
+
+// Random chance of encountering a monster //
+[[Trove: Army of the Dead]]
+[[Trove: Basilisk]]
+[[Trove: Blind Cave Serpent]]
+[[Trove: Giant Mechanical Homonculus]]
+// Random chance of finding gold //
+[[Trove: Gold Cache]]
+// Random chance of finding items //
+[[Trove: Treasure Cache]]
+// Random chance of meeting a special encounter //
+[[Trove: Shop Keeper]]
+[[Trove: Elder Gnome]]
+[[Trove: Sentient Arachnid]]
+[[Trove: Goblin Chieftain]]
+
+
+:: Trove: Army of the Dead {"position":"6209,7332","size":"100,100"}
+Each individual member of the army has weak, paper-like limbs, but their collective mass could trap and kill a living being and then recruit them into their ranks.
+
+
+:: Trove: Basilisk {"position":"6203,7212","size":"100,100"}
+A single, small, ungainly creature in a dense hydra of tunnels.  A single touch will kill you.
+
+
+:: Trove: Blind Cave Serpent {"position":"6454,7333","size":"100,100"}
+// Fight a creature that is a big damage sponge that rarely hits, but when it does, hits hard //
+
+
+:: Trove: Giant Mechanical Homonculus {"position":"6323,7214","size":"100,100"}
+// The giant metal homonculus must either be fought (high health; hits for 1 each turn) or reprogrammed/sabotaged //
+
+
+:: Trove: Gold Cache {"position":"6619,7110","size":"100,100"}
+(set: _value to (random: 1, 10) * 100)
+(set: $gold to it + _value)
+You find a random amount (~_value coins worth) of gold in a (either: "small", "large") (either: "chest", "barrel", "heap")
+
+[[Seal Up The Trove]]
+
+[[Dig Site #3]]
+
+(display: "NavOptions")
+
+
+:: Trove: Treasure Cache {"position":"6612,7222","size":"100,100"}
+You see a pile of treasure.  It is cleverly trapped such that you may only take one item, and the rest will be pulverised under an enormous stone hammer.  Not sure why the Ancients thought that was a good idea, but you play the hand you're dealt.
+
+|input>[
+(for: each _item, ...(shuffled: ...(find: _i where _i's tags contains "item", ...(passages:)))'s (range: 1,3))[
+(set: _chosen to _item)(link-reveal: _item)[(replace:?input)[(set: $arg to _chosen)(display: "GetItem")
+]]]]
+
+[[Seal Up The Trove]]
+
+[[Dig Site #3]]
+
+(display: "NavOptions")
+
+
+:: Trove: Shop Keeper {"position":"6630,6978","size":"100,100"}
+A strange, wizened creature in a hooded robe sits on a threadbare flying carpet arrayed with items for sale.
+
+// Stuff for Sale //
+
+[[Seal Up The Trove]]
+
+[[Dig Site #3]]
+
+(display: "NavOptions")
+
+
+:: Trove: Elder Gnome {"position":"6327,7334","size":"100,100"}
+This creature of animated earth was asleep.
+50% of big fight.
+50% you agree to dig around it, and it returns to sleep.
+
+
+:: Trove: Sentient Arachnid {"position":"6445,7222","size":"100,100"}
+50% chance of a fight
+25% chance you are poisoned and trapped in a web
+25% chance you can talk your way out of it
+
+
+:: Trove: Goblin Chieftain {"position":"6530,6690","size":"100,100"}
+Goblins are curious folk.  Once completely human, they willingly joined or were abducted into a goblish tribe.  Through a series of rituals and surgeries, they are slowly converted into a goblin.  It is thought to be an irreversible process, but it is hard to say, as no one has ever willingly left a goblin tribe once they joined.
+
+Each tribe has their own aesthetic, ranging from "basically humans but with pointy ears and teeth" to "absolutely speciated underdweller".  They have no sense of personal property, so they may steal items from you.
+
+You make contact with the local tribe's chieftain, a (either: "old", "middle-aged", "surprisingly young") intersexed member furthest along in the direction of the local's aesthetic.
+
+(either: "They are still obviously human in origin.",
+"They are halfway between human and goblin states, belonging still to both worlds.",
+"If you did not know that goblins are a transpeciated human, you wouldn't believe that the creature had come from your kind.")
+
+(either: "This local group goes in for large jewelry.  Earlobes, nostrils, lips, random patches of flesh, all sporting thick plugs and plates made from bone and quartz.",
+"This local group wears needles of titanium coated with psychoactive toad juices in their lips and septum.  Chains hang from their earlobes.  They file their teeth to points.",
+"They are positively covered in blue-black tattooes.  They start by tattooing the wrists, throat, and ankles.  As time passes, they have regular ritual tattooing.  The tattoos spread from the origin sites until the person is completely covered.  At this time, the sclera of their eyes will inexplicably turn black.",
+"Miniature horns erupt from their foreheads in various numbers: usually 2 or 4, but sometimes 1, 3, 7, 20!  The chieftain has a crown of nine horns shaped like kris blades.  Instead of incisors, they bear small curved tusks.",
+"They are assigned a color of edible fungus to eat, and they eat that fungus exclusively.  The nutritional content is about the same for any given mushroom, but the pigments convert the eater's skin a vivid blue, red, green, black in response.",
+"Vestigial wings have sprouted from their backs.  Most members have either fewer than the typical 5 fingers and toes or more and webbing between them all.  They mutilate their noses with a series of symmetrical cuts.")
+
+Goblins and Wizards get along just fine.  This goblin is wielding a very powerful magical staff.
+
+// You can be a dick and try to steal from the goblins, but they'll rush you and try to kill and eat you //
+[[Trove: Steal the Goblin Chieftain's Staff]]
+
+//  You can trade rumors and possibly get good items //
+// Randomly lose items to the goblin tribe //
+[[Trove: Hold Palaver With the Goblin Chieftain]]
+
+
+// Become a Goblin //
+[[Trove: Join the Goblins]]
+
+
+:: Trove: Steal the Goblin Chieftain's Staff {"position":"6667,6831","size":"100,100"}
+You and the Goblin Chieftain hold palaver while the rest of the clan surrounds you.
+
+Goblins, as a society, don't have a concept of personal property outside of the clan.
+
+So, outsiders cannot steal from them, but they can steal from outsiders.
+
+// Randomly lose item //
+
+(if: $inventory contains any of (a: "Mark of the Goblins Lvl 1", "Mark of the Goblins Lvl 2", "Mark of the Goblins Lvl 3"))
+[They gladly hand over their wand to a member of the tribe.  Use it for as long as you need it.
+(set: $inventory to it + (either: "Frozen Icicle", "Warding Wand", "Diadem of Digging"))
+
+[[Seal Up The Trove]]
+
+[[Dig Site #3]]
+
+(display: "NavOptions")
+](else:)
+[
+You are savagely attacked by the entire tribe.
+
+[[Death]] 
+]
+
+
+:: Trove: Hold Palaver With the Goblin Chieftain {"position":"6647,6710","size":"100,100"}
+You and the Goblin Chieftain hold palaver while the rest of the clan surrounds you.
+
+Goblins, as a society, don't have a concept of personal property outside of the clan.
+
+So, outsiders cannot steal from them, but they can steal from outsiders.
+
+// Randomly lose item //
+
+(if: $inventory contains any of (a: "Mark of the Goblin Lvl 1", "Mark of the Goblin Lvl 2", "Mark of the Goblin Lvl 3"))
+[
+// Get goblin rumors //
+](else:)
+[
+// Get normal rumors //
+]
+
+[[Seal Up The Trove]]
+
+[[Dig Site #3]]
+
+(display: "NavOptions")
+
+
+:: Trove: Join the Goblins {"position":"6647,6600","size":"100,100"}
+(set: $inventory to it + (ds: "Mark of the Goblins Lvl 1"))
+The process is horrifically painful, but once it is complete, you are an honorary member of the tribe.  They understand that you have a life in the greater world, they just ask that you come by to visit every now and then.
+
+[[Seal Up The Trove]]
+
+[[Dig Site #3]]
+
+(display: "NavOptions")
+
+
+:: Have Your Gnome Clean Up The Cave-In {"position":"5323,7199","size":"100,100"}
+You so happen to have a wee daemon who especially excels at digging.
+(link-reveal: "Have Your Gnome Clean Up The Cave-In")[(replace:?input)[]
+(set: $miningEvent to "Deeper We Dig...  With Some Yield")
+(display: "TickMining")
+The Gnome quickly restores the tunnel to excellent condition, freeing all of the trapped crew.
+(if: (random: 0, 1) > 0)[It scarpers right afterwards, feeling like it did its job properly. (set: $arg to "Gnome")(display: "LoseDaemon")]
+(else:)[You manage to herd it right back into the Soul Jar after it performed its work.]
+]

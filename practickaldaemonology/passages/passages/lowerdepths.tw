@@ -1,0 +1,245 @@
+
+
+:: Lower Depths [tick] {"position":"3698,5863","size":"200,200"}
+(display: "Init Lower Depths")
+The city below the city is both grim and artful. The albino, spooky, and the Undead live here.  They have chosen not to hide among the Abovedwellers but to develop a full society of their own within the light of reflected and stored moonlight in crystals.  Lighting their city entirely with magical moonlight crystals was chosen purely for aesthetic effect.  It's actually quite inefficient but stunningly beautiful.
+
+(for: each _item, ...($neighborhood's locations))[(if: (history:) contains _item and (passage: _item)'s tags contains "bookmark")[(link-goto: _item)
+
+]]
+
+(display: "NavOptions")
+
+
+:: Init Lower Depths [function] {"position":"3741,5739","size":"100,100"}
+{(set: $environmentMaterials to (a: "stone", "brick", "chalk", "stalactite", "stalagmite", "crystal", "earthen", "marble"))
+(set: $environmentColors to (a: "white", "black", "gray"))
+(set: $clothingMaterials to (a: "fur", "felt", "linen", "rag", "metal plate", "leather", "wool"))
+(set: $clothingColors to (a: "brown", "black", "gray", "white", "yellowed"))
+(set: $clothingTypes to (a: "tabard","gown", "shroud", "loincloth", "girdle", "three-piece suit", "robe"))
+(set: $adornmentMaterials to (a: "bone", "ivory", "copper", "clay", "gold", "silver", "obsidian", "iron", "tin", "lead"))
+(set: $adornmentTypes to (a: "plate", "plug", "ring", "stud"))
+(set: $hairstyles to (a: "a shaven scalp", "a bald pate", "a tonsure", "an elegant braid", "a lacquered headdress", "a shaggy mane"))
+
+(set: $sizes to (a: "grand", "stout", "scrawny", "burly", "rotund", "gaunt", "obese", "muscular", "sculpted", "lithe", "slender", "bloated", "warped"))
+(set: $genders to (a: "man", "woman", "non", "herm"))
+(set: $races to (a: "human", "shade", "daemonkin", "changeling", "Undead", "zombie", "lich", "goblin", "troll"))
+(set: $skinColors to (a: "black", "tan", "brown", "blue", "green", "yellow", "silver", "red", "gray"))
+(set: $skinTypes to (a: "smooth", "lightly furred", "fur-covered", "scaled", "faceted", "marbled", "translucent", "gently burning"))
+(set: $professions to (a: "soldier", "thief", "ragpicker", "sineater", "cursekeeper", "prostitute", "courtesan", "thug", "student", "alckymist", "resurrectionist", "soulbroker"))
+
+(set: $neighborhood to 
+(dm: "name", "Lower Depths",
+"tagname", "lowerdepths",
+	"locations", (altered: _item via _item's name, ...(find: _item where _item's tags contains all of (a: "lowerdepths", "location"), ...(passages:))),
+"contracts", (altered: _item via _item's name, ...(find: _item where _item's tags contains all of (a: "lowerdepths", "contract"), ...(passages:))),
+		"events", (altered: _item via _item's name, ...(find: _item where _item's tags contains all of (a: "lowerdepths", "event"), ...(passages:)))))}
+
+
+:: Lower Depths Color {"position":"3585,5918","size":"100,100"}
+(either: "The spooky and gloomy citizens of the True City Beneath The City.", "Great crystal pillars loom overhead, diffusing the gloomy moonlight.", "A few bright faces peer out at you from behind crowds of shambling Undead.", "A shambler in front of you suddenly collapses Truly Dead.", "When you first came to this place, you were as fresh as a babe.  Now, you feel like you fit in a little too well.")
+
+:: Sanctum Nero [lowerdepths location bookmark tick] {"position":"3748,6066","size":"100,100"}
+The most precious artifact in the world is housed here, behind a garrison of wizards, soldiers, and daemons.
+
+
+(set: _item to "Aleph")(set: _cost to 1)(display: "QuickBuy")
+
+[[Begone!->Home Again]]
+
+
+:: Godiva's Hearth [location lowerdepths bookmark tick] {"position":"3749,6176","size":"100,100"}
+Godiva, the proprietor is a large golden mask supported by a cloud of smoke approximating a human woman eight feet high and four feet wide.
+
+They offer to tell your fortune in exchange for a small donation.
+
+"I can give you a choice of futures in exchange for an item of yours.  No, I won't tell you which item."
+
+[[Buy A Fortune From Godiva]]
+
+(display: "NavOptions")
+
+
+:: Buy A Fortune From Godiva {"position":"3857,6178","size":"100,100"}
+(set: _item to (either: ...$inventory))(display: "LoseItem")
+(set: _possibles to (find: _item where _item's tags contains "contract", ...(passages:)))
+(for: each _i, ...(shuffled: ..._possibles)'s (range: 1, (min: _possibles's length, $cunning + $perception)))[
+(link-goto: _i's name)
+]
+
+(display: "NavOptions")
+
+
+:: Fountain of Blood [location lowerdepths tick] {"position":"3750,6282","size":"100,100"}
+If you aren't the squeamish type, feel free to drink from yon spring of black blood, guaranteed to boost your life force.
+
+(link-reveal: "Let's Drink!")[
+(set: $arg to 1)(display: "GainHealth")
+(if: (random: 0, 13) is 0)[Oops, you've picked up a touch of vampirism.
+(set: $arg to "Vampir Krenk")(display: "GetItem")]
+]
+
+(display: "NavOptions")
+
+
+:: Archives [location bookmark lowerdepths tick] {"position":"3751,6387","size":"100,100"}
+This place is both a library and a prison.
+The creatures and books contained within are so contained, because they are too dangerous to be released.
+
+So, naturally, you'd like to know how to break in and get some really dangerous artifacts.
+
+[[Enter the Archives]]
+
+(if: (history:) contains any of (a: "Read Practical Thievery: A Young Rogue's Primer"))
+[
+[[Case the Archives]]
+]
+
+(display: "NavOptions")
+
+:: Enter the Archives {"position":"3876,6390","size":"100,100"}
+(set: _cost to 1500)
+(for: each _item, "Macro Caster", "The Aleph", "Gold Loom", "Magisterium Head Office Calling Card", "The Incredibly Secret Machine's User Manual", "Patent Filing for Experimental Rift Ship")[
+(display: "QuickBuy")
+]
+
+(display: "NavOptions")
+
+
+
+:: Case the Archives [tick] {"position":"3994,6391","size":"100,100"}
+You find a (either: "park bench", "sausage vendor", "obelisk") to casually wait around, observing the patterns of the workers, changing of the guards, etc.
+
+// Feedback on guard patrols, etc. //
+
+[[Case the Archives]] 
+
+[[Enter the Archives]]
+
+(display: "NavOptions")
+
+
+:: Encounter: Corpse Cart [event lowerdepths] {"position":"3655,4436","size":"100,100"}
+A creaking cart laden with diseased corpses rolls slowly by, pulled by a team of zombified corpses.
+
+Do not touch the corpse cart, lest you risk a horrible infection.
+|input>[(link-reveal: "Squeeze Past")[(replace:?input)[(if: (random: 0, $cunning + $perception) > 2)[You manage to slip past between the wall and the cart without making contact with anything contagious.]
+(else:)[Oh, gosh, you accidentally brushed up against a big, old diseased lump of dead flesh.
+(set: $arg to "Plague Marks")(display: "GetItem")
+]
+[[Next Encounter]] ]]]
+(link-reveal: "Pick the Pockets of the Dead")[(replace:?input)[(if: (random: 0, $cunning + $perception) > 4)[You delicately or luckily pick a piece of pocket dosh without contracting anything immediately unpleasant.
+](else:)[Oh, gosh, you accidentally brushed up against a big, old diseased lump of dead flesh.
+(set: $arg to "Plague Marks")(display: "GetItem")]
+(display: "An Embarassing Display")
+(set: $arg to (random: 1, 3) * 15)(display: "UpdateGold")
+[[Next Encounter]] ]]
+:: Lost Books [location lowerdepths tick bookmark] {"position":"3755,6495","size":"100,100"}
+The store is unnaturally cold and contains no visible staff.
+
+(unless: $inventory contains "Penny Dreadful")[A slim magazine lies on a dusty table, with a paper price tag attached by a length of string.
+(set: _item to "Penny Dreadful")(set: _cost to 150)(display: "QuickBuy")]
+
+(display: "NavOptions")
+
+
+
+
+
+:: Ilgezin's Amusements [location lowerdepths bookmark] {"position":"3748,6611","size":"100,100"}
+(set: _cost to 150)
+(for: each _item, "Obsidian Lens", "Stiletto")[
+(display: "QuickBuy")
+]
+
+(display: "NavOptions")
+
+
+
+:: Shade of Owl Feathers [location lowerdepths] {"position":"3753,6720","size":"100,100"}
+The Thieves Guild.  The Guild House is hidden to anyone but members of the Guild.  You can't become a member unless you can get to the head office of The Guild House.
+
+[[Enter Shade of Owl Feathers]]
+
+(display: "NavOptions")
+
+
+:: Enter Shade of Owl Feathers {"position":"3881,6715","size":"100,100"}
+A squinting rogue in a weathered cowl approaches you, apparently unarmed.
+
+"Can I help ye?" they say.  Their one good eye appraises you with its blazing gaze.  "Ah, a wizard.  You can't be both a wizard and a rogue, er, not //legally// in the sense of laws that you and I bother with, but...  it wouldn't hurt for you to do your homework...  know what options you have available."
+
+(set: _cost to 150)
+(for: each _item, "Practical Thievery: A Young Rogue's Primer")[
+(display: "QuickBuy")
+]
+
+(display: "NavOptions")
+
+:: Dire Salon [location bookmark lowerdepths] {"position":"3754,6830","size":"100,100"}
+(if: $inventory contains any of (a: "Vampire Krenk", "Dire Salon Calling Card", "Hell Money"))[
+The jet-black double doors swing wide open as you arrive, letting you pass into the ruddy light of the Dire Salon.  It is surprisingly warm and cozy.
+
+[[Inside the Dire Salon]]
+](else:)[
+As you attempt to find the entrance, it appears to move before you arrive.
+You never see it move, and the discreetly posted Undead bouncers mostly hide their bemusement at your plight.
+]
+
+(display: "NavOptions")
+
+
+:: Inside the Dire Salon {"position":"3880,6816","size":"100,100"}
+Within the pulsing walls of the Dire Salon are giant, transparent hearts.
+Within the hearts are replicas of actual people from within The City.
+Through sympathetic magic, you can speak to them as if they were really right there next to you.
+
+In front of each heart is a small table with a little lamp and some light tea and snacks.  Sit down with the one you'd like to chat.
+
+(for: each _persona, ...(shuffled: ...(find: _i where _i's tags contains "persona", ...(passages:)))'s (range: 1,$perception))[
+(link-goto: (either: "Chat with ", "Speak to ", "Hold Palaver with ")+ _persona's name, _persona's name)
+]
+
+(display: "NavOptions")
+
+:: Encounter: Local Personality [event westfires easternfortress northharbor southquarry lowerdepths uppercastlerock] {"position":"3650,4712","size":"100,100"}
+(set: _person to (shuffled:
+...(find: 
+_p where _p's tags contains all of (a: $neighborhood's tagname, "persona")
+, ...(passages:)))'s 1st's name
+)
+You see _person walking towards you on the street.
+(display:
+_person
+)
+
+[[Next Encounter]]
+
+
+
+:: Bonepicker [lowerdepths persona] {"position":"3738,6955","size":"100,100"}
+Rag and bone man who cleans up the carcasses of Truly Dead off of the streets and pockets what little treasure they have.  
+
+Will trade any 1 item for 1 random item (site unseen)
+
+
+:: Inamorata [lowerdepths persona] {"position":"3868,6954","size":"100,100"}
+In her home country, she was a princess or some such, but being a vampire, she was driven from her home.
+
+White hair and skin.  Red eyes and lips.
+
+
+Inamorata
+Low-Level:
+    It is safe to drink from the Fountain of Blood, but there's a chance of contracting Vampirism.
+    If I knew of a cure for Vampirism, I wouldn't have had to move into this Neighborhood.
+Mid-Level (Player is a Vampire):
+    Bladed weapons are more likely to draw blood in a fight, and that blood will feed you.
+    We vampires aren't vulnerable to sunlight or anything like that.  We don't have any weaknesses at all, relative to humans, and that is why they hate us.
+High-Level (Player has cure for Vampirism):
+    You could restore my humanity and my royal position with a single draught.
+    I'll pay you [very large amount of money] for it.
+
+
+
+

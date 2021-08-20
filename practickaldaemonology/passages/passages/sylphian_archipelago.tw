@@ -1,0 +1,34 @@
+:: Sylphian Archipelago [location] {"position":"6430,235","size":"200,100"}
+(display: "Init Sylphian Archipelago")
+Ancient towers of a buoyant stone converted into luxury apartments reminiscent of Venice.
+Between Upper Castlerock and the four Main Neighborhoods.
+
+You also see the ruins of Lower Castlerock, which was originally just called Castlerock until...  you know....  they built the upper one.
+
+[[Lower Castlerock]]
+
+[[North Harbor]]
+
+
+:: Init Sylphian Archipelago [function] {"position":"6458,100","size":"100,100"}
+{(set: $environmentMaterials to (a: "float stone", "lift wood"))
+(set: $environmentColors to (a: "white", "yellow", "ochre", "gray"))
+(set: $clothingMaterials to (a: "fur", "hide", "flaxen", "hair"))
+(set: $clothingColors to (a: "brown", "black", "gray", "yellowed", "dun","sunbleached"))
+(set: $clothingTypes to (a: "loincloth", "tunic", "skirt", "bracers"))
+(set: $adornmentMaterials to (a: "leather", "cord", "beaded"))
+(set: $adornmentTypes to (a: "earrings", "bracelets", "utility belt"))
+(set: $hairstyles to (a: "a shaven scalp", "a bald pate", "mussed-up mane","a majestic crest"))
+
+(set: $sizes to (a: "scrawny", "rawboned"))
+(set: $races to (a: "human", "drake-kin", "sylph", "hawk-kin"))
+(set: $skinColors to (a: "black", "tan", "brown", "red", "gray"))
+(set: $skinTypes to (a: "smooth", "lightly feathered", "fur-covered", "scaled"))
+(set: $professions to (a: "sky pilot", "street sweeper", "messenger"))
+}
+{(set: $neighborhood to 
+(dm: "name", "Sylphian Archipelago", 
+"tagname", "sylphianarchipelago",
+	"locations", (a:),
+"contracts", (a:),
+		"events", (a:)))}

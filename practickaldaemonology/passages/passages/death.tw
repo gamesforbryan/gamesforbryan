@@ -1,0 +1,33 @@
+
+:: Death {"position":"3895,2862","size":"100,100"}
+(goto: "At the Veil of the Void")
+
+:: At the Veil of the Void {"position":"3894,2742","size":"100,100"}
+(if: $LazarusBeaconCharges is 0)
+[
+You have now passed through the Veil of the Void, and there is no turning back.
+
+(display: (either: "True Death Ending", "VR Ending", "Bad Acid Trip Ending"))
+
+This is The End.
+]
+(else:)
+[
+(set: $health to $maxHealth)
+(if: $cunning < 1)[(set: $cunning to 1)]
+(set: $LazarusBeaconCharges to it - 1)
+You have died.
+(if: $deathReason is not "")[
+$deathReason(set: $deathReason to "")
+]
+(if: $contractCancelledOnDeath is 1)[
+<div style="display:none">(display: "Cancel Contract")</div>
+]
+In the distance, but getting closer by the second is The Veil of the Void.
+
+It is the thinnest of barriers between being merely Dead or Undead and being Really Dead.  No one has ever come back from beyond the Veil of the Void.
+
+It is unspeakably beautiful, and you want to touch it.
+
+Best not to get too close.  The natural beauty of the Veil is what makes it so dangerous.  Your Lazarus Beacon expends a charge to create a portal from the realm of Death to your (link-reveal-goto: "Home Again")[(set: $cunning to $maxCunning)(set: $perception to $maxPerception)(set: $health to $maxHealth)].
+]

@@ -1,0 +1,434 @@
+
+:: GetDaemon [function] {"position":"4258,3239","size":"100,100"}
+//+ $arg//(set: $daemons to it + (ds: $arg))
+
+:: Encounter Daemon {"position":"4276,3467","size":"100,100"}
+|output>[]
+|input>[(display: "DaemonShuffle")]
+
+(event: when $enemyHealth <= 0)[ (replace:?input)[ [[Next Encounter]] ]]
+
+
+:: Buy a Daemon {"position":"4519,3220","size":"100,100"}
+The shopkeeper swaps your gold for a jar containing a $itemName.
+
+(set: _pay to 100)
+(set: $gold to it - _pay)
+<b>Gold - _pay</b>
+(set: $daemons to it + (ds: $itemName))
+
+(display: "NavOptions")
+
+
+
+:: Blood Sacrifice {"position":"5090,3377","size":"100,100"}
+You willingly shed your blood for them.(set: $deathReason to "It looks like you bled too much for the sacrifice and have expired via exsanguination, the worst of the sanguinations.")
+(set: $arg to (random: 0, 3))(display: "TakeDamage")
+[[Next Encounter]]
+
+
+:: Bribe Daemon {"position":"5090,3479","size":"100,100"}
+(if: $enemyBribeType is "Gold")[
+You cast a purse full of gold to them.  (set: $gold to it - (random: 5, 10))(replace:?clock)[(display: "RenderHeader")]  While they are distracted picking it up, you can silently walk away.
+(display: "An Embarassing Display")
+[[Next Encounter]] 
+](else:)[
+(if: $inventory contains $enemyBribeType)[(set: $inventory to it - (ds: $enemyBribeType))They snatch the $enemyBribeType from your inventory and attempt to scarper.
+
+[[Next Encounter]] 
+]]
+
+:: QuickBuyDaemon {"position":"5258,2460","size":"100,100"}
+(unless: $daemons contains _item)[_item
+(display: _item)(set: _i1 to _item)(set: _i2 to _cost)  It will cost you _i2 gold.(if: $gold >= _i2)[ You can afford it. (link-reveal-goto: "Buy It", (passage:)'s name)[(set: $daemons to it + (ds: _i1))(set: $gold to it - _i2)]
+](else:)[ Quite a bit too rich for your blood.]]
+
+:: DaemonShuffle {"position":"4272,3580","size":"100,100"}
+(set: _weapons to (find: _item where (passage: _item)'s tags contains "magic-weapon", ...$inventory))
+(set: $options to $options + (altered: _weapon via "Use " + _weapon, ..._weapons))
+(set: $options to $options + (altered: _item via "Release " + _item, ...$daemons))
+(if: $options's length <= 0)[]
+(else-if: $options's length > 1)[
+(set: $options to (shuffled: ...$options))]
+(else:)[]
+
+(replace:?input)[(if: $options's length > 0)[(for: each _i, ...(range: 1, (min: $cunning, $options's length)))[
+(set: _item to ($options's (_i)))
+(link-reveal: _item)[(replace:?output)[(display: _item)
+]]]
+
+(link-reveal: "Shuffle")[(replace:?output)[You are whipped and beaten by the force of your foe as you prepare for another assault.(set: $arg to (random: 0,1))(display: "TakeDamage")(set: $options to (a:))(display: "DaemonShuffle")
+]]](else:)[
+[[Succumb->Death]] 
+]]
+
+
+
+
+:: Shadowling Swarm [daemon-description] {"position":"4508,4235","size":"100,100"}
+The combined mass of shadow daemons, maybe even shreds of half-living shadow creatures, is itself a combined creature, like a Portuguese Man O'War, but one that devours the essential vitality out of its victims' souls.
+
+
+
+:: Encounter: Shadowling Swarm [daemon lowerdepths event] {"position":"4392,4234","size":"100,100"}
+A Shadowling Swarm envelops you in razor-sharp darkness.  You have but a few moments...
+
+{(set: $enemyType to "Shadowling Swarm")
+(set: $deathReason to "The strangulating effects of the Shadowling Swarm's tentacles don't seem to affect your oxygen or bloodflow but something apparently even more essential, until your body is an empty shell that flops to the ground.")
+(set: $enemyHealth to 5)
+(set: $enemyElementType to "shadow")
+(set: $options to (a: "Blood Sacrifice"))
+(if: $inventory contains "Slice of Silver")[ (set: $options to $options + (a: "Bribe Daemon"))
+]
+(if: $inventory contains "Cellar of Salt" and (history:) contains "Read Ex Nobilis Aetherium" and $cunning >= 5)[ (set: $options to $options + (a: "Capture Shadowling Swarm"))
+]
+}
+(display: "Encounter Daemon")
+
+
+:: Capture Shadowling Swarm {"position":"4722,4232","size":"100,100"}
+You quickly dash out a design on the ground that is intended to bind the shadow within.
+(if: (random: 0, 6) is 0)[You use up the last of your Cellar of Salt doing it.  (set: $inventory to it - (ds: "Cellar of Salt"))]
+(if: $inventory contains "Soul Jar")[
+   You attempt to capture it with your Soul jar,
+   (if: $cunning > 3)[ and succeed in entrapping a Living Shadow, part of the swarm. 
+   (set: $daemons to it + (ds: "Living Shadow"))
+   (set: $inventory to it - (ds: "Soul Jar"))(set: $arg to 2)(display: "DealDamage") ]
+   (else:)[ but you are unable to predict its movements, and it shreds you with what feels like thousands of razor-sharp tentacles.
+   (set: $arg to (random: 1,2))(display: "TakeDamage")]
+]
+(else:)[You didn't bring a Soul Jar!
+
+In retaliation, it shreds you with what feels like thousands of razor-sharp tentacles.
+   (set: $arg to (random: 1,2))(display: "TakeDamage")]
+
+
+
+:: Living Shadow [daemon-description] {"position":"4511,3333","size":"100,100"}
+An ethereal creature made of living shadow.  Is so utterly thin that it can slice through the flesh of their victims.
+They don't appear to eat anything, but their victim's bodies are always about (random: 3, 12) pounds lighter than they were when they were still alive.
+
+
+:: Release Living Shadow {"position":"4836,3333","size":"100,100"}
+(set: $dieroll to (random: 0, 6))
+(if: $inventory contains "Rack of Torment")[(set: $dieroll to it - 1)]
+
+(if: $enemyType is not "Shadow")[
+(if: $dieroll > 4)[The shadow daemon takes the opportunity to scarper!(set: $daemons to it - (ds: "Living Shadow"))
+(set: $arg to (either: 0, 1, 1, 2))(if: $arg > 0)[It brushes past your opponent on the way out.
+(display: "DealDamage")]
+]
+(else:)[
+The living shadow lashes out at the enemy!  You pull it back into its Soul Jar for next time.(set: $arg to 2)(display: "DealDamage")]](else:)[You release the shadow daemon, and it merges with its kin.(set: $enemyHealth to it + 2)(set: $daemons to it - (ds: "Living Shadow"))
+]
+
+
+:: Capture Fire Ghost {"position":"4718,3655","size":"100,100"}
+(if: $inventory contains all of (a: "Soul Jar", "Clump of Coal"))[
+(set: $arg to "Clump of Coal")(display: "LoseItem"))
+You throw a clump of coal to the ground.  When the Fire Ghost attempts to grab it, you attempt to pull it into your Soul Jar.
+(if: (random: 0, $cunning) > 3)[With an audible //shlorp//, you trap the Fire Ghost in the Soul Jar.(set: $daemons to it + (ds: "Fire Ghost"))
+   (set: $inventory to it - (ds: "Soul Jar"))
+   [[Next Encounter]] 
+   ](else:)[ but you are unable to predict its movements.]
+](else:)[You try to capture the Fire Ghost, but you need a Soul Jar and a Clump of Coal!]
+
+
+:: Encounter: Fire Ghost [daemon event westfires] {"position":"4403,3655","size":"100,100"}
+A Fire Ghost blocks your path.  It locks its gaze with you and begins charging for an attack.  You have a few moments...
+{(set: $enemyType to "Fire Ghost")
+(set: $deathReason to "You are unable to make any more gestures of combat magic, as your very flesh has been consumed by the daemon's flames.  It is not quick, but at least it is incredibly painful.")
+(set: $enemyHealth to 3)
+(set: $enemyElementType to "fire")
+(set: $enemyBribeType to "Clump of Coal")
+(set: $options to (a:))
+(if: $rumors contains "Fire Ghosts Crave Coal" and $inventory contains "Clump of Coal")[(set: $options to it + (a: "Bribe Daemon"))
+(if: $inventory contains all of (a: "Soul Jar", "Clump of Coal") and $cunning > 3)[ (set: $options to it + (a: "Capture Fire Ghost"))]]}
+(display: "Encounter Daemon")
+
+
+:: ExamineDaemon {"position":"4408,3222","size":"100,100"}
+(display: $itemName)
+(link-undo: "Back")
+
+
+:: Sell a Daemon {"position":"4626,3221","size":"100,100"}
+The shopkeeper swaps your full Soul Jar for another that contains a handful of gold.
+(set: _pay to (random: 2, 3) * ($reputation's ($neighborhood's name) + 1))
+(set: $gold to it + _pay)
+<b>Gold + _pay</b>
+(set: $inventory to it + (ds: "Soul Jar"))
+(set: $daemons to it - (ds: $itemName))
+
+(link-goto: "Continue Browsing for Daemons", (history:)'s last) 
+
+(display: "NavOptions")
+
+
+:: Solar Spark [daemon-description] {"position":"4504,3441","size":"100,100"}
+These creatures appear to be mindlessly drifting through the air.  Sages argued endlessly about whether they are even alive or are a phenomena of the weather.
+
+(if: $perception > 7)[But a studious observer will note that they are actually performing exceedingly complicated math using the language of their movement.  The ultimate purpose behind the calculation is beyond you.]
+
+
+:: Release Solar Spark {"position":"4840,3449","size":"100,100"}
+The Solar Spark sweeps away from the Soul Jar and leaves a wake of glowing, ionized air.
+
+(set: $daemons to it - (ds: "Solar Spark"))
+(set: $inventory to it + (ds: "Soul Jar"))
+(if: $isDay)[(set: $arg to 5)(display: "DealDamage")]
+(else:)[(set: $arg to 2)(display: "DealDamage")]
+
+:: Encounter: Solar Spark [daemon event uppercastlerock] {"position":"4396,3440","size":"100,100"}
+You see a delicate collection of golden orbs hovering in the sun-dappled air.  They bob with maddening regularity, but just when you start to be able to predict their movements, the pattern changes to something entirely new.
+{(set: $enemyType to "Solar Spark")(set: $enemyHealth to 4)
+(set: $deathReason to "You accidentally stumbled into a convergence of all of the orbs in the Solar Spark into a pattern later referred to as Hell's Blender.  Bits of you are in a shrub.")
+(set: $enemyElementType to "holy")
+(set: $enemyBribeType to "None")
+(set: $options to (a: "Dodge Solar Spark"))
+(if: $inventory contains "Soul Jar")[ (set: $options to $options + (a: "Capture Solar Spark")) ]
+}
+(display: "Encounter Daemon")
+
+
+:: Capture Solar Spark {"position":"4728,3446","size":"100,100"}
+(if: $cunning + $perception > (random: 5, 9))
+[You deftly place the opening of the Soul Jar right where you predict it will be by the time you get there.  Then you just slide the lid back on and latch it in place.(set: $inventory to it - (ds: "Soul Jar"))(set: $daemons to it + (ds: "Solar Spark"))
+
+[[Next Encounter]] 
+]
+(else:)
+[You try grabbing at the Solar Spark, but you cannot predict its movements.  It nearly cauterizes off your most favorite thumb before you give up the chase.
+(set: $arg to 1)(display: "TakeDamage")
+(if: $health > 0)
+[
+[[Next Encounter]] 
+]
+(else:)
+[It didn't hurt much, but the damned thing must have cut across something even more important than your thumb.
+It was too much for your weakened form, and you succumb to [[Death]]]]
+
+
+:: Dodge Solar Spark {"position":"4617,3445","size":"100,100"}
+(if: $perception + $cunning > 6)[ 
+You make your best guess about where the Spark will go next, and you manage to pass through with the slightest scorching of your topcoat. ](else:)[
+As you walk past, the Solar Spark streaks right through you, leaving behind a searing trail and a vague smell of cooked pork.(set: $deathReason to "The Solar Spark randomly penetrated an incredibly vital organ, and you expire with smell of cooked pork in your nostrils.")
+(set: $arg to 1)(display: "TakeDamage")
+(if: $health > 0)
+[
+You survive the superheated insult and move on.
+]]
+
+[[Next Encounter]]
+
+
+:: Fire Ghost [daemon-description] {"position":"4514,3656","size":"100,100"}
+A greedy creature made of fire that only loves to burn.  Becomes deliriously elated while devouring rich, delicious coal.
+
+
+:: Release Fire Ghost {"position":"4831,3656","size":"100,100"}
+(if: $enemyType is "Fire Ghost")
+[
+The two Fire Ghosts merge and become a larger Fire Ghost!
+(set: $enemyHealth to 6)
+(set: $daemons to it - (ds: "Fire Ghost"))
+]
+(else-if: $enemyType is "fire")
+[
+The daemon refuses to attack!
+(set: _dieroll to (random: 0, 6))
+(if: $inventory contains "Rack of Torment")[(set: _dieroll to it - 1)]
+(if: _dieroll > 3)[The daemon takes the opportunity to scarper!(set: $daemons to it - (ds: "Fire Ghost"))
+]]
+(else:)
+[
+(set: _dieroll to (random: 0, 6))
+(if: $inventory contains "Rack of Torment")[(set: _dieroll to it - 1)]
+(if: _dieroll > 3)[The daemon takes the opportunity to scarper!(set: $daemons to it - (ds: "Fire Ghost"))
+]
+(else:)[The daemon lashes out at the enemy!  You pull it back into its Soul Jar for next time. (set: $arg to 2 + (random: -1,1))(display: "DealDamage")
+]
+]
+
+:: Encounter: Living Shadow [daemon lowerdepths event] {"position":"4401,3331","size":"100,100"}
+A Living Shadow slips a loop of its shadow matter around your neck.  You have but a few moments...
+
+{(set: $enemyType to "Living Shadow")
+(set: $deathReason to "The strangulating effects of the Living Shadow's tentacles don't seem to affect your oxygen or bloodflow but something apparently even more essential, until your body is an empty shell that flops to the ground.")
+(set: $enemyHealth to 3)
+(set: $enemyElementType to "shadow")
+(set: $options to (a: "Blood Sacrifice"))
+(if: $inventory contains "Slice of Silver")[ (set: $options to $options + (a: "Bribe Daemon"))
+]
+(if: $inventory contains "Cellar of Salt" and (history:) contains "Read Ex Nobilis Aetherium" and $cunning > 5)[ (set: $options to $options + (a: "Capture Living Shadow"))
+]
+}
+(display: "Encounter Daemon")
+
+
+:: Capture Living Shadow {"position":"4729,3332","size":"100,100"}
+You quickly dash out a design on the ground that is intended to bind the shadow within.
+(if: (random: 0, 6) is 0)[You use up the last of your Cellar of Salt doing it.  (set: $inventory to it - (ds: "Cellar of Salt"))]
+(if: $inventory contains "Soul Jar")[
+   You attempt to capture it with your Soul jar,
+   (if: $cunning > 3)[ and succeed in entrapping a Living Shadow. 
+   (set: $daemons to it + (ds: "Living Shadow"))
+   (set: $inventory to it - (ds: "Soul Jar")) ]
+   (else:)[ but you are unable to predict its movements, and it slips between some cracks in the pavement.]
+]
+(else:)[It slips between some cracks in the pavement.]
+[[Next Encounter]]
+
+
+:: Rattle Bones [daemon-description] {"position":"4510,3544","size":"100,100"}
+This beast is an assemblage of skeletons, goat skulls, yarrow sticks, and scratched old coins.
+When it gets riled up, it begins to spin around in a vortex.
+It gets far more dangerous if it catches fire.
+It cannot withstand compasses.  They make it impossible for it to move.
+
+
+:: Encounter: Rattle Bones [daemon event easternfortress] {"position":"4403,3545","size":"100,100"}
+A loose collection of bones and mechanical detritus swirls up before you into a crude mockery of a man.
+{(set: $enemyType to "Rattle Bones")
+(set: $deathReason to "Long after your body is lifeless, the restless Rattle Bones continues to pelt it.  Once your corpse has been completely ruined, the daemon selects a single piece of your bone and adds it to its collection.")
+(set: $enemyHealth to 7)
+(set: $enemyElementType to "bone")
+(if: $inventory contains any of (a: "Compass of Many Places", "Lodestone"))[(set: $enemyHealth to (ceil: it / 2))]
+(set: $options to (a: "Blood Sacrifice"))
+(if: $inventory contains "Piece of Pitch")[ (set: $options to $options + (a: "Bribe Daemon"))
+]
+(if: $inventory contains "Piece of Pitch" and (history:) contains "Read Ex Nobilis Aetherium" and $cunning > 5)[ (set: $options to $options + (a: "Capture Rattle Bones"))
+
+]}
+(set: _options to $options)(display: "Encounter Daemon")
+
+:: Release Rattle Bones {"position":"4835,3551","size":"100,100"}
+(set: $dieroll to (random: 0, 6) - ((count: (a: ...$inventory), "Rack of Torment", "Compass of Many Places", "Lodestone")))
+(if: $dieroll > 4)[The daemon takes the opportunity to scarper!(set: $daemons to it - (ds: "Rattle Bones"))
+]
+(else:)[The daemon lashes out at the enemy!  You pull it back into its Soul Jar for next time. (set: $arg to 1)(display: "DealDamage")
+(if: $enemyElementType is "fire")[Contact with its fiery foe has engulfed it in flames.  It shrivels into blackened ruins and ash.(set: $daemons to it - (ds: "Rattle Bones"))]
+]
+
+
+
+:: Golem [daemon-description] {"position":"4506,3780","size":"100,100"}
+A creature of clay, with an inscription on parchment tucked in its mouth animating it with murderous purpose.
+
+
+:: Release Golem {"position":"4824,3769","size":"100,100"}
+You send the golem forth, with the name of your enemy written in its mouth.
+
+
+:: Gnome [daemon-description] {"position":"4506,3899","size":"100,100"}
+An elemental creature of earth and rock, crudely assembled into a hominid form.
+
+:: Capture Golem {"position":"4715,3764","size":"100,100"}
+You write down an unprocessable paradoxical statement on a bit of parchment and launch it down the golem's maw, rendering it pliant.  It willingly follows you around.
+
+(set: $arg to "Ink of Enchantment")(display: "LoseItem")
+(set: $arg to "Blank Scroll")(display: "LoseItem")
+(set: $daemons to it + (ds: "Golem"))
+
+:: Release Gnome {"position":"4823,3902","size":"100,100"}
+The gnome merges with any earth and stone it can contact and begins to shake the area apart, sending rocks crashing down on you and your opponent.
+
+
+:: Encounter: Golem [event daemon southquarry] {"position":"4391,3777","size":"100,100"}
+A bipedal mass of dry clay with a frog-like mouth and two unblinking eyes scooped out its face confronts you.
+{(set: $enemyType to "Golem")
+(set: $deathReason to "You've been smashed into pulp by the golem.  The instant you die, it ceases moving")
+(set: $enemyHealth to 9)
+(set: $enemyElementType to "stone")
+(set: $options to (a:))
+(if: $inventory contains all of (ds: "Blank Scroll", "Ink of Enchantment") and (history:) contains "Read Ex Nobilis Aetherium" and $cunning > 5)[(set: $options to $options + "Capture Golem")]
+}
+(set: _options to $options)(display: "Encounter Daemon")
+
+
+:: Vulcan Avatar [daemon] {"position":"8115,682","size":"100,100"}
+Double-click this passage to edit it.
+
+
+
+:: Encounter: Sylph [daemon] {"position":"4394,4122","size":"100,100"}
+The wind picks up in a localized area around you.  It appears that a Sylph has been disturbed.
+(if: $inventory contains "Soul Jar")[
+[[Capture the Sylph]]
+]
+[[Remain Calm->Next Encounter]]
+
+
+:: Capture the Sylph {"position":"4724,4120","size":"100,100"}
+(if: (random: 0, $perception + $cunning) > 5)[You manage to capture the Sylph in your Soul Jar.
+(set: $arg to "Soul Jar")(display: "LoseItem")
+(set: $arg to "Sylph")(display: "GainDaemon")]
+(else:)[
+The sylph is offended that you would attempt to capture it and smashes your Soul Jar in retaliation.
+(set: $arg to "Soul Jar")(display: "LoseItem")
+]
+
+[[Next Encounter]]
+
+
+:: Sylph [daemon-description] {"position":"4513,4120","size":"100,100"}
+A nearly invisible pattern of wind that appears to be sentient and/or sapient.
+
+
+:: Hungry Ghost [daemon-description] {"position":"4511,4007","size":"100,100"}
+A collection of pure hunger energy that tends to rupture into this world and demand tribute of food.
+
+:: Encounter: Hungry Ghost [event daemon] {"position":"4397,4002","size":"100,100"}
+A wretched, tooth-ring mouth emerges from a surface that seemed completely solid.
+
+"So...  hungry..." it gasped.
+(set: $deathReason to "Your life was drained out by a horrible, leech-like creature")
+(if: $inventory contains "Food")[
+You can give it a little food...
+
+(link-reveal: "Or Not")[
+It clamps on and drains you of a little blood.
+(set: $arg to (random: 0, 2))(display: "TakeDamage")
+
+[[Next Encounter]] 
+]
+](else:)
+[
+You have nothing to give it, so it clamps on and drains you of a little blood.
+
+(set: $arg to (random: 0, 2))(display: "TakeDamage")
+
+[[Next Encounter]] 
+]
+
+
+:: Encounter: Gnome [daemon event] {"position":"4394,3899","size":"100,100"}
+Double-click this passage to edit it.
+
+:: Ifriti [daemon] {"position":"8408,4445","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Djinn [daemon] {"position":"8411,4554","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Marid [daemon] {"position":"8415,4655","size":"100,100"}
+Double-click this passage to edit it.
+
+
+
+:: Capture Rattle Bones {"position":"4715,3547","size":"100,100"}
+(if: $inventory contains all of (a: "Soul Jar", "Piece of Pitch"))[
+(set: $arg to "Piece of Pitch")(display: "LoseItem"))
+You throw a Piece of Pitch to the ground.  Thin threads of pitch drape up and over the Rattle Bones, snaring its individual pieces into a cotton candy-like web, and you attempt to pull it into your Soul Jar.
+(if: (random: 0, $cunning) > 2)[With an audible //shlorp//, you trap the Rattle Bones in the Soul Jar.(set: $daemons to it + (ds: "Rattle Bones"))
+   (set: $inventory to it - (ds: "Soul Jar"))
+   [[Next Encounter]] 
+   ](else:)[ but it tears free of the webbing, and it appears that the pitch reinforced it! (set: $enemyHealth to it + (random: 1,3))]
+](else:)[You try to capture the Rattle Bones, but you haven't got a Soul Jar!]
+
+
+
+:: Capture Gnome {"position":"4722,3902","size":"100,100"}
+Double-click this passage to edit it.

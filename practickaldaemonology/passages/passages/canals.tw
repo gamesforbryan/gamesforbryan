@@ -1,0 +1,34 @@
+
+
+:: Canals [location northharbor easternfortress] {"position":"8381,2064","size":"200,100"}
+(display: "Init Canals")
+Hilbert space-filling curves of canals.
+Borders North Harbor and Eastern Fortress.
+
+[[North Harbor]] 
+
+[[Eastern Fortress]]
+
+
+:: Init Canals [function] {"position":"8388,1944","size":"100,100"}
+{(set: $environmentMaterials to (a: "stone", "wood", "concrete"))
+(set: $environmentColors to (a: "seafoam white", "driftwood brown", "wine dark", "sea blue"))
+(set: $clothingMaterials to (a: "satin", "leather", "linen"))
+(set: $clothingColors to (a: "brown", "black", "gray", "goldenrod", "verdant","ruddy","robin's egg"))
+(set: $clothingTypes to (a: "service uniforms", "one-piece mountebank's livery", "gentry livery", "a cuirass and tunic"))
+(set: $adornmentMaterials to (a: "silver foil", "gold foil", "ivory", "living flower", "feather", "tin"))
+(set: $adornmentTypes to (a: "masks", "epaulets", "diadems"))
+(set: $hairstyles to (a: "a shaven scalp", "a powdered wig", "a wig and a hat","a glorious powdered confection"))
+
+(set: $sizes to (a: "scrawny", "rawboned"))
+(set: $races to (a: "human", "drake-kin", "goblin", "devil"))
+(set: $skinColors to (a: "black", "tan", "brown", "red", "gray"))
+(set: $skinTypes to (a: "smooth", "lightly furred", "fur-covered", "scaled"))
+(set: $professions to (a: "duelist", "entertainer", "juggler", "courtesan"))
+}
+{(set: $neighborhood to 
+(dm: "name", "Canals", 
+"tagname", "canals",
+	"locations", (a:),
+"contracts", (a:),
+		"events", (a:)))}

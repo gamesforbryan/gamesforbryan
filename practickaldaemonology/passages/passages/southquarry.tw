@@ -1,0 +1,923 @@
+
+:: South Quarry [tick] {"position":"5144,4590","size":"200,200"}
+(display: "Init South Quarry")
+This neighborhood is carved out of a vast nearly cubical deposit of living rock halfway beneath the surface of the Earth.  It has an extensive Catacombs(unless: (history:) contains "Entrance to the Catacombs")[, but you've yet to find them].
+
+(for: each _item, ...($neighborhood's locations))[(if: (history:) contains _item and (passage: _item)'s tags contains "bookmark")[(link-goto: _item)
+
+]]
+
+(display: "NavOptions")
+
+
+
+:: South Quarry Color {"position":"5024,4646","size":"100,100"}
+Wonderful South Quarry denizens
+
+
+:: Pandaemonium [bookmark southquarry location tick] {"position":"5196,4806","size":"100,100"}
+(for: each _item, "Rattle Bones", "Gnome", "Golem")[(unless: $daemons contains _item)[
+(set: $itemName to _item)_item - (link-reveal-goto: "Buy " + _item, "Buy a Daemon")[(set: $itemName to _item)]]]
+
+(display: "NavOptions")
+
+
+:: Unlicensed Potion Broker [southquarry location tick lowerdepths] {"position":"4532,2215","size":"100,100"}
+Random, nasty, and cheap!  Affordable potions and alchemical components sold by a creature that seems to be a large hat and cloak with many, many satchels.
+(if: visits % 2 is 1)[
+(set: $marketplace to (shuffled: ...(find: _i where _i's tags contains any of (a: "potion", "reagent"), ...(passages:)))'s (range: 1, 3))(for: each _i, ...$marketplace)[(set: _item to _i's name)(unless: $inventory contains _item)[(set: _cost to 75)(display: "QuickBuy")]]]
+(else:)[The broker dashes away before the Magisterium Guards can catch him doing business.]
+
+(display: "NavOptions")
+
+
+:: 999th Hand Book Store [bookmark southquarry location tick] {"position":"5201,5027","size":"100,100"}
+The books in this store are incredibly worn and fuzzy.  They've been through so many owners that most are virtually palimpsest.
+(unless: $inventory contains "Percepção de Cristal")[
+One appears to still be legible:
+(if: $perception < 7)
+[(set: _item to "Percepção de Cristal")(set: _cost to 150)(display: "QuickBuy")]
+(else:)[(set: _item to "Percepção de Cristal")(set: _cost to 20)(display: "QuickBuy")]]
+
+(unless: $inventory contains "Grimoire Alchemickal")[
+One appears to still be legible:
+(if: $perception < 7)
+[(set: _item to "Grimoire Alchemickal")(set: _cost to 150)(display: "QuickBuy")]
+(else:)[(set: _item to "Grimoire Alchemickal")(set: _cost to 20)(display: "QuickBuy")]]
+
+(unless: $inventory contains "Ex Nobilis Aetherium")[
+One appears to still be legible:
+(if: $perception < 7)
+[(set: _item to "Ex Nobilis Aetherium")(set: _cost to 150)(display: "QuickBuy")]
+(else:)[(set: _item to "")(set: _cost to 20)(display: "QuickBuy")]]
+
+(display: "NavOptions")
+
+
+:: Mystique Boutique [bookmark southquarry location tick] {"position":"5200,4917","size":"100,100"}
+Consuela greets you at the front of the store.
+"Ah, yes, a discerning customer who recognizes the superiority of our merchandise."  As she adjusts her massive and ornate wig, she adds, "Our prices may have risen recently due to our increasing popularity."
+(set: $goldCost to 350)
+(for: each _item, ...(a: "Scrying Stone", "Potion Automixer",
+, "Neighborhood Door to Eastern Fortress"))[(if: $inventory contains _item)[(set: $goldCost to (floor: it * 1.5))]]
+(for: each _item, ...(a: "Scrying Stone", "Potion Automixer",
+, "Neighborhood Door to Eastern Fortress"))[(unless: $inventory contains _item)[(link-reveal-goto: "Examine the " + _item, "Furniture For Sale")[(set: $itemName to _item)]
+]]
+
+(display: "NavOptions")
+
+
+
+:: Entrance to the Catacombs [bookmark southquarry tick unlisted location] {"position":"4687,5292","size":"100,100"}
+Here is the entrace to the Lower Depths, the Catacomb city beneath the City.
+
+[[Catacombs]]
+
+[[South Quarry]] 
+
+[[Home Again]]
+
+
+:: Coffee Shop [location bookmark southquarry tick] {"position":"5201,5134","size":"100,100"}
+Information and stimulants delivered hot and fast.  The place is packed with aggressively conversing creatures regardless of the time of day or night.
+
+You find a seat at one of the crowded tables to listen in on the conversation of the hour.
+
+A server arrives with a tray of cups and a steaming pot of fresh coffee.
+
+[[Buy a Cup of Coffee]]
+
+(display: "NavOptions")
+
+
+:: Dig Site #1 [southquarry bookmark location tick] {"position":"5544,4633","size":"100,100"}
+The area is roped off, preventing the extremely clumsy or dispossessed from falling into a vast, eerily regular crater.
+
+A crew of uniformed workers make continuous lines into and out of the crater, down a series of steps and rungs cut into the living stone.  They carry down picks, ropes, and wands and come out with enormous treasures.
+
+Vast winches reach down into the crater's yawning guts and pull up impossibly large gemstones, vaults, enchanted artifacts, amphorae.
+
+(display: "QuickChar")
+
+The yard leader for the current shift approaches you.
+
+"You look like the kind of person who's looking to make an investment," they say. "You can finance a dig and get a percentage on the return."
+
+They trace a line around the perfectly square-edge portal that leads to a universe made entirely out of rock and treasure.  You've heard of these kinds of deals:
+You put up the money for a crew and their supplies.
+You negotiate how long they will spend mining before returning.
+The crew will use their tools to dig as much as they can.
+Some crews are careful, some are reckless.
+They might encounter monsters, traps, lava, poison gas, etc.  So, you may be asked to pay more to keep the dig going.
+You can visit the dig site, but doing so is time-consuming and potentially dangerous.
+
+(if: $miningCommand > 0)[
+[[Visit Your Dig Site #1 Lease]]]
+(else:)[
+[[Finance a Dig at Site #1]]]
+
+(display: "NavOptions")
+
+
+:: Finance a Dig at Site #1 {"position":"5547,4743","size":"100,100"}
+The industry is pretty well standardized for this kind of operation.
+You buy at a certain gold price.
+Your crew exhausts your gold mining through a sector of the portal you've leased from the Portal Authority.
+That portal lease comes right off the top.  The rest of the price is spent on supplies and insurance.
+
+(link-reveal: "Trial Plan")[(set: $portalSupplies to 100)
+(set: $portalDistance to 0)
+(set: $miningCommand to 10)
+(set: $portalCrew to 10)
+(set: $portalTreasure to 0)
+(set: $currentDigSiteOneTick to $ticks)
+[[Visit Your Dig Site #1 Lease]]]
+
+(display: "NavOptions")
+
+
+:: Dig Site #2 [bookmark southquarry location tick] {"position":"5526,5193","size":"100,100"}
+Near the portal at Dig Site #1 is another crater, this one much smaller.
+
+(display: "QuickChar")
+The yard foreman points out that this area is centered at the edge of the portal.  The stone and materials regenerate more slowly, and tunneling through the rock here has opened up the Catacombs, a more or less permanent fixture at the edge of the portal.
+
+"You can more or less dig up whatever you want in this area.  It runs pretty dry.  Bring your own shovel, and you can dig all you want."
+(set: $plotDepth to 0)
+[[Start Digging->Dig Your Plot]]
+
+(display: "NavOptions")
+
+
+:: The Southern Gate to Eastern Fortress [southquarry bookmark tick easternfortress location unlisted] {"position":"7070,4741","size":"100,100"}
+When the gates open, a cloud of incense and stone dust mix in the middle.
+
+[[South Quarry]] 
+
+[[Eastern Fortress]] 
+
+(display: "NavOptions")
+
+:: Visit Your Dig Site #1 Lease {"position":"5546,4866","size":"100,100"}
+(set: $previousDigSiteOneTick to $currentDigSiteOneTick)
+(set: $currentDigSiteOneTick to $ticks)
+(set: _tickDiff to $currentDigSiteOneTick - $previousDigSiteOneTick)
+It's been _tickDiff ticks since your last visit.
+(set: $portalSupplies to it - _tickDiff)
+You have $portalSupplies supplies left.
+(set: _portalDistanceGained to _tickDiff * $portalCrew * (1+($miningCommand/10)))
+You have gained _portalDistanceGained meters of distance into the living stone.
+(set: $portalDistance to it + _portalDistanceGained)
+For a total of $portalDistance meters.
+(if: (random: 0, 1) > 0)[(set: $miningCommand to it - 1)Your crew are annoyed at you for interrupting their work.](else:)[Your crew acknowledge your presence and go right back to their work.]
+!Secret! Your current portalCommand is $miningCommand.
+(set: _earnedIncome to (ceil: (random: 0, _portalDistanceGained)))
+Your crew has gathered _earnedIncome kilograms of raw treasure boulders.
+(set: $portalTreasure to it + _earnedIncome)
+For a total of $portalTreasure currently in the hopper.
+
+[[Empty Treasure Hopper]]
+
+[[Resupply Crew]]
+
+[[Bring the Crew Coffee and Doughnuts]]
+
+[[Reprimand the Crew]]
+
+[[Cancel the Dig]] 
+
+(display: "NavOptions")
+
+
+:: Empty Treasure Hopper {"position":"5366,4884","size":"100,100"}
+Your crew has gathered $portalTreasure kilograms of raw treasure boulders.
+
+You can pull a lever to convert $portalTreasure to gold in your pocket, but that means that your crew will not be mining for more treasure for the rest of the week, as they process your treasure ore.
+(set: $arg to $portalTreasure * (random: 1, 10))(display: "UpdateGold")
+Treasure ore is made of all kinds of rubbish:
+(for: each _i, ...(range: 0, (ceil: $portalTreasure / 100)))[
+(display: "Random Treasure Hopper Item")]
+(if: $portalDistanceBonus > 0)[Distance Bonus Paid: (ceil: $portalDistance * $portalDistanceBonus)(set: $gold to it - (ceil: $portalDistance * $portalDistanceBonus))]
+(set: $portalTreasure to 0)(display: "UpdateClock")
+
+Total Gold: $gold
+
+[[Resupply Crew]]
+
+[[Bring the Crew Coffee and Doughnuts]]
+
+[[Reprimand the Crew]]
+
+[[Cancel the Dig]]
+
+(display: "NavOptions")
+
+
+:: Resupply Crew {"position":"5351,5027","size":"100,100"}
+You are negotiating with the lead of your crew.  They have certain expectations based on their own sense of worth.
+(if: $gold >= 1000)[
+(link-reveal: "Extend Contract for 1000 Gold")[
+(set: $portalSupplies to 100)
+(set: $miningCommand to it + (random: 0, 1))
+(set: $arg to -1000)(display: "UpdateGold")
+!SECRET! $miningCommand
+]]
+
+[[Empty Treasure Hopper]] 
+
+[[Bring the Crew Coffee and Doughnuts]]
+
+[[Reprimand the Crew]]
+
+[[Cancel the Dig]]
+
+(display: "NavOptions")
+
+
+:: Bring the Crew Coffee and Doughnuts {"position":"5699,5015","size":"100,100"}
+You order your crew their favorite stimulants and hypercaloric food stuffs.
+(set: $gold to it - 20)<b>Gold - 20<b/>
+(if: $miningCommand <= 0)[They wait until after you've started to leave before they eat them. (set: $miningCommand to it - (random: 0, 1))]
+(else-if: $miningCommand <=5)[They appreciate the effort you put in to show your appreciation of them. (set: $miningCommand to it + (random: 0, 1))]
+(else-if: $miningCommand < 10)[Your crew enthusiastically grabs doughnuts and coffee from you.  One of them even attempts an awkward high-five before realizing that you are not the kind of person who "highs five".(set: $miningCommand to it + (either: ...(range: 0,2)))]
+(else:)[They are too busy working to even notice you stopping by.]
+!SECRET! $miningCommand
+
+[[Empty Treasure Hopper]]
+
+[[Resupply Crew]]
+
+[[Reprimand the Crew]]
+
+[[Cancel the Dig]] 
+
+(display: "NavOptions")
+
+
+:: Reprimand the Crew {"position":"5537,5028","size":"100,100"}
+If you reprimand a crew that is low in morale, they may quit, but your command level will possibly increase for the remaining crew.
+
+(if: (random: 0, $miningCommand) < 2)[The crew feel like your rebuke was stern but fair.  They are a little more confident in your command.(set: $miningCommand to it + (random: 1, 2))]
+(else:)[The crew feels like your rebuke was unfair and slanderous.
+(set: $miningCommand to it - (random: 1, 2))]
+
+!SECRET! $miningCommand
+(if: $miningCommand > 0)[
+(set: _walkouts to (ceil: (random: 0, $portalCrew) / $miningCommand))
+_walkouts crew members have decided it is time for them to leave the project.
+(set: $portalCrew to it - _walkouts)]
+(else:)[Too much or too little, but definitely too late.  Regardless of your words, all $portalCrew have walked out on you.
+(set: $portalCrew to 0)
+]
+ Crew: $portalCrew
+ 
+[[Empty Treasure Hopper]]
+
+[[Resupply Crew]]
+
+[[Bring the Crew Coffee and Doughnuts]]
+
+[[Reprimand the Crew]]
+
+[[Cancel the Dig]] 
+
+(display: "NavOptions")
+
+
+:: Random Treasure Hopper Item {"position":"5371,4764","size":"100,100"}
+(either: "A golden helmet with wings", "a ruby the size of a canteloupe...  no, I mean an antelope", "dragon bones", "gold bricks", "ancient pottery", "sand dollars", "totems", "abstract sculpture")
+
+
+:: Cancel the Dig {"position":"5704,4869","size":"100,100"}
+You call off the dig.
+
+(set: $portalSupplies to 0)
+(set: $portalDistance to 0)
+(set: $miningCommand to 0)
+(set: $portalCrew to 0)
+(set: $portalTreasure to 0)
+(set: $currentDigSiteOneTick to 0)
+
+(display: "NavOptions")
+
+
+:: Encounter: Falling Rock! [event southquarry] {"position":"4974,4965","size":"100,100"}
+(if: $perception > 3)[You see a section of rock teetering above you and are able to get out of the way before it hits you.](else:)[You don't see the rock falling in time to get out of the way.
+
+(if: (random: 0, 1) is 0)[Sharp, heavy rock rains down on you.
+
+(set: $deathReason to "You were obliterated by a combination of bad safety protocol and tons and tons of megaliths precariously stacked around the neighborhood.")(set: $arg to 1)(display: "TakeDamage")]
+
+[[Next Encounter]] ]
+(else:)
+[
+You are clouted on the head, causing you to stagger down a blind alley.
+
+[[Staggering Through The Alleys]] 
+]
+
+
+:: Dig Your Plot [tick] {"position":"5512,5349","size":"100,100"}
+You dig and...
+(set: _roll to (random: 1, 4))
+(if: _roll is 1)[find dirt.]
+(else-if: _roll is 2)[find rocks.]
+(else-if: _roll is 3)[(set: $plotDepth to it + 1)(if: (random: 0, $plotDepth) > 9)[You've found the [[Entrance to the Catacombs]] !](else:)[find dirt and rocks.]]
+(else-if: _roll is 4)[find a little gold and gemstone.
+(set: $arg to (random: 1, 20))(display: "UpdateGold")]
+
+[[Dig Your Plot]]
+
+(display: "NavOptions")
+
+
+
+
+
+:: Cave-In! [mining-incident] {"position":"5846,4873","size":"100,100"}
+The mines cave-in, injuring your crew.
+
+
+
+:: Markov's Munitions [location southquarry bookmark] {"position":"5203,5358","size":"100,100"}
+(set: _cost to 150)
+(for: each _item, "Enchanted Flashlight", "Blunderbuss")[
+(display: "QuickBuy")
+]
+
+(display: "NavOptions")
+
+
+
+
+:: Init South Quarry [function] {"position":"5168,4464","size":"100,100"}
+{(set: $environmentMaterials to (a: "stone", "brick", "charcoal", "cinderbrine", "obsidian", "flagstone", "cobble", "chalk"))
+(set: $environmentColors to (a: "white", "tan", "black", "gray"))
+(set: $clothingMaterials to (a: "fur", "felt", "linen", "rag", "metal plate", "leather"))
+(set: $clothingColors to (a: "brown", "black", "dun", "gray",  "yellowed"))
+(set: $clothingTypes to (a: "kilt", "apron", "loincloth", "girdle", "three-piece suit", "coveralls", "one-piece"))
+(set: $adornmentMaterials to (a: "bone", "shell", "copper", "clay", "gold", "silver", "citrine", "iron", "bronze", "brass"))
+(set: $adornmentTypes to (a: "plate", "plug", "tusk", "ring", "stud"))
+(set: $hairstyles to (a: "a shaven scalp", "a bald pate", "shaven sides and spiked top", "long dreadlocks", "long bangs", "a lacquered headdress", "a shaggy mane"))
+
+(set: $sizes to (a: "grand", "stout", "scrawny", "burly", "rotund", "gaunt", "obese", "muscular", "sculpted"))
+(set: $genders to (a: "man", "woman", "non", "herm"))
+(set: $races to (a: "human", "gnome", "daemonkin", "changeling", "golem", "mekannin"))
+(set: $skinColors to (a: "black", "tan", "brown", "red", "gray", "white","pink"))
+(set: $skinTypes to (a: "smooth", "lightly furred", "fur-covered", "scaled", "faceted"))
+(set: $professions to (a: "soldier", "thief", "ragpicker", "sineater", "cursekeeper", "prostitute", "thug", "miner", "alckymist", "blacksmith","gemcutter","engineer"))
+}
+{(set: $neighborhood to 
+(dm: "name", "South Quarry", 
+"tagname", "southquarry",
+	"locations", (altered: _item via _item's name, ...(find: _item where _item's tags contains all of (a: "southquarry", "location"), ...(passages:))),
+"contracts", (altered: _item via _item's name, ...(find: _item where _item's tags contains all of (a: "southquarry", "contract"), ...(passages:))),
+		"events", (altered: _item via _item's name, ...(find: _item where _item's tags contains all of (a: "southquarry", "event"), ...(passages:)))))
+		
+(if: (history:) contains "Trove: Join the Goblins")
+[
+(if: $inventory contains any of (a: "Mark of the Goblins Lvl 1"))[
+(set: $neighborhood's events to $neighborhood's events + (a: "Encounter: A Friendly Goblin"))
+]
+(else:)[
+(set: $neighborhood's events to $neighborhood's events + (a: "Encounter: An Angry Goblin"))
+]
+]
+		}
+
+
+:: Garagalg's Glint [location southquarry bookmark] {"position":"5204,5472","size":"100,100"}
+Garagalg is a fairly enormous elemental creature made of stone inlayed with precious stones.  They are continuously replacing stones with superior specimens.
+
+(if: not ($requests contains "Garagalg"))[
+// Initializing Garagalg //
+(set: $requests to it + (dm: "Garagalg", (either: "Damage Ward", "Ex Nobilis Aetherium", "Crystal Prism")))
+]
+Garagalg is currently looking for (print: $requests's "Garagalg").
+(if: $inventory contains $requests's "Garagalg")[
+You happen to have one of those.  Would you be willing to part with it for 150 gold?
+(link-reveal: "Sell It")[
+(set: $arg to $requests's "Garagalg")(display: "LoseItem")
+(set: $arg to 150)(display: "UpdateGold")
+(set: $requests's "Garagalg" to (either: "Damage Ward", "Ex Nobilis Aetherium", "Crystal Prism"))
+]]
+
+//Trade treasure for better treasure//
+(set: $arg to "Macro Caster")(display: "GetItem")
+
+//Buy rare materials//
+
+(display: "NavOptions")
+
+:: Umber Gorr [southquarry persona] {"position":"5206,5602","size":"100,100"}
+Umber is a gnome, an earth elemental.
+
+
+You can be digging along, finding plenty of gold, when bam, goblins all up in your business!  Don't know where they come from.  They're always found in impossible bubbles of tunnels deep under the surface.  No way hominids could develop in those conditions.  Worst of all is that one time, an old salt told me that a feller they lost to a goblin raid was seen again, years later, living with the goblins, and he helped the goblins attack!
+
+Oh, you should head right over to Dig Site #2 if you're new to all of this kind of business.  You can put in an honest days work, and if you're lucky, you'll go home with a tidy sum.
+
+Well, someone in your tax bracket could fund a dig over at Dig Site #3.  They're always looking for venture capital.
+
+I'm sure your competitors wouldn't tell you this, but here's how to upgrade your mining equipment for maximum efficiency.
+
+If you're like me, you've been in the mining game so long, there aren't any more surprises.  But, I still want a constant flow of money.  That's why I mine through Dig Site #1.
+
+
+
+:: Dig Site #3 [location southquarry tick bookmark] {"position":"5162,6848","size":"100,100"}
+This dig site is a hive of activity for workers and wizards alike.
+
+(if: $reputation's ("House Guild Mechanika") > 0)[The House Guild Meckanicka has spread their mechanical technology all over the place, ostensibly making it a more efficient operation.]
+(if: $miningCommand <= 0)[
+[[Start A New Dig]]
+]
+(else:)[
+
+[[Cancel The Dig->Dig Cancelled]]
+
+[[Visit The Dig]]
+]
+
+
+// debug //
+(link-repeat: "TickMining")[(display: "TickMining")]
+
+(display: "NavOptions")
+
+
+:: Start A New Dig {"position":"5159,7078","size":"100,100"}
+|input>[
+(link-reveal: "Trial Plan - 1 gold")[(replace:?input)[
+(set: $miningCommand to 1)
+(set: $miningCrew to 1)
+(set: $miningWage to 1)
+(set: $miningDistance to 0)
+(set: $miningDanger to 1)
+
+(set: $miningGoldYieldRate to 0)
+(set: $miningEvents to (a: "Deeper We Dig...  But No Yield",
+"Deeper We Dig...  But No Yield",
+"Deeper We Dig...  But No Yield",
+"Deeper We Dig...  But No Yield",
+"Deeper We Dig...  With Some Yield"))
+(display: "TickMining")
+[[Visit The Dig]]
+]]
+
+(link-reveal: "Standard Plan - 80 gold")[(replace:?input)[
+(set: $miningCommand to 5)
+(set: $miningCrew to 20)
+(set: $miningWage to 4)
+(set: $miningDistance to 0)
+(set: $miningDanger to 3)
+(set: $miningGoldYieldRate to 0)
+(set: $miningEvents to (a: "Deeper We Dig...  But No Yield",
+"Deeper We Dig...  But No Yield",
+"Deeper We Dig...  With Some Yield"))
+(display: "TickMining")
+[[Visit The Dig]]
+]]
+
+(link-reveal: "Premium Plan - 1600 gold")[(replace:?input)[
+(set: $miningDanger to 1)
+(set: $miningCommand to 10)
+(set: $miningCrew to 100)
+(set: $miningWage to 16)
+(set: $miningDistance to 0)
+(set: $miningGoldYieldRate to 0)
+(set: $miningEvents to (a: "Deeper We Dig...  But No Yield",
+"Deeper We Dig...  With Some Yield", 
+"Deeper We Dig...  And We Found A Vein!"))
+(display: "TickMining")
+[[Visit The Dig]]]]
+]
+
+[[Dig Site #3]]
+
+(display: "NavOptions")
+
+
+:: Visit The Dig {"position":"5321,7026","size":"100,100"}
+(if: $miningEvent != "")[
+(goto: $miningEvent)]
+(else:)
+[
+The workers are milling about the entrance to the mine: some entering, some leaving, with the fruit of their labor piling up in heaps near the refinery.
+]
+
+[[Dig Site #3]]
+
+(display: "NavOptions")
+
+
+:: Deeper We Dig...  But No Yield [mining-status] {"position":"5519,6945","size":"100,100"}
+(if: (passage:)'s name is not "Deeper We Dig...  But No Yield")
+[
+(set: $miningGoldYieldRate to 0)
+(set: $miningEvents to (a: "Deeper We Dig...  But No Yield",
+"Deeper We Dig...  But No Yield",
+"Deeper We Dig...  But No Yield",
+"Deeper We Dig...  But No Yield",
+"Trove Discovered",
+"Deeper We Dig...  With Some Yield"))
+(set: $miningDistance to it + 1)
+(set: $miningEvents to it + (repeated: $miningDistance / 10, "We Dug Too Deep"))
+
+
+]
+(else:)
+[
+This patch of earth appears barren of the materials you are after:
+No gold, no ore, no coal.
+
+Only loose dirt and flawed lumps of silicates are to be found in this accursed patch.
+
+Your stalwart crew continues to strain against the yoke to go deeper and deeper in an effort to find treasure.
+
+]
+
+[[Dig Site #3]]
+
+(display: "NavOptions")
+
+
+:: Deeper We Dig...  With Some Yield [mining-status] {"position":"5749,6941","size":"100,100"}
+(if: (passage:)'s name is not "Deeper We Dig...  With Some Yield")
+[
+(set: $miningGoldYieldRate to 1)
+(set: $miningEvents to (a: "Deeper We Dig...  But No Yield",
+"Deeper We Dig...  With Some Yield",
+"Deeper We Dig...  With Some Yield",
+"Deeper We Dig...  And We Found A Vein!"
+))
+(set: $miningDistance to it + 1)
+
+]
+(else:)
+[
+The crew has encountered a patch of dirt that yields up some fine powder of gold.
+
+Your stalwart crew continues to strain against the yoke to go deeper and deeper in an effort to find greater treasure.
+
+[[Dig Site #3]]
+
+(display: "NavOptions")
+]
+
+
+:: Deeper We Dig...  And We Found A Vein! [mining-status] {"position":"5633,6936","size":"100,100"}
+(if: (passage:)'s name is not "Deeper We Dig...  And We Found A Vein!")
+[
+(set: $miningGoldYieldRate to 5)
+(set: $miningEvents to (a: "Working The Vein", "Working The Vein"))
+(set: $miningDistance to it + 1)
+(set: $miningCommand to it + 1)
+]
+(else:)
+[
+The crew has encountered a vein of gold with enviable purity.
+
+Your stalwart crew continues to strain against the yoke to go deeper and deeper in an effort to find greater treasure.
+
+]
+[[Dig Site #3]]
+
+(display: "NavOptions")
+
+
+:: Working The Vein [mining-status] {"position":"5861,6941","size":"100,100"}
+(if: (passage:)'s name is not "Working The Vein")
+[
+(set: $miningGoldYieldRate to 10)
+(set: $miningEvents to (a: "Working The Vein",
+"Deeper We Dig...  With Some Yield"))
+(set: $miningDistance to it + 1)
+
+]
+(else:)
+[The vein has begun to yield up great chunks of precious metals.
+
+[[Dig Site #3]]
+
+(display: "NavOptions")
+]
+
+
+:: Cave-In [mining-status] {"position":"5447,7076","size":"100,100"}
+(if: (passage:)'s name is not "Cave-In")
+[
+// Send mail //
+(set: $miningEvents to (a: "Digging Out The Cave-In", "Digging Out The Cave-In"))
+(set: $miningGoldYieldRate to 0)
+(set: $miningDanger to it + 1)
+(set: $miningCrew to it - (random: 0, 2))
+(set: $mail to it + (a:
+(dm: "sender", "Dig Site #3",
+     "message", "A cave-in has injured some workers.  Work has halted until they have been rescued from beneath the rocks.",
+	 "attachment", "Nothing"
+)
+))
+]
+(else:)
+[During excavation, the rocks forming the wall and ceiling of a branch have become unstable.
+
+All work has ceased until the crew have been dug out.
+
+(if: $daemons contains "Gnome")[
+(display: "Have Your Gnome Clean Up The Cave-In")
+]
+
+|input>[
+[[Threaten to Fire Them If They Don't Continue Working->Disgruntlement]]
+]
+[[Dig Site #3]]
+
+(display: "NavOptions")
+]
+
+
+:: Gas Leak [mining-status] {"position":"5587,7077","size":"100,100"}
+(if: (passage:)'s name is not "Gas Leak")
+[(set: $miningEvents to (a: ))
+(set: $miningGoldYieldRate to 0)
+(set: $miningDanger to it + 1)
+// Send mail //
+(set: $mail to it + (a:
+(dm: "sender", "Dig Site #3",
+     "message", "A gas leak has flooded the tunnels, making it unsafe to work.  Work has halted until we receive your instructions in person.",
+	 "attachment", "Nothing"
+)
+))
+]
+(else:)
+[Flammable, noxious gasses have flooded the shafts, leading to a complete work stoppage.
+
+(if: $gold > 500)[// Safe, expensive solution //
+(link-reveal: "Spend Money To Fix Problem")[
+(set: $arg to -500)(display: "UpdateGold")
+You shell out a significant sum of lucre for a combination of contraption work and wind spirits to purify the air in your mine.
+(set: $miningEvent to "Deeper We Dig...  But No Yield")
+]]
+
+(if: $inventory contains "Infernal Lens" or $daemons contains "Fire Ghost")[
+// Dangerous, cheap solution -> Potentially Injure yourself and/or crew //
+(link-reveal: "What If We Burn the Gas?!")[
+Hark, y'all, and witness this tomfoolery!  You hand your drink to a dumbstruck worker and use flame to detonate the gas.
+
+(if: (random: 0, $cunning) > 4)[All of the flammable gas ignites with a satisfying WOOMP.  A few of your crew were standing too close without the proper precautions and have lost some eyebrows.
+(set: $miningEvent to "Deeper We Dig...  But No Yield")
+
+]
+(else:)[
+With a hellish crack, the gas detonates, sending rock and raw fragments of support beams through your group like Satan's blunderbuss!
+
+(set: $miningCommand to (floor: it / 2))
+(set: $miningCrew to (floor: it / 2))
+(set: $deathReason to "With a hellish crack, the gas detonates, sending rock and raw fragments of support beams through your group like Satan's blunderbuss!
+You are torn to shreds in the ensuing chaos.")
+(set: $arg to (random: 0, 3))(display: "TakeDamage")
+(set: $miningEvents to (a: "Cave-In", "Deeper We Dig...  But No Yield"))
+]
+]]
+
+[[Threaten to Fire Them If They Don't Continue Working->Disgruntlement]]
+]
+
+[[Dig Site #3]]
+
+(display: "NavOptions")
+
+
+
+:: We Dug Too Deep [mining-status] {"position":"5729,7072","size":"100,100"}
+(if: (passage:)'s name is not "We Dug Too Deep")
+[
+// Send mail //
+(set: $miningGoldYieldRate to 0)
+(set: $miningEvents to (a:
+"Cave-In",
+"Gas Leak",
+"Monster Attack",
+"Deeper We Dig...  And We Found A Vein!",
+"Deeper We Dig...  And We Found A Vein!",
+"Deeper We Dig...  With Some Yield",
+"Deeper We Dig...  But No Yield"
+
+))
+(set: $miningDistance to it + 10)
+(set: $miningDanger to it + 2)
+(set: $mail to it + (a:
+(dm: "sender", "Dig Site #3",
+     "message", "We regret to inform you that we encountered Elder Wards during today's excavation.  Usually, we explicitly avoid them, but in this case, a worker unfortunately desecrated them with a pickaxe, angering the Deep Spirits.",
+	 "attachment", "Nothing"
+)
+))
+]
+(else:)
+[Your crew is quite concerned that they have dug too deep into the living stone and fear retribution from whatever lives below.
+]
+[[Dig Site #3]]
+
+(display: "NavOptions")
+
+
+:: Union Dues [mining-status] {"position":"5558,7348","size":"100,100"}
+(if: (passage:)'s name is not "Union Dues")
+[
+// Send mail //
+(set: $mail to it + (a:
+(dm: "sender", "Dig Site #3",
+     "message", "It's a list of demands from your workers' union.  They want to meet and negotiate.",
+	 "attachment", "Nothing"
+)
+))
+(set: $miningEvents to (a: ))
+(set: $miningGoldYieldRate to 0)
+]
+(else:)
+[
+(set: _desiredRaise to (floor: $miningWage * ($miningDanger/10)))
+// Increase their wages to include a higher percentage of profits and hazard pay //
+(link-reveal: "Increase Wages to " + (str: $miningWage + _desiredRaise))[
+(set: $miningWage to it + _desiredRaise)
+(set: $miningCommand to it + 10)
+The crew is pleased that you've given in to their demands.
+]
+(link-reveal: "Increase Wages to " + (str: $miningWage + _desiredRaise/2))
+[
+(if: (random: 0, $miningCommand) > 1)[
+Considering your popularity, you are able to negotiate a better rate with your crew.
+(set: $miningWage to it + _desiredRaise/2)
+]
+(else:)[(goto: "Disgruntlement")]
+]
+[[No Raise->Disgruntlement]] 
+]
+
+[[Dig Site #3]]
+
+(display: "NavOptions")
+
+
+:: Disgruntlement [mining-status] {"position":"5604,7228","size":"100,100"}
+{(set: $miningEvents to (a: "Deeper We Dig...  But No Yield",
+"Deeper We Dig...  But No Yield",
+"Workers On Strike",
+"Workers On Strike",
+"Trove Discovered",
+"Deeper We Dig...  With Some Yield"))
+(set: $miningGoldYieldRate to it / 2)
+(set: $miningCommand to it - 1)
+}
+The crew is unhappy, and their unhappiness is beginning to affect their work.
+
+(if: $miningCommand <= 0)
+[(display: "Dig Cancelled")]
+(else-if: (random: 0, $miningCommand) <= 0)
+[(goto: "Union Dues")]
+
+[[Dig Site #3]]
+
+(display: "NavOptions")
+
+
+:: Trove Discovered [mining-status] {"position":"5983,6928","size":"100,100"}
+(if: (passage:)'s name is not "Trove Discovered")
+[
+(set: $miningGoldYieldRate to 0)
+(set: $miningEvents to (a: ))
+(set: $miningDistance to it + 5)
+(set: $miningCommand to it + 1)
+// Send mail //
+(set: $mail to it + (a:
+(dm: "sender", "Dig Site #3",
+     "message", "A trove has been uncovered.  Work has halted until we receive your instructions in person.",
+	 "attachment", "Nothing"
+)
+))
+]
+(else:)
+[In among the precious materials, your crew has uncovered a trove of treasure suspended like a bubble in the living rock.
+
+This is no mere nugget of gold, but the detritus of an ancient civilization, perhaps a tomb of a once-great emperor.
+
+They have begun cataloging the site and await your arrival to choose the greatest among treasures for your personal collection.
+
+They would also like you around just in case there are "residents", like murderous spiders or barrow wights.
+
+[[Seal Up The Trove]]
+
+[[Enter the Trove]]
+
+(display: "NavOptions")
+]
+
+
+:: Dig Cancelled [mining-status] {"position":"5860,7225","size":"100,100"}
+// Send mail //
+(set: $miningCommand to 0)
+(set: $miningSupplies to 0)
+(set: $miningDistance to 0)
+(set: $miningCrew to 0)
+
+(set: $miningGoldYieldRate to 0)
+(set: $miningEvents to (a: ))
+(set: $mail to it + (a:
+(dm: "sender", "Dig Site #3",
+     "message", "Your excavation project at Dig Site #3 is hereby cancelled.  All work has been halted.",
+	 "attachment", "Indestructible Pickaxe"
+)
+))
+
+The dig has been cancelled.
+
+[[Dig Site #3]]
+
+(display: "NavOptions")
+
+
+:: Workers On Strike {"position":"5734,7224","size":"100,100"}
+// Send mail //
+(set: $miningEvents to (a: "Disgruntlement", "Workers On Strike", "Workers On Strike", "Workers On Strike"))
+(set: $miningGoldYieldRate to 0)
+(set: $miningCrew to it - (random: 0, 2))
+(set: $mail to it + (a:
+(dm: "sender", "Dig Site #3",
+     "message", "It's a flyer for a general strike and demonstration by your crew at your mine.",
+	 "attachment", "Nothing"
+)
+))
+
+Your mine is being actively picketed by your workers over slights both real and percieved, an unsafe work environment, and problems getting their wages on time and in the correct amounts.
+
+(set: $arg to (random: 0, 1) + (random: 0, 1))
+(display: "LoseReputation")
+
+[[Negotiate Contract->Union Dues]] 
+
+[[Dig Site #3]]
+
+(display: "NavOptions")
+
+
+:: TickMining [function] {"position":"5022,6852","size":"100,100"}
+{(set: _crewWages to $miningCrew * $miningWage)
+(set: _profits to $miningCrew * (ceil: $miningGoldYieldRate * (1 + $reputation's ("House Guild Mechanika")/10)))
+(if: _profits + $gold < _crewWages)
+[(display: "Disgruntlement")
+(set: $gold to it + _profits)
+]
+(else:)
+[
+(set: $gold to it + _profits - _crewWages)
+]
+(if: $miningEvents's length > 0)[(set: $miningEvent to (shuffled: ...$miningEvents)'s 1st)
+<p style="display:none">(display: $miningEvent)</p> 
+]
+
+(if: $miningCommand > 0 and $miningCrew <= 0)[(goto: "Dig Cancelled")]
+(if: $miningCommand > 0)[
+// Send mail //
+(set: $mail to it + (a:
+(dm: "sender", "Dig Site #3",
+     "message", "Invoice: ["+(str: (floor: $ticks / 169))+":"+(str: (floor: $ticks / 13 % 13))+":"+(str: $ticks % 13)+"] " + (str: $miningGoldYieldRate) + " GPH/Yield, " + (str: $miningDistance) + " MGMs/Depth, " + (str: $miningEvent),
+	 "attachment", "Nothing"
+)
+))]
+}
+
+
+:: Digging Out The Cave-In {"position":"5460,7195","size":"100,100"}
+(if: (passage:)'s name is not "Digging Out The Cave-In")
+[
+(set: $miningEvents to (a: "Digging Out The Cave-In", "Digging Out The Cave-In", "We Dug Too Deep", "Cave-In", "Deeper We Dig...  But No Yield"))
+(set: $miningGoldYieldRate to 0)
+(set: $miningDanger to it + 0)
+]
+(else:)
+[During excavation, the rocks forming the wall and ceiling of a branch have become unstable.
+
+All work has ceased until the crew have been dug out.
+
+
+(if: $daemons contains "Gnome")[
+(display: "Have Your Gnome Clean Up The Cave-In")
+]
+
+[[Threaten to Fire Them If They Don't Continue Working->Disgruntlement]]
+
+[[Dig Site #3]]
+
+(display: "NavOptions")
+]
+
+
+
+:: South Quarry Mines [rumor] {"position":"5548,6605","size":"100,100"}
+In South Quarry, you can mine to your heart's content...  infinitely deep mines of fabulous treasure!  We would definitely have infinite hyperinflation if it wasn't for the Accounting Wayes of the Ancient El-Dar.
+
+
+
+:: Magisterium Local Office: South Quarry [location unlisted southquarry] {"position":"5206,5722","size":"100,100"}
+(display: "NavOptions")

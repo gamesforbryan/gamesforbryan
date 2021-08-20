@@ -1,0 +1,42 @@
+
+
+
+:: Dunes [location easternfortress southquarry] {"position":"7264,4939","size":"200,100"}
+(display: "Init Dunes")
+Rolling yellow sand, covering ancient ruins.
+
+// Random chance you'll find The Southern Gate to Eastern Fortress
+
+(link-repeat: "Search for The Southern Gate to Eastern Fortress")[
+The sun beats down on you, mercilessly.
+(set: $arg to (random: 0,1) + (random: 0,1))(display: "TakeDamage")
+(display: "Tick")
+(if: (random: 0, 10 - $perception) is 0)[
+But it was worth it to find
+[[The Southern Gate to Eastern Fortress]]
+]]
+
+
+
+:: Init Dunes [function] {"position":"7151,4929","size":"100,100"}
+{(set: $environmentMaterials to (a: "stone", "sandstone", "sand",  "fossilized wood", "fossil", "obsidian"))
+(set: $environmentColors to (a: "tan", "yellow", "ochre"))
+(set: $clothingMaterials to (a: "burlap", "linen"))
+(set: $clothingColors to (a: "yellowed", "dun","sunbleached"))
+(set: $clothingTypes to (a: "tunic", "robe"))
+(set: $adornmentMaterials to (a: "fossil", "clay", "glass"))
+(set: $adornmentTypes to (a: "beads", "amulets"))
+(set: $hairstyles to (a: "a khaffia", "a bald pate", "a shaggy mane","long matted tendrils"))
+
+(set: $sizes to (a: "wiry", "solid"))
+(set: $races to (a: "human", "drake-kin", "djinni", "rakhshasa"))
+(set: $skinColors to (a: "black", "tan", "brown", "red", "gray", "golden", "blue"))
+(set: $skinTypes to (a: "smooth", "lightly furred", "fur-covered", "scaled"))
+(set: $professions to (a: "bandit", "frankincense harvester", "warlord"))
+}
+{(set: $neighborhood to 
+(dm: "name", "Dunes", 
+"tagname", "dunes",
+	"locations", (a:),
+"contracts", (a:),
+		"events", (a:)))}

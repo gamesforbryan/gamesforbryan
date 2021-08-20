@@ -1,0 +1,1496 @@
+
+
+:: Equatorial Iceberg [journey] {"position":"4209,902","size":"100,100"}
+The Rift Ship punches through to a tranquil, warm sea.  A fairly large iceberg bobs in an otherwise featureless ocean.
+(set: _roll to (random: 0, 1))
+|input>[
+(link-reveal: "We could try to get some fresh water off of it.")[
+(replace:?input)[
+(if: $riftCommand > 0)[
+(if: _roll > 0)[Your loyal crew breaks out shovels and buckets.  In no time flat, you've given your fresh wather supplies a boost. (set: $riftSupplies to it + (random: 2,5) * 5)
+<b>Supplies -> $riftSupplies</b>
+
+[[Next Journey]]
+](else:)[As your crew begins disembarking, the "iceberg" cracks open, revealing that it is actually the beak of a monstrously large squid.
+Several of your crew are devoured before you're able to flee.
+(set: $arg to -(random: 1,7))(display: "UpdateRiftCrew")
+(set: _commandDamage to (random: 0,2))(if: _commandDamage > 0)[<b>Command - _commandDamage<b/>(set: $riftCommand to it - _commandDamage)](else:)[No one blames you for the loss, though.  Bad things happen on the sea.]
+
+[[Next Journey]]
+]](else:)[(if: _roll > 0)[The ship's captain refuses to get close to that thing.  You all sail away uneventfully.
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+](else:)[The crew captain commands you and the crew down to bring up water, when you are suddenly assaulted by a horrendous squid monster!
+(set: $arg to -(random: 1,7))(display: "UpdateRiftCrew")
+(set: $arg to (random: 0,1))(display: "TakeDamage")
+[[Next Journey]]
+]]]]
+
+(link-reveal: "It's obviously a trap, right?")[(replace:?input)[
+(if: _roll > 0)[You all sail away uneventfully.
+<b>Distance + 1</b>(set: $riftDistance to it + 1)
+[[Next Journey]]  ](else:)[After an agonizing wait, an elephant seal is snapped up into a horrific squid's beak. Your fellows are glad they heeded your warning.
+(set: $arg to 1)(display: "UpdateRiftDistance")
+(set: $riftCommand to it + 1)
+<b>Command + 1<b/>
+
+[[Next Journey]]]
+]]
+]
+
+
+:: Stealing Starfire [journey] {"position":"4213,1040","size":"100,100"}
+The Rift Ship drifts between planetoids in an unusually small solar system.  The suns and planets are the same kind of red-hot machinery as our own world, only executed in exquisite miniature.
+
+
+(set: _roll to (random: 0, 1))
+|input>[
+(link-reveal: "We could try to capture the sun to power our ship.")[
+(replace:?input)[
+(if: $riftCommand > 0)[
+(if: _roll > 0)[Your loyal crew breaks out a winch, a pulley, and a swing boom. In no time flat, they've loaded up and mounted the sun into the ship's drive train.
+(set: $riftSupplies to it + (random: 3,7) * 5)
+<b>Supplies -> $riftSupplies</b>
+(set: $arg to 10)(display: "UpdateRiftDistance")
+(set: $riftTreasure to it + 30)
+<b>Treasure + 30</b>
+
+[[Next Journey]]
+](else:)[
+As you drift by, your crew is unable to loop the little sun.
+
+[[Next Journey]]
+]](else:)[(if: _roll > 0)[The ship's captain refuses to get close to that thing.  You all sail away uneventfully.
+(set: $arg to 1)(display: "UpdateRiftDistance")
+[[Next Journey]]
+](else:)[
+
+[[Next Journey]]
+]]]]
+
+(link-reveal: "It's obviously a trap, right?")[(replace:?input)[
+(if: _roll > 0)[You all sail away uneventfully.
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]  ](else:)[You sail away.
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]]
+]]
+]
+
+
+
+
+:: Smooth Sailing [journey] {"position":"4216,1157","size":"100,100"}
+Nothing much happened today.  Lots of very same-y universes right after the other.  Decent winds.
+(set: $arg to 2)(display: "UpdateRiftDistance")
+[[Next Journey]]
+
+
+:: Rough Seas [journey] {"position":"4211,1375","size":"100,100"}
+This area is not particularly dangerous, but going is slow, and morale is poor.  Everyone is hopelessly nauseous.
+<b>Command - 1</b>(set: $riftCommand to it - 1)
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: Becalmed [journey] {"position":"4212,1263","size":"100,100"}
+No wind today.  You and your crew are stuck in some backwater universe with a very low magical potential.
+
+(if: visits > 2)[Getting stuck in places like this makes you quite worried, as if magic would no longer be real, and you'd be one of these people in these alternate timelines with no way to return to the City.]
+(else-if: visits > 4)[In fact, it might be quite nice to just wander off and live with those people forever.  Forget about the City.]
+(else-if: visits > 6)[You could never forget about the City.  That's what keeps you on the ship even when it seems like it will never set sail ever again.  But what if you just got off?]
+(else-if: visits > 8)[You're afraid of what could have happened that one time.  You know, that one time that you got cabin fever during a becalming and left the ship.  (either: "Turn your back for an instant", "Stop to help one stranger", "Try to collect some supplies for the crew"), and you almost get trapped in a world where (either: "the local theocracy has condemned you to death.", "a hierarchical system of cannibalism has replaced fiat currency.", "wizards are a rare delicacy.", "everyone is a roboticized drone.")]
+(else-if: visits > 12)[
+You've gone a bit mad with anger at having to wait once again in some disgusting flyspeck in the middle of the unknown universe.
+
+<b>Command - 1</b>(set: $riftCommand to it - 1)
+](else-if: visits > 24)[
+You take your time to study this world.  You moor the ship's anchor to this stem and go live with the world for a relative lifetime.  Then, you return no longer bent nor bearded with age, pull up the anchor, and set sail once again.
+
+You never tell the crew what you saw, which for them was just a few minutes but for you was your entire universe.
+]
+
+(set: $arg to 0)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+
+:: Safe Atoll [journey] {"position":"4334,903","size":"100,100"}
+Your ship encounters a section of sea that changes only on geological time scales, making it stable enough to make minor repairs on your sail ship, forage for fresh supplies, and allow you turn around and go home.
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Forward to Glory!->Next Journey]]
+
+[[Scrape Barnacles off of the Hull]] 
+
+[[About to Aft, Return Home!]]
+
+
+:: Monster Attack [journey] {"position":"4215,1492","size":"100,100"}
+A hideous beast arises from the sea, threatening to engulf you.
+
+You have a crew of $riftCrew.  You can sacrifice any number of them to the beast, in order to increase the chance that the rest of them can get away.
+
+How many do you sacrifice? (cycling-link: bind _sacrifice, ...(altered: _i via (str: _i), ...(range: 0, $riftCrew)))
+(link-reveal: "Sacrifice")[
+(if: (num:_sacrifice) is 0)[You'll be sacrificing no one!  You and your crew insist on fighting on!
+(set: _roll to (random: 0, $riftCrew + $riftCommand))
+Roll: _roll
+(if: _roll > 20)[You capture the beast with a harpoon and drag it onto the decks where various hooks and knives make short work of it!
+<b>Supplies + 100</b>(set: $riftSupplies to it + 100)
+
+[[Next Journey]] 
+](else:)[
+Sadly, your glory is ended somewhere in the lower intestine of a hideous transdimensional serpent.
+
+[[Death]] 
+]](else:)[
+You send _sacrifice crew members into the awaiting maw!
+(set: _roll to (random: 0, (pow: (num:_sacrifice), 2) * 5))
+Roll: _roll
+(if: _roll > 20)[
+The poor souls have bought you enough time to escape.
+
+[[Next Journey]]
+](else:)[
+But the sacrifice was in vain, for you all have perished.
+
+[[Death]]]
+]
+]
+
+
+:: Stormy Weather [journey] {"position":"4331,1037","size":"100,100"}
+The ship is tossed about by ragged winds full of jagged shards of clashing realities.
+
+You and your crew must risk your lives to avoid losing supplies!
+
+How many are you willing to risk?  (dropdown: bind _sacrifice, ...(altered: _i via (str: _i), ...(range: 0, $riftCrew)))
+(link-reveal: "Batten Down The Hatches!")[
+(if: (num:_sacrifice) is 0)[You rush out and begin lashing down loose cargo and tools. 
+(if: (random: 0, $perception) > 2)[
+(set: _roll to (random: 0, $riftCrew + $riftCommand))
+Roll: _roll
+(if: _roll > 20)[Your crew is inspired by your courage and follow your lead!
+<b>Command + 1</b>(set: $riftCommand to it + 1)
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+](else:)[You do a passable job and don't lose too many supplies.
+(set: _lostSupplies to (random: 10, 30))
+<b>Supplies - _lostSupplies</b>(set: $riftSupplies to it - _lostSupplies)
+]
+[[Next Journey]]](else:)[You fail to see a swinging boom or mast or whatever those awful wooden swinging things are called.  You are struck over the guardrail and into the roaring sea!
+
+[[Set Adrift]]]
+](else:)[
+You send _sacrifice crew members onto the decks to brave the storm!
+(set: _roll to (random: 0, (pow: (num:_sacrifice), 2) * 5))
+Roll: _roll
+(set: _lostSupplies to (max: 0, 30 - _roll))
+(set: $arg to 1)(display: "UpdateRiftDistance")
+<b>Supplies - _lostSupplies</b>(set: $riftSupplies to it - _lostSupplies)
+(set: $arg to -(abs: (min: 0, (random: 0, 10) - (num: _sacrifice))))
+(display: "UpdateRiftCrew")
+
+[[Next Journey]] 
+]
+]
+
+
+:: Set Adrift {"position":"4462,1025","size":"100,100"}
+You are adrift on the open Rift ocean, clinging precariously to a gyre of swirling wreckage.
+
+(if: (random: 0,5) is 0)[
+You don't have long before a massive wedge of dreadnought wreckage clears your tiny patch of safety like so many duck pins.  But where can you find safety?
+](else:)[[[Wait->Set Adrift]]]
+(link-reveal: "Jump Down Into the Rift")[
+(if: $inventory contains "Silent Ansible")[
+  An image appears in front of you, written in the spaces between the pieces of wreckage on which you bob over the ocean eternal.  It is the cabin of your flying sail ship, some minutes prior to your unfortunate departure from its safety.
+
+  You could just walk right through and [[Pick Next Heading]] 
+  ]
+  (if: $inventory contains "Compass of Many Places")
+  [
+	  You can make out the shape of [[Safe Harbor]] a short leap away.
+  ]
+  (if: $inventory contains "Selkie Skin")[You could [[Dive In Headfirst->Next Journey]] while wearing your Selkie Skin.]
+  (else:)[You could [[Dive In Headfirst->Death]](set: $deathReason to "As you collide with the surface of raw riftspace, your very being is torn into infinitely thin slices.")
+]]
+(if: (history:) contains "Read Philomender's Book of Excellent Knots")[
+(link-reveal: "Craft a Raft")[(if: $cunning > 2)[Your little dinghy manages to get to a [[Safe Harbor]] where you can bring on a new crew.](else:)[(set: $deathReason to "It seems that more cunning was required to craft a boat that could float.")(goto: "Death")]]]
+
+
+:: Siren's Call [journey] {"position":"4352,1158","size":"100,100"}
+(if: (history:) contains "Read Philomender's Book of Excellent Knots")[You are able to secure your crew and yourself to the mast.  You'd hoped that the sirens would reveal great secrets to you, but it's almost exclusively slanderous gossip.
+
+(display: "Baseless Rumors")
+
+[[Next Journey]] 
+](else:)[(if: $cunning + $perception > 4)[You are able to resist the alluring call of the sirens.
+(set: $arg to 1)(display: "UpdateRiftDistance")
+](else:)[(set: $deathReason to "You are gulled by them ladies and dunk yourself headfirst into the ocean eternal.")(goto: "Death")
+]
+(set: $arg to -(random: 1, (ceil: $riftCrew/2)))(display: "UpdateRiftCrew")
+Some of your crew throw themselves to the sirens.  They are snatched out of the air in the sirens's greedy claws.
+(set: _riftCommandDamage to (random: 0, 1))<b>Command - _riftCommandDamage</b>(set: $riftCommand to it - _riftCommandDamage)
+[[Next Journey]] 
+]
+
+
+:: Maelstrom [journey] {"position":"4349,1266","size":"100,100"}
+A reality-bending experience where there are 3 hidden mutator dials.  One changes each turn.  The player must figure out how to navigate the changing states in order to proceed.  Big speed boost for quick success.
+
+[[Next Journey]]
+
+
+:: Attacked by Pirates [journey] {"position":"4356,1388","size":"100,100"}
+You are menaced by pirates.  You can attempt to fight them or abandon yourself to them.
+
+They choose to either take your treasure and/or supplies, kill you, kidnap you, or join your crew depending on a number of factors.
+{(set: $pirateAnger to 5)(set: $pirateHealth to 10)
+(set: $crewAnger to 0)(set: $crewHealth to $riftCrew)
+(set: $turnsResisted to 0)}
+
+Crew: (live: )[$crewHealth] vs. Pirates: (live: )[$pirateHealth]
+|input>[(link-repeat: "Fight!")[(replace:?output)[
+{(set: $pirateAnger to it + 1)
+(set: $turnsResisted to it + 1)
+(set: $playerAttack to (random: 0, $riftCommand))
+(set: $pirateAttack to (random: 0, $pirateHealth))}
+(if: $playerAttack > $pirateAttack )[
+Your crew press the attack against the pirates!
+<b>Pirate Damage + (print: $playerAttack - $pirateAttack)</b>(set: $pirateHealth to it - ($playerAttack - $pirateAttack))
+(if: $pirateHealth <= 0)[You have defeated the pirates and pillage their loot!
+(set: $riftTreasure to it + 100)<b>Treasure + 100</b>
+(set: $riftSupplies to it + 30)<b>Supplies + 30<b/>
+[[A Fetching Ransom]]
+
+[[Next Journey]] 
+(replace:?input)[]
+]
+](else:)[
+The pirates begin to overcome you!
+<b>Crew Health - (print: $pirateAttack - $playerAttack)</b>(set: $crewHealth to it - ($pirateAttack - $playerAttack))
+(if: $crewHealth <= 0)[(replace:?input)[]
+[[Kidnapped!]] 
+
+[[Set Adrift]] 
+
+[[Stranded on a Deserted Island]] 
+
+[[On the Lifeboat]]
+]]]]
+
+(link-reveal: "Surrender!")[(replace:?input)[](replace:?output)[
+(if: $turnsResisted < 3)[(set: $crewAnger to it + 3 - $turnsResisted)]
+[[Kidnapped!]] 
+
+[[Set Adrift]] 
+
+[[Stranded on a Deserted Island]] 
+
+[[On the Lifeboat]]
+]]
+
+(if: $inventory contains "Captain's Hat")[(link-reveal: "Nail My Colors to the Mast!")[(replace:?output)[
+{(set: $playerAttack to (random: 0, $riftCommand) + 1)
+(set: $pirateAttack to (random: 0, $pirateHealth))}
+(if: $playerAttack >= $pirateAttack )[
+You and your crew quickly overwhelm the pirates!
+
+[[Recruit a Salty Crew]]
+
+(set: $riftTreasure to it + 100)<b>Treasure + 100</b>
+(set: $riftSupplies to it + 30)<b>Supplies + 30<b/>
+[[A Fetching Ransom]]
+
+[[Next Journey]] 
+(replace:?input)[]
+]
+]]
+]]
+
+(if: $inventory contains "Pirate's Cap")[ [[Parlay with the Pirates]] ]
+
+|output>[]
+
+
+:: Desert Island [journey] {"position":"4348,1498","size":"100,100"}
+No supplies on this island.
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]] 
+
+[[Scrape Barnacles off of the Hull]] 
+
+(if: $riftDirection is 1)[ [[About to Aft, Return Home!]] ]
+
+
+:: Deserted Island [journey] {"position":"4348,1604","size":"100,100"}
+No one lives on this island, but it may have forage.
+
+(link-reveal: "Forage for Supplies")[
+(set: $arg to (random: 0, 50))(display: "UpdateRiftSupplies")]
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]] 
+
+[[Scrape Barnacles off of the Hull]] 
+
+(if: $riftDirection is 1)[ [[About to Aft, Return Home!]] ]
+
+
+:: Abandoned Monolith [journey] {"position":"4454,904","size":"100,100"}
+Either explore the monolith and whatever traps and treasures are therein, or sail on.
+(set: $arg to 1)(display: "UpdateRiftDistance")
+|input>[
+(link-reveal: "Let's Explore!")[
+(replace:?input)[(display: "Explore Ancient Tombs")]
+]
+[[Let's Sail On->Next Journey]] ]
+
+
+:: Inhabited Island [journey] {"position":"4483,1164","size":"100,100"}
+This island is inhabited,(if: (random: 0,1) is 1)[ and they guard the beach, forbidding you from landing.  They do not appear to be violent: they just want to be left alone.
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+](else:)[and they are willing to share with you and hold palaver on the beach.
+
+They feed you their best foods in exchange for tales of your journeys through this sea.
+(set: _musicalItems to (find: _item where (passage: _item)'s tags contains "musical", ...$inventory))
+(if: _musicalItems's length > 0)[
+With a bit of hasty preparation, you play a piece on your (either: ..._musicalItems) that tells in music what human language could not convey about your epic journey through the seas of infinity.  It's quite a hit with both the locals and your crew.
+(set: $arg to 1)(display: "UpdateRiftCommand")
+(set: $arg to 25)(display: "UpdateRiftSupplies")
+](else:)[You do not know their language, and they have only a few fragments of your language, so you must resort to the universal languages.  You have no musical instruments, so you spend a few hours eating and doing math.
+(set: $arg to 0)(display: "UpdateRiftCommand")
+(set: $arg to 10)(display: "UpdateRiftSupplies")]
+
+(if: $riftDirection is 1)[ [[About to Aft, Return Home!]] ]
+]
+
+[[Next Journey]]
+
+
+:: Hunting Expedition [journey] {"position":"4487,1279","size":"100,100"}
+You've made landfall and have sighted animals.  You can join a small team of crew members to hunt for game and forage.
+
+
+Invest a certain amount of time, then pay supplies as food for your crew.
+Can choose to invest more time.  Will return random amount of supplies from a limited cache.
+
+[[Go Hunting]]
+
+Or, you can sail right past!
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]] 
+
+(if: $riftDirection is 1)[ [[About to Aft, Return Home!]] ]
+
+
+:: Fishing Contest [journey] {"position":"4481,1388","size":"100,100"}
+The seas are calm, and a large school of fish is feeding on zooplankton beneath your hull.  You and some members of your crew decide to do some fishing.  There's a little wager on the side to make it extra interesting.
+
+Commit bait resources to try to draw a superior fish.  Best fish after 3 rounds wins.
+
+(set: $riftSupplies to it + 50)<b>Supplies + 50</b>
+[[Next Journey]]
+
+
+:: Crossing the Meridian [journey] {"position":"4480,1503","size":"100,100"}
+A foul celebration performed by long-time members of the ship's crew for every swab who's never crossed this meridian before.
+They have many of these foul celebrations for the many, many meridians in Zenospace.
+<b>Command + 1</b>(set: $riftCommand to it + 1)
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: Playing Cards Below Deck [journey] {"position":"4476,1614","size":"100,100"}
+The crew wants to play cards with you, because they do not seem to fully understand that you are a magician.
+You could easily cheat to win.
+
+
+Win
+Lose
+Catch Them Cheating
+Cheat and Get Caught
+Cheat and Win
+
+
+[[Next Journey]]
+
+
+:: Singing Chanties [journey] {"position":"4589,908","size":"100,100"}
+You and the crew are singing chanties and drinking grog.
+
+(either: "There once was a creature", "Of very slight stature") (either: "of curious nature", "and not a bit bashful")!
+(either: "And fine, luxurious hair", "Gentle sailors beware")!
+(either: "She fell in love with a sailor", "He did her a favor") (either: "who did hard labor", "and he did save her")!
+(either: "Mermaid children, the males do bear", "And he fell into her snare")!
+
+(set: $arg to -10)(display: "UpdateRiftSupplies")
+
+(if: (random: 0, 10) is 0)[Actually, you might have had *too much* grog, if that's possible.
+[[Wake Up In The Brig]] 
+]
+(else:)[
+(set: $arg to 1)(display: "UpdateRiftCommand")
+
+[[Next Journey]] ]
+
+
+:: Safe Harbor [journey] {"position":"4592,1023","size":"100,100"}
+Your ship comes to rest in the harbor of a small island.
+
+<b>Command + 1</b>(set: $riftCommand to it + 1)
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Scrape Barnacles off of the Hull]] 
+
+[[Next Journey]] 
+
+(if: $riftDirection is 1)[ [[About to Aft, Return Home!]] ]
+
+
+:: Ancient Tombs [journey] {"position":"4596,1164","size":"100,100"}
+(set: $arg to 1)(display: "UpdateRiftDistance")
+Your sailship has come across the stone ruins of an ancient tomb complex.
+Great treasure could be found inside, but perhaps great danger as well.
+Either explore the tombs and whatever traps and treasures are therein, or sail on.
+|input>[
+(link-reveal: "Let's Explore!")[
+(replace:?input)[(display: "Explore Ancient Tombs")]
+]
+[[Let's Sail On->Next Journey]] ]
+
+
+:: Derelict Dreadnought [journey] {"position":"4352,438","size":"100,100"}
+You can choose to explore this vast dreadnought rift ship. 
+
+[[Explore the Derelict Dreadnought]]
+
+[[Sail Away->Smooth Sailing]]
+
+
+:: Void Rays [journey] {"position":"4597,1388","size":"100,100"}
+Beautiful and elegant motion enchanters.  Careful study of them can be beneficial.
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: Dolphin's Guidance [journey] {"position":"4597,1495","size":"100,100"}
+As everyone knows, dolphins are highly-evolved hyper-sentient beings that are the only known organisms who can consciously plan their way through transdimensional space.
+
+(set: $arg to 6)(display: "UpdateRiftDistance")
+
+They offer you an additional shortcut:
+(if: $riftCommand <= 0)[[[Go to Hell->Next Journey]]](else:)[
+(set: _options to (shuffled: ...(find: _item where _item's tags contains "journey", ...(passages:))))
+
+(for: each _item, ...(subarray: _options, 1, $perception))
+[
+(link-goto: (_item's name), (_item's name))]]
+
+
+:: Dive for Pearls [journey] {"position":"4597,1614","size":"100,100"}
+Your crew point out a valuable place to get Rift Pearls.  It's a press your luck game where you can take a smaller treasure or risk dying to get a bigger treasure.
+(set: $breath to $health * 5)
+(set: $currentDepth to 0)
+|input>[
+(link-repeat: "Dive Deeper")[(set: _nextDepth to $currentDepth + (random: 1, 5) * 10)
+(set: $currentDepth to it + (random: 1, 5))
+(set: $breath to it - 1)
+(replace:?output)[Current Depth -> $currentDepth
+Breath -> $breath
+(if: (random: 0, 4) >= 4)[(set: $riftPearlValue to (random: (ceil:$currentDepth/4), (ceil: $currentDepth/2)))You've found a pearl worth approximately $riftPearlValue treasure units.
+]]]
+(link-repeat: "Return to the Surface")[(set: _divingDirection to -1)(set: $breath to it - (random: 1,2))
+(replace:?output)[(set: $currentDepth to it - (random: 1, 5))Current Depth -> $currentDepth
+Breath -> $breath
+(if: $currentDepth <= 0)[(replace:?input)[You return to your ship, (if: $riftPearlValue > 0)[victorious, treasure in hand.
+(set: $arg to "Perfect Pearl")(display: "GetItem")](else:)[empty-handed.]
+(set: $arg to $riftPearlValue)(display: "UpdateRiftTreasure")
+
+[[Next Journey]]](else:)[
+(if: $breath <= 0)[Your lungs are running low on vital oxygen and are overflowing with effluvium.
+(set: $deathReason to "You asphyxiated.")(set: $arg to 1)(display: "TakeDamage")]]]]]
+]
+
+|output>[]
+
+
+
+:: Rolling Bones [journey] {"position":"4697,907","size":"100,100"}
+Your crew invites you to join their dice game.  They are seated belowdecks around a barrel littered with glimmering coins.  They extend you the dice cup.
+
+(display: "Dice Game #1")
+
+
+[[Time For Me to Call it a Night->Next Journey]]
+
+
+:: Swabbing Decks [journey] {"position":"4704,1023","size":"100,100"}
+It's time to swab the decks.  Everybody groans.
+|input>[
+(link-reveal: "Jump In and Start Working!")[(replace:?input)[The furious eye of the Rift, the Siren's Folly, is brutally hot today. (set: $deathReason to "You were withered into a hideous flesh jerky by the unrelenting eye of the Rift.")(set: $arg to (either: 0,0, 1))(display: "TakeDamage")
+(if: (random: 0, 1) > 0)[Your crew appreciate you throwing in your lot with them.
+<b>Command + 1<b/>(set: $riftCommand to it + 1)]
+]]
+(link-reveal: "Let the Crew Handle It")[(replace:?input)[
+(if: (random: 0, $riftCommand) < 1)[Your crew would have appreciated you throwing in your lot with them.
+<b>Command - 1<b/>(set: $riftCommand to it - 1)](else:)[Your crew quickly go about their work.
+
+(set: $arg to 1)(display: "UpdateRiftDistance")]
+]]
+]
+
+[[Next Journey]]
+
+
+:: Sparring [journey] {"position":"4686,757","size":"100,100"}
+{(set: $enemyHealth to 9)(set: $koHealth to 6)
+(set: $fightPattern to (a:"Biff",(either: "Boff", "Bash"),"Biff",(either: "Boff", "Bash"),"Rest"))
+(set: $fightIndex to 1)
+(set: $koReason to "You biffed when you should have boffed.")
+}You see a (either: "swarthy", "grinning", "salty") (either: "crewmate", "fellow", "bosun") with their dukes in the air.  They challenge you to a little biff-boff-bash!
+
+|output>[]
+
+|input>[
+(display: "Sparring Shuffle")
+]
+
+
+:: Palaver with the Captain [journey] {"position":"4710,1273","size":"100,100"}
+You and the captain trade chat during a quiet moment.
+(set: $arg to 1)(display: "UpdateRiftDistance")
+(set: $riftCommand to it + (random: 0, 1))
+(either: "Some say Sirens will grant you secrets, should you listen to them.",
+"If you get a Compass of Many Places, it will help quite a bit out here.",
+"I don't think anyone has gone all of the way to the center of the Rift.",
+"Every time we see land, it could be even more dangerous than the open seas.",
+"Reality doesn't work the same way out here as it does in the City.",
+"I once saw an iceberg in the middle of the warmest of seas.  Turns out to have been the beak of a truly dire monster.")
+
+[[Next Journey]]
+
+
+:: Your Turn in the Crow's Nest [journey] {"position":"4713,1390","size":"100,100"}
+Everyone takes a turn in the Crow's Nest, because staring into the raw, unfiltered eye of the Rift tends to cause folk to go mad.
+(if: (random: 0, $perception) >= 2)[By keeping your eyes open, you're able to pick a better route through the possibility sea.
+(set: $arg to 1)(display: "UpdateRiftDistance")
+[[Pick Next Heading]] ](else:)[
+By performing your job adequately, you help move the ship even faster through the sea.
+(set: $arg to 2)(display: "UpdateRiftDistance")
+
+[[Next Journey]]]
+
+
+:: Kidnapped! [journey] {"position":"4714,1502","size":"100,100"}
+You've been taken captive but there's still time to make it back to your ship.
+
+|input>[(set: $ransom to (random: 1, 10) * 100)
+(if: $gold >= $ransom)[(link-reveal: "Pay the Ransom ($ransom)")[
+(set: $arg to -$ransom)(display: "UpdateGold")
+They release you on a lifeboat.
+[[On the Lifeboat]]
+]]
+Try to fight your way to safety
+[[Steal a Lifeboat]]]
+
+
+:: A Fetching Ransom [journey] {"position":"4715,1611","size":"100,100"}
+You've rescued an aristocratic tourist from people more wicked than yourselves.  They'll fetch a fine price upon their safe return?
+
+|output>[]
+|input>[(link-reveal: "Abandon Them")[(replace:?input)[You leave them to their own devices.
+
+[[Next Journey]] ]]
+(link-reveal: "Kidnap Them")[(replace:?input)[
+\todo
+
+[[Next Journey]] ]]
+(link-reveal: "Recruit Them")[(replace:?input)[
+(set: $arg to 1)(display: "UpdateRiftCrew")
+
+[[Next Journey]] ]]]
+
+:: Fast Current [journey] {"position":"4219,1603","size":"100,100"}
+The crew takes advantage of an advantageous current to boost speed through the area.
+
+<b>Command + 1</b>(set: $riftCommand to it + 1)
+(set: $arg to 4)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+
+:: Buried Treasure [journey] {"position":"4822,911","size":"100,100"}
+If you have the map and the key, the treasure is yours to keep.
+
+(if: $inventory contains all of (ds: "Treasure Map", "Chest Key"))
+[
+(link-reveal: "Dig Up the Treasure")[
+(set: $inventory to it - (ds: "Treasure Map", "Chest Key"))
+(set: $arg to 250)(display: "UpdateRiftSupplies")
+(display: "UpdateRiftTreasure")
+]
+]
+(else-if: $inventory contains all of (ds: "Treasure Map", "Skeleton Key"))
+[
+(link-reveal: "Dig Up the Treasure")[
+(set: $inventory to it - (ds: "Treasure Map"))
+(if: (random: 0, 6) is 0)[The skeleton key has finally broken! And its broken off in the lock!
+(set: $inventory to it - (ds: "Skeleton Key"))](else:)[
+(set: $arg to 250)(display: "UpdateRiftSupplies")
+(display: "UpdateRiftTreasure")
+]]
+]
+(else:)
+[Unfortunately, you have no such tools.]
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: Pirate's Cove [journey] {"position":"4817,1025","size":"100,100"}
+A spiky accretion of captured sail ships, spikes, electrical wires, and rudimentary pre-ansible stabilization technology forms the base of operations for rift pirates.
+
+(if: $inventory contains any of (ds: "Pirate Hat", "Belonging Sign"))[
+If you're allied with the pirates, you can stay here and resupply, etc.
+
+[[Recruit a Salty Crew]] 
+
+[[Singing Chanties]] 
+
+[[Purchase Supplies]]
+
+[[Scrape Barnacles off of the Hull]] 
+
+(if: $riftDirection is 1)[ [[About to Aft, Return Home!]] ]
+]
+(else:)
+[
+(if: (random: 0, 1) is 0)[
+You cannot escape them!
+
+[[Attacked by Pirates]] 
+](else:)[
+
+You sail off without interacting with them.
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]] 
+]]
+
+
+:: Colonial Fort [journey] {"position":"5681,1275","size":"100,100"}
+Your ship approaches a sizeable island with a small, well-maintained fort squatting on the highest point.  Serious-looking soldiers in light arms and armor approach your landing.
+(unless: $inventory contains "Pirate's Cap")[
+One hails you, "You can stay here and do basic maintenance as long as you're not a pirate."
+(if: $inventory contains any of (ds: "Noble Cowl", "Belonging Sign"))[
+"Ah! I didn't recognize you at first.  Please avail yourself of our surplus!"
+[[Purchase Supplies]]]
+
+[[Scrape Barnacles off of the Hull]] 
+
+Or, you can skedaddle.
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]] 
+
+(if: $riftDirection is 1)[ [[About to Aft, Return Home!]] ]
+](else:)[
+
+You're a pirate, they're an anti-pirate.  You should just move along.
+
+[[Next Journey]] 
+
+Or, you can [[Raid the Colonial Fort]].
+
+]
+
+
+:: Something Follows in the Deep [journey] {"position":"4833,1275","size":"100,100"}
+(if: visits < 3)[
+You see a dark form in the eternal ocean below you.  It lurks but does not emerge.
+(set: $arg to 1)(display: "UpdateRiftDistance")
+[[Next Journey]] ]
+(else-if: visits is 3)[
+The darkness below the surface erupts, engulfing your ship deep in its craw.
+
+[[In the Literal Belly of the Literal Beast]]
+]
+(else:)[Not since that day have you seen the darkness follow you in the deep.  It is through with you.
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+[[Next Journey]] ]
+
+
+:: In the Literal Belly of the Literal Beast {"position":"4958,1276","size":"100,100"}
+Try to escape the inside of a giant transdimensional dragon whale before you are digested.
+
+[[Next Journey]]
+
+
+:: Learning the Laws of the Sea [journey] {"position":"4838,1396","size":"100,100"}
+The crew entreat you to learn an incredible cyclopaedia of absolute filth, including outright lies about basic anatomy.
+(set: $arg to 1)(display: "UpdateRiftCommand")
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: Trading Gossip with the Sea Hag [journey] {"position":"4835,1503","size":"100,100"}
+Every ship has its resident sea hag.  They are known to be liars, but it depends on when and how you talk to them.
+
+Sea hags are beings who've been specially enchanted to withstand repeated, prolonged exposure to transdimensional forces that would otherwise drive the crew mad.
+
+They can give you enchantment marks that grant protection from the Rift.
+
+(set: _cost to 1500)(set: $marketplace to (a: "Belonging Sign", "Skein of the Deep"))(for: each _item, ...$marketplace)[(unless: $inventory contains _item)[
+(display: "QuickBuy")
+]]
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+ds [journey] {"position":"4952,913","size":"100,100"}
+Several market stalls have been lashed together on top of some floats, creating a floating market that has crossed paths with you.
+
+(set: $marketplace to (a: "Supply Crate", "Supply Crate", "Supply Crate"))
+(set: $price to 100)
+(for: each _item, ...$marketplace)[	(set: _t1 to _item)	(set: _t2 to $price)	(link-reveal: "Buy " + _t1 + " For " + (str: _t2) + " Gold")[(if: $gold > _t2)[You buy _t1 for _t2. 
+	(set: $riftSupplies to it + 50)(set: $gold to it - _t2)
+	(replace:?clock)[(display: "RenderHeader")]](else:)[You don't have the dosh, mate.]]
+	(set: $price to $price * 2)
+]
+
+[[Next Journey]]
+
+
+
+:: Trade Winds [journey] {"position":"4952,913","size":"100,100"}
+Several market stalls have been lashed together on top of some floats, creating a floating market that has crossed paths with you.
+
+(set: $marketplace to (a: "Supply Crate", "Supply Crate", "Supply Crate"))
+(set: $price to 100)
+(for: each _item, ...$marketplace)[	(set: _t1 to _item)	(set: _t2 to $price)	(link-reveal: "Buy " + _t1 + " For " + (str: _t2) + " Gold")[(if: $gold > _t2)[You buy _t1 for _t2. 
+	(set: $riftSupplies to it + 50)(set: $gold to it - _t2)
+	(replace:?clock)[(display: "RenderHeader")]](else:)[You don't have the dosh, mate.]]
+	(set: $price to $price * 2)
+]
+
+[[Next Journey]]
+
+
+:: Scavenger Barge [journey tick] {"position":"4947,1036","size":"100,100"}
+A floating agglomeration of reclaimed materials, impromptu craftwork, and outright trash.  They sell the choicest pieces of their scavenging for fresh food and gold.
+
+Random, semilegal items sold by a mobile heap of trinkets, knickknacks, wagon wheels, and presumably an actual person as wiry, grey arms do reach out with items for sale and to receive payment, although not always the stereotypical number we associate with humanoids.
+
+{(set: $marketplace to (shuffled: "Selkie Skin", "Pirate's Cap", "Map Fragment", "Lodestone", "Sea Scum")'s (a: 1, 2))}
+(for: each _item, ...$marketplace)[(unless: $inventory contains _item)[
+(set: _cost to 10 + (random: 0, 6) * 5)(display: "QuickBuy")
+]]
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: Light House [journey] {"position":"4952,1154","size":"100,100"}
+A gigantic ansible, arranging rings of order out from it into the boiling chaos of the Rift.
+
+(if: $inventory contains "Silent Ansible")[
+Your Silent Ansible harmonizes with the Light House, sending you forward a dramatic distance and granting you a selection of choice universes.
+
+(set: $arg to 100)(display: "UpdateRiftDistance")
+
+(set: _options to (shuffled: ...(find: _item where _item's tags contains "journey", ...(passages:))))
+
+(for: each _item, ...(subarray: _options, 1, $riftCommand))
+[
+(link-goto: (_item's name), (_item's name))]]
+(else-if: $inventory contains "The Compass of Many Places")[
+(set: _options to (shuffled: ...(find: _item where _item's tags contains "journey", ...(passages:))))
+
+(for: each _item, ...(subarray: _options, 1, 4))
+[
+(link-goto: (_item's name), (_item's name))]]
+(else:)[
+(set: $arg to 10)(display: "UpdateRiftDistance")
+]
+
+[[Next Journey]]
+
+
+:: Seafall [journey] {"position":"4959,1396","size":"100,100"}
+The world isn't flat, of course, but there are numerous places in this unnatural sea where it drops off and becomes an enormous waterfall for many leagues in either direction.
+
+You must backtrack a bit to get to a place where you can safely maneuver.
+
+<b>Command - 1</b>(set: $riftCommand to it - 1)
+(set: $arg to 0)(display: "UpdateRiftDistance")
+[[Next Journey]]
+
+
+:: Run Aground [journey] {"position":"4971,1513","size":"100,100"}
+(if: (random: 0, $perception) <= 2)[You've run aground!  The crew are upset.  They desperately repair the ship before it submerges into transreality space.
+
+<b>Command - 1</b>(set: $riftCommand to it - 1)
+
+(set: $arg to 0)(display: "UpdateRiftDistance")
+
+(if: $riftDirection is 1)[ [[About to Aft, Return Home!]] ]
+](else:)[
+You spot the shallows and alert the navigator in time to dodge them.
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+]
+
+[[Next Journey]]
+
+
+:: In the Fog [journey] {"position":"4973,1622","size":"100,100"}
+All around you is impenetrable fog.  You can carefully drift in place until it is clear enough to see, or you can push forward and risk crashing into detritus or landfall.
+
+|input>[(link-reveal: "Charge Ahead!")[(replace:?output)[](if: (random: 0, $perception) > 2)[(set: $arg to 1.2)(display: "UpdateRiftDistance")
+[[Next Journey]]](else:)[ 
+[[Run Aground]]]]]
+|output>[(if: (random: 0,1) is 0)[ [[Drift in Place->In the Fog]]](else:)[ 
+(set: $arg to 0.1)(display: "UpdateRiftDistance")(replace:?input)[]
+[[Next Journey]]]
+]
+
+
+:: Reef Diving [journey] {"position":"5072,921","size":"100,100"}
+Some crew point out that you're sailing close to a famous coral reef, which may be entertaining to explore.
+
+|input>[
+(link-reveal: "Let's Explore")[(replace:?input)[
+
+Down in the briny water, floating about like gravity is a myth or a mild inconvenience.  You and your crew can clearly see the vitality of this reef.  You see
+(either: "3D Mandelbrot coral", "hyperbolic sponges", "eels poking through cracks", "the worms that make the wormholes").
+
+It is an awe-inspiring journey.
+(set: $arg to 1)(display: "UpdateRiftCommand")
+
+[[Next Journey]]
+]]
+(link-reveal: "Let's Keep Going")[
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]] 
+]
+]
+
+
+:: Rogue Wave [journey] {"position":"5070,1040","size":"100,100"}
+If you are going towards the eye of the Rift, will push you back towards the Rift.
+
+(if: $riftDirection > 0)[(set: $arg to -2)(display: "UpdateRiftDistance")]
+
+If you are going back to North Harbor, will push you closer to North Harbor.
+
+(if: $riftDirection < 0)[(set: $arg to 2)(display: "UpdateRiftDistance")]
+
+[[Next Journey]]
+
+
+:: Mermaids [journey] {"position":"5681,1534","size":"100,100"}
+They will trade fresh supplies to borrow crew members.
+
+Crew members who are "borrowed" will be returned the next time that the mermaids are encountered, but they will have thousands of mermaid eggs in their bellies.
+
+(set: $arg to (dm: "delay", 3, "event", "Mermaid Birth"))(display: "Schedule Event")
+
+[[Next Journey]]
+
+
+:: Selkies [journey] {"position":"5082,1276","size":"100,100"}
+A group of selkies pops out of the sea near your vessel.  In their hands they hold the skin of a selkie outcast.  
+(display: "Selkie Skin")
+
+(set: _item to "Selkie Skin")(set: _cost to 350)(display: "QuickBuy")
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: Ships of the Line [journey] {"position":"5077,1395","size":"100,100"}
+A pitched battle between two full navies.
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: Sargasso [journey] {"position":"5085,1513","size":"100,100"}
+A dangerous bloom of flora that prevents forward movement.
+
+(set: $arg to 0)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: Cross Winds [journey] {"position":"5088,1635","size":"100,100"}
+The crosswinds here make going straight quite challenging.  If you're not cautious, you'll end up perpendicular in the sixth dimension AKA "ass over teakettle".
+
+(set: $arg to -1)(display: "UpdateRiftCommand")
+(set: $arg to 0)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: Domed City [journey] {"position":"5185,928","size":"100,100"}
+(if: (history:) contains "Read The True History of Leng")[Ah, that belongs to the Leng-i-ans.  We could pillage that or sail away unharmed.
+
+]
+(else:)[Yonder domed city in the sea.  Who knows what that is?  The crew grow anxious and spout superstitious nonsense.
+<b>Command - 1</b>(set: $riftCommand to it - 1)
+]
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+:: Yacht Race {"position":"5193,1048","size":"100,100"}
+You challenge a fellow riftrunner sail ship to a race.
+
+<b>Command - 1</b>(set: $riftCommand to it - 1)
+(set: $arg to 1)(display: "UpdateRiftDistance")
+<b>Supplies - 1</b>(set: $riftSupplies to it - 1)
+
+[[Next Journey]]
+
+:: Assassins On Board! [journey] {"position":"5203,1280","size":"100,100"}
+You don't know how, but assassins have come on board and are here to kill you!
+
+{(set: $enemyHealth to 3)
+(set: $fightPattern to (a:"Strike","Strike",(either: "Strike", "Throw"),"Rest"))
+(set: $fightIndex to 1)
+(set: $deathReason to "You were garrotted in your bunk by a professional killer.")
+}You see a (either: "cloaked", "shadowy", "zealous") (either: "strangler", "assassin", "strongarm") with their weapon levelled at you.
+They demand your life.
+
+|output>[]
+
+|input>[(display: "Fight")]
+
+(event: when $enemyHealth <= 0)[ [[Next Journey]] ]
+
+
+:: Stowaways [journey] {"position":"5198,1391","size":"100,100"}
+You've somehow picked up stowaways.  With nowhere to drop them off, you press them into your service.
+
+|output>[(set: $arg to 2)(display: "UpdateRiftCrew")]
+
+[[Next Journey]]
+
+:: Capture Merchant Ship {"position":"5198,1506","size":"100,100"}
+[[Next Journey]]
+
+
+:: Flying Dutchman [journey] {"position":"5207,1636","size":"100,100"}
+It's the Flying Dutchman.  You can board it, but it has nothing to discover.
+
+[[Next Journey]]
+
+
+:: Trash Gyre [journey] {"position":"5307,962","size":"100,100"}
+Mudlarking in the ocean eternal. Try not to fall in!
+
+(link-repeat: "Search the Gyre")[(if: (random: 0, 25) is 0)[(goto: "Monster Attack")](else:)[(replace:?output)[(display: "RandomTrashGyre")]]]
+|output>[]
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: Cruise Ship [journey] {"position":"5310,1043","size":"100,100"}
+Transdimensional tourists getting drunk and taking photos of the Rift.
+
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: The Angler [journey] {"position":"5307,1158","size":"100,100"}
+In what passes for night in this misbegotten Rift, the crew carry lanterns to illuminate and signal.
+
+(if: $perception > 3)[As you watch, something seems off with one of the lanterns.  You shout to your crew as a hideous, toothy maw erupts from the Rift Sea.  A giant Angler, with a hypnotic signal lamp on its brow.  
+Some noble crew are devoured, but not as many as would have been without your warning.
+(set: $arg to -(random: 1, 2))(display: "UpdateRiftCrew")](else:)[
+Without warning, a hideous, toothy maw erupts from the Rift Sea.  A giant Angler, with a hypnotic signal lamp on its brow, begins devouring your crew.
+(set: $arg to -(random: 1, $riftCrew))(display: "UpdateRiftCrew")
+]
+You escape, but barely.
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: Man o'War Jelly [journey] {"position":"5323,1280","size":"100,100"}
+A great, gelatinous mass arises from the sea in front of your ship.  Deadly, stinging tentacles trail behind it in unseen winds.  You and your crew may be able to navigate through!
+(if: (random: 0, $perception + $riftCommand) > 1)[
+You've managed to escape!
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+](else:)[
+Sadly, you've become entangled!
+
+[[Monster Attack]] 
+]
+
+
+:: Fleet of Corsairs [journey] {"position":"5317,1393","size":"100,100"}
+The crew in the crow's nest hollers a "Hallooo!" to the small fleet of fast-moving warships approaching you.
+
+(if: (random: 0, 3) is 0)[They've decided to take you on.
+
+[[Attacked by Pirates]]]
+(else:)[
+They must have been after someone else.
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]] 
+]
+
+
+:: Fire Below Decks [journey] {"position":"5307,1505","size":"100,100"}
+Existential threat to ship.
+FIRE!!!
+
+You and your crew must risk your lives to avoid losing supplies OR WORSE!
+
+How many are you willing to risk?  (dropdown: bind _sacrifice, ...(altered: _i via (str: _i), ...(range: 0, $riftCrew)))
+(link-reveal: "Batten Down The Hatches!")[
+(if: (num:_sacrifice) is 0)[You rush out and begin dousing the fire with water, spellcraft, and panic sweat.
+(if: (random: 0, $perception) > 2)[
+(set: _roll to (random: 0, $riftCrew + $riftCommand))
+Roll: _roll
+(if: _roll > 20)[Your crew is inspired by your courage and follow your lead!
+(set: $arg to 1)(display: "UpdateRiftCommand")
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+](else:)[You do a passable job and don't lose too many supplies.
+(set: $arg to (random: 10, 20))(display: "UpdateRiftSupplies")
+]
+[[Next Journey]]](else:)[The ship is lost.  You've a chance to escape.
+
+[[On the Lifeboat]] ]
+](else:)[
+You send _sacrifice crew members into the ship's coal bin!
+(set: _roll to (random: 0, (pow: (num:_sacrifice), 2) * 5))
+Roll: _roll
+(set: $arg to (max: 0, 30 - _roll))(display: "UpdateRiftSupplies")
+(set: $arg to 1)(display: "UpdateRiftDistance")
+(set: $arg to -(abs: (min: 0, (random: 0, 10) - (num: _sacrifice))))
+(display: "UpdateRiftCrew")
+
+[[Next Journey]] 
+]]
+
+
+:: Found Stranded Fellow [journey] {"position":"5327,1631","size":"100,100"}
+You happen upon a desperate, scrawny-looking fellow clinging to a chunk of detritus.  They have been set adrift.  You could easily pick them up, but it would cost you some travel time.
+
+|input>[(link-reveal: "Rescue Them")[(replace:?input)[
+(if: $inventory contains "Selkie Skin")[They see you holding the Selkie Skin and explode with rage.
+"How dare you take that!" they scream.
+They grab the Selkie Skin from you, don it themselves, and then disappear beneath the waves.
+(set: $inventory to it -(ds: "Selkie Skin"))
+]
+(else:)[
+(set: $arg to 1)(display: "UpdateRiftCrew")] ]]
+(link-reveal: "Keep Going")[(replace:?input)[(set: $arg to 1)(display: "UpdateRiftDistance")]]]
+|output>[]
+
+[[Next Journey]]
+
+
+:: Carving Scrimshaw {"position":"5437,928","size":"100,100"}
+Build an artifact.
+
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: Submarine Excursion [journey] {"position":"5440,1046","size":"100,100"}
+Since it's not really water, you can fly your ships into the "ocean" in order to pick up treasure or supplies.
+{(set: $breath to $health * 5)
+(set: $currentDepth to 0)
+|input>[(set: _nextDepth to $currentDepth + (random: 1, 5) * 10)
+(link-repeat: "Return to the Surface")[(set: _divingDirection to -1)(replace:?input)[](set: $breath to it - (random: 1,2))
+(replace:?output)[(set: $currentDepth to it - (random: 1, 5))Current Depth -> $currentDepth
+Breath -> $breath
+(if: $currentDepth <= 0)[You return to your ship, victorious, treasure in hand.
+<b>Treasure + $riftPearlValue<b/>(set: $riftTreasure to it + $riftPearlValue)](else:)[
+(if: $breath <= 0)[Your lungs are running low on vital oxygen and are overflowing with effluvium.
+(set: $deathReason to "You asphyxiated.")(set: $arg to 1)(display: "TakeDamage")]]]]<br/><br/>
+(link-repeat: "Dive Deeper")[
+(set: $currentDepth to it + (random: 1, 5))
+(set: $breath to it - 1)
+(replace:?output)[Current Depth -> $currentDepth
+Breath -> $breath
+(if: (random: 0, 4) >= 4)[(set: $riftPearlValue to (random: (ceil:$currentDepth/4), (ceil: $currentDepth/2)))You've found a pearl worth approximately $riftPearlValue treasure units.
+(link-reveal: "Take it and Return to the Surface")[(replace:?input)[]]
+]
+]
+]]
+
+|output>[]
+}
+
+[[Next Journey]]
+
+
+:: Polar Passage [journey] {"position":"5437,1158","size":"100,100"}
+At risk to your supplies, you can attempt a shortcut.
+
+(set: $arg to -(random: 0, $riftSupplies))(display: "UpdateRiftSupplies")
+
+(set: $arg to (random: 0, 10))(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: Penguins [journey] {"position":"5448,1271","size":"100,100"}
+Everyone thinks penguins are adorable.  Good feelings.
+
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: Pillars of Hot Ocean [journey] {"position":"5438,1400","size":"100,100"}
+Giant pillars of steaming hot ocean erupt from the rift sea.  You could ride on them for a distance boost, but it's risky.
+
+|input>[(link-reveal: "Charge Ahead!")[(replace:?output)[](if: (random: 0, $perception) > 2)[(set: $arg to 10)(display: "UpdateRiftDistance")
+[[Next Journey]]](else:)[ 
+[[Run Aground]]]]]
+|output>[It's pretty foggy down here.
+[[Drift in Place->In the Fog]]]
+
+
+:: Bilge Tank Overflow [journey] {"position":"5457,1520","size":"100,100"}
+Filthy and demoralizing.  Witch Jars everywhere!
+
+
+(set: $arg to 0)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: Trade with Kayakers [journey] {"position":"5470,1638","size":"100,100"}
+Some sentients live full time out here on tiny ships.  
+They will trade supplies for curiosities.
+(set: _options to (find: _p where (passage: _p)'s tags contains "item", ...$inventory))
+(if: _options's length > 2)[
+(for: each _item, ...(shuffled: ..._options's (a: 1, 2, 3)))[(set: _i to _item)
+(link-reveal: "Trade " + _i)[(set: $inventory to it -(ds: _i))
+(set: $arg to it + (random: 5, 50))(display: "UpdateRiftSupplies")]
+]]
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: Whale Watching [journey] {"position":"5573,923","size":"100,100"}
+Super-sweet whales.
+
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+:: The Ocean Laid Bare [journey] {"position":"5575,1275","size":"100,100"}
+Imagine you are sailing the greatest sea on your particular planet, and one day, all of the water is suddenly gone.  You are trapped on the bottom of the sea.
+All around you is detritus, sea monsters, treasure.
+
+You could leave the boat in search of bounty, but when will the water return?!
+
+(set: $arg to 0)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: The Tavern Barge [journey] {"position":"5575,1390","size":"100,100"}
+Good currents have brought you to a place for seafaring crews like yours.  On great pontoons, an epic tavern has been erected.
+
+[[Recruit a Salty Crew]] 
+
+[[Singing Chanties]] 
+
+[[Purchase Supplies]] 
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: Message in a Bottle [journey] {"position":"5566,1519","size":"100,100"}
+(display: "Random Bulk Scroll")
+
+(set: $arg to 1)(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+:: Tempest [journey] {"position":"5578,1632","size":"100,100"}
+Your ship is shifted random distances along the path to the Siren's Folly, the eye of the Rift.
+
+(set: $arg to (random: -6, 6))(display: "UpdateRiftDistance")
+
+[[Next Journey]]
+
+
+
+:: Circled by Sharks [journey] {"position":"5695,920","size":"100,100"}
+You and your crew are surrounded by a sphere of hypersharks.
+
+
+:: Above Decks #1 {"position":"4586,350","size":"100,100"}
+(display: "Explore Derelict")
+
+[[Above Decks #2]] 
+
+[[Below Decks #1]]
+
+
+:: Above Decks #2 {"position":"4713,336","size":"100,100"}
+(display: "Explore Derelict")
+
+[[Above Decks #1]] 
+
+[[Above Decks #3]] 
+
+[[Below Decks #2]]
+
+
+:: Above Decks #3 {"position":"4835,321","size":"100,100"}
+(display: "Explore Derelict")
+
+[[Above Decks #2]] 
+
+[[Below Decks #3]]
+
+
+:: Below Decks #1 {"position":"4590,458","size":"100,100"}
+(display: "Explore Derelict")
+
+[[Above Decks #1]] 
+
+[[Below Decks #2]]
+
+
+:: Below Decks #2 {"position":"4716,448","size":"100,100"}
+(display: "Explore Derelict")
+
+[[Above Decks #2]] 
+
+[[Below Decks #1]] 
+
+[[Below Decks #3]]
+
+
+:: Below Decks #3 {"position":"4836,431","size":"100,100"}
+(display: "Explore Derelict")
+
+[[Above Decks #3]] 
+
+[[Below Decks #2]]
+
+
+:: Explore the Derelict Dreadnought {"position":"4472,423","size":"100,100"}
+(set: _chambers to (shuffled:
+"Above Decks #1"
+,"Above Decks #2"
+,"Above Decks #3"
+,"Below Decks #1"
+,"Below Decks #2"
+,"Below Decks #3"))
+(set: $derelictLevel to _chambers's (a: 1, 2, 3))
+(set: $derelictIndex to 1)
+(set: _temp to $derelictLevel's 3rd)(goto: _temp)
+
+
+:: Explore Derelict {"position":"4718,235","size":"100,100"}
+(if: $derelictLevel contains (passage:)'s name)[
+(if: (passage:)'s name is $derelictLevel's ($derelictIndex))[
+(if: $derelictIndex is 1)[You find the key.  Now, find the safe and open it!]
+(else-if: $derelictIndex is 2)[You find the safe.  You insert the key and take the treasure.
+(set: $arg to (random: 10, 50))(display: "UpdateRiftTreasure")
+Now, find the exit and get out of here!]
+(else-if: $derelictIndex is 3)[You and your crew bucket brigade the treasure through the porthole into your ship.  You wrap it up and kick off, letting the Derelict drift into the Rift Sea.
+
+[[Next Journey]]]
+(set: $derelictIndex to it + 1)
+](else:)
+[(if: (passage:)'s name is $derelictLevel's 1st)[This is where you found the key.
+]
+(else-if: (passage:)'s name is $derelictLevel's 2nd)[You see a safe.  A key would open it.
+
+(if: $inventory contains "Skeleton Key")[
+Your Skeleton Key makes short work of the safe's lock.(set: $derelictIndex to 3)
+(set: $arg to (random: 0, 50))(display: "UpdateRiftTreasure")
+Now, find the exit and get out of here!
+]
+]
+(if: (passage:)'s name is $derelictLevel's 3rd)[
+You're at the exit.  You could just leave.
+
+[[Next Journey]] 
+]
+
+(if: (passage:)'s name is $derelictLevel's 4th)[
+(if: (random: 0, 3) is 0)[(goto: "Monster Attack")
+]
+]]
+
+](else:)[
+Nowhere in the grinding gears or vessels of exotic fuels are any of the components you need.
+]
+
+:: Explore Ancient Tombs {"position":"4713,1143","size":"100,100"}
+You and your crew stride up to the gate of the most impressive tomb and crack it open.  The glint of gold in the light from the Rift sparkles more beautifully than anything you've ever seen before.
+|output>[]
+(set: $EATdepth to 0)(set: $EATdeck to (shuffled: 1,2,2,3,3,3,4,4,4,4,5,5,5,5,5))(set: $EATdiscard to (ds:))
+(link-repeat: "Keep Exploring")[(append:?output)[(set: $EATdepth to it + 1)(set: _value to $EATdeck's ($EATdepth))(if: $EATdiscard contains _value)[(if: _value is 2)[A section of the ceiling comes crashing down! (set: $deathReason to "Your poor brains were jellified by shoddy roofing materials.")(set: $arg to (random: 1, 2))(display: "TakeDamage")
+]
+(if: _value is 3)[You found another vault key! (if: $EATdiscard contains 1)[(display: "Open Ancient Tomb Vault")
+]]
+(if: _value is 4)[Blow-dart traps that had not yet claimed victims are launched and strike your crew!
+(set: $arg to -(random: 1,3))(display: "UpdateRiftCrew")]
+(if: _value is 5)[You find some loose treasure.
+(set: $arg to (random: 1, 5))(display: "UpdateRiftTreasure")
+]]
+(else:)
+[(if: _value is 1)[The vault is where all of the //real// treasure is kept.  It looks like you need some kind of key...
+(if: $EATdiscard contains 3 or $inventory contains "SkeletonKey")[(display: "Open Ancient Tomb Vault")]]
+(if: _value is 2)[You notice that the ceiling sections are getting loose.  If you see one more loose section, it will probably be your last.]
+
+(if: _value is 3)[
+You find a bit of some kind of gear.  It must be the key to the vault!
+]
+(if: _value is 4)[You notice some empty blow-dart traps near the entrance.  You're about a quarter of the way through the traps.]
+(if: _value is 5)[You find a small pile of treasure.
+(set: $arg to (random: 10, 15))(display: "UpdateRiftTreasure")
+]
+(set: $EATdiscard to it + (ds: _value))
+]]]
+
+[[Abandon the Search->Next Journey]]
+
+
+:: Open Ancient Tomb Vault {"position":"4833,1143","size":"100,100"}
+The vault swings open, groaning on its hinges.
+
+(set: $arg to (random: 100, 250))(display: "UpdateRiftTreasure")
+(set: $arg to (random: 0,1))(display: "UpdateRiftCommand")
+
+
+[[Next Journey]]
+
+
+:: Raid the Colonial Fort {"position":"5806,1280","size":"100,100"}
+{(set: $pirateAnger to 5)(set: $pirateHealth to 10)
+(set: $crewAnger to 0)(set: $crewHealth to $riftCrew)
+(set: $turnsResisted to 0)}
+
+Crew: (live: )[$crewHealth] vs. Colonials: (live: )[$pirateHealth]
+|input>[(link-repeat: "Fight!")[(replace:?output)[
+{(set: $pirateAnger to it + 1)
+(set: $turnsResisted to it + 1)
+(set: $playerAttack to (random: 0, $riftCommand))
+(set: $pirateAttack to (random: 0, $pirateHealth))}
+(if: $playerAttack > $pirateAttack )[
+Your crew press the attack against the colonials!
+<b>Colonial Damage + (print: $playerAttack - $pirateAttack)</b>(set: $pirateHealth to it - ($playerAttack - $pirateAttack))
+(if: $pirateHealth <= 0)[You have defeated the colonials and pillage their loot!
+(set: $arg to 100)(display: "UpdateRiftTreasure")
+(set: $arg to 30)(display: "UpdateRiftSupplies")
+[[A Fetching Ransom]]
+
+[[Next Journey]] 
+(replace:?input)[]
+]
+](else:)[
+The colonials begin to overcome you!
+<b>Crew Health - (print: $pirateAttack - $playerAttack)</b>(set: $crewHealth to it - ($pirateAttack - $playerAttack))
+(if: $crewHealth <= 0)[(replace:?input)[]
+[[Kidnapped!]] 
+
+[[Death]]
+]]]]
+
+(link-reveal: "Surrender!")[(replace:?input)[](replace:?output)[
+(if: $turnsResisted < 3)[(set: $crewAnger to it + 3 - $turnsResisted)]
+[[Kidnapped!]] 
+
+[[Set Adrift]] 
+
+[[Death]]
+]]]
+
+|output>[]
+
+
+:: Mermaid Birth {"position":"5807,1532","size":"100,100"}
+Several members of your crew spontaneously erupt as the mer-babies in their abdomens abruptly mature.
+
+(set: $arg to -(random: 3, 5))(display: "UpdateRiftCrew")
+(if: $riftCrew > 0)[The remaining crew talks sense into the newly born mer-folk, and they decide to join you.
+(set: $arg to (random: 5, 13))(display: "UpdateRiftCrew")
+]
+
+
+:: Enter the Eye of the Rift {"position":"4013,1787","size":"100,100"}
+As you approach the Eye of the Rift, you realize that it is actually a mouth.
+Various crewmembers shout commands that go unheard in the turgid dirge of waves rushing into the maw that opens like an eight-part squid beak.
+Down, down, down you all go into a gulf that is greater and darker than Hell itself.
+Long after your crew has been obliterated, the ship shattered and the sails torn, the remnant of wreckage you tied yourself to comes to rest on the shores of a beautiful tropical island with obsidian sand beaches.
+
+Sunning themselves on the beach is a gentleman in a fine suit.  In one hand is a daiquiri.  In the other is a card that says
+
+[[The Second Prestige]]
+
+
+
+:: RandomTrashGyre {"position":"5297,842","size":"100,100"}
+{(display: "Tick")(replace:?clock)[(display: "RenderHeader")]
+(set: _roll to (random: 0, $perception * 2))
+(if: _roll is 0)[(either:"You find some plastic wrap.", "You find a box of rubber ducks.","Tons and tons of bullkelp.")]
+(else-if: _roll is 1)[(either: "You find an old coin.", "You find a dainty bauble.","You find a small gemstone.")(set: _gold to (random: 1,5))
+<br/><b>Gold + _gold</b>(set: $gold to it + _gold)]
+(else-if: _roll is 2)[You find a shred of paper:
+<br/>(display: "Random Bulk Scroll") ]
+(else-if: _roll < 5)[You find a small piece of useful rubbish: (set: _reagent to (either: "Amount of Ambergris", "Rusted Key", "Map Fragment"))<br/>(set: $arg to _reagent)(display: "GetItem")]
+(else-if: _roll < 7)[You find a valuable antique:
+<br/><b>Gold + 75<b/>(set: $gold to it + 75)]
+(else:)[(if: $inventory contains "Slow Clock")[You find a space where an object should be, but you've already picked it up.](else:)[You find a Compass of Many Places.  It's badly sodden, but it appears to still be in working order.
+(set: $arg to  "Compass of Many Places")
+(display: "GetItem")]]}

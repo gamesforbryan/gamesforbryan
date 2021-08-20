@@ -1,0 +1,110 @@
+
+
+
+:: Init Catacombs [function] {"position":"4517,5459","size":"100,100"}
+{(set: $environmentMaterials to (a: "stone", "stalagmite", "bone", "calcite", "dirt", "fossil", "pitch-soaked timbers"))
+(set: $environmentColors to (a: "black", "white", "gray"))
+(set: $clothingMaterials to (a: "sackcloth", "burlap", "hair"))
+(set: $clothingColors to (a: "dun", "black"))
+(set: $clothingTypes to (a: "robe", "tunic", "cloak and cowl"))
+(set: $adornmentMaterials to (a: "iron", "bone", "gold"))
+(set: $adornmentTypes to (a: "chains", "amulets"))
+(set: $hairstyles to (a: "tonsure"))
+
+(set: $sizes to (a: "drawn", "rawboned"))
+(set: $races to (a: "human", "zombie", "animated skeleton", "spectre"))
+(set: $skinColors to (a: "black", "white", "green", "gray"))
+(set: $skinTypes to (a: "smooth", "scaly", "moldy", "wart-covered"))
+(set: $professions to (a: "cenobite", "monastic", "incense-burner", "sin eater"))
+}
+{(set: $neighborhood to 
+(dm: "name", "Catacombs", 
+"tagname", "catacombs",
+	"locations", (a:),
+"contracts", (a:),
+		"events", (a:)))}
+
+:: Catacombs: Grave Robbing {"position":"4780,5877","size":"100,100"}
+Golden treasures and precious reagents just sitting there, going to waste.  Reduce, Reuse, Recycle!
+
+(link-reveal: "Yes, I'll Rob That Juicy Grave!")[
+You grab some gold and what-not
+(set: $arg to (random: 0, 200))(display: "UpdateGold")
+(set: $arg to "Bit of Bone")(display: "GetItem")
+(if: (random: 0, 2) is 0)[]
+(else:)[
+(goto: "Encounter: Rattle Bones")
+]
+
+]
+
+[[Next Encounter]]
+
+
+:: Catacombs: Groping in the Darkness {"position":"4651,5842","size":"100,100"}
+It's quite dark down here.
+(if: (random: 0, $perception) > 0)[But you're able to make your way just fine.
+](else:)[
+In the darkness, you slip and fall.
+(set: $deathReason to "You reach for firm ground but instead plummet into eternal darkness.")(set: $arg to 1)(display: "TakeDamage")
+]
+
+[[Next Encounter]]
+
+
+:: Catacombs: Spirit Flames {"position":"4755,5752","size":"100,100"}
+Floating near the tunnel ceiling is a (either: "faint", "bright", "queasy"), (either: "greenish", "bluish", "greyish") flame moving under its own direction.
+
+You could follow it!
+
+[[Catacombs: Follow the Spirit Flames]]
+
+[[Next Encounter]]
+
+
+:: Catacombs: A Series of Twisty Crypts All Similar {"position":"4880,5637","size":"100,100"}
+It's a trope that all catacombs will have twisty passages, either alike or unalike, but all pointeless wastes of time.
+
+[[Next Encounter]]
+
+
+:: Catacombs: Lower Depths Gate {"position":"4535,5637","size":"100,100"}
+[[Lower Depths]]
+
+
+:: Catacombs: South Quarry Gate {"position":"4998,5628","size":"100,100"}
+[[South Quarry]]
+
+
+:: Catacombs: Follow the Spirit Flames {"position":"4660,5962","size":"100,100"}
+(set: $encounterIndex to (random: 1, $encounterStack's length))
+You follow the spirit flames, hoping that they don't deliver you into instant death.
+
+[[Next Encounter]]
+
+
+:: Catacombs {"position":"4655,5487","size":"200,200"}
+(display: "Init Catacombs")
+//some form of adventure to unlock shortcut to...//
+
+(set: $pursued to false)
+(set: $encounterStack to (shuffled: 
+"Catacombs: Grave Robbing","Catacombs: Grave Robbing","Catacombs: Grave Robbing","Catacombs: Grave Robbing",
+"Catacombs: Groping in the Darkness","Catacombs: Groping in the Darkness","Catacombs: Groping in the Darkness","Catacombs: Groping in the Darkness",
+"Catacombs: Spirit Flames","Catacombs: Spirit Flames","Catacombs: Spirit Flames","Catacombs: Spirit Flames",
+"Catacombs: A Series of Twisty Crypts All Similar","Catacombs: A Series of Twisty Crypts All Similar","Catacombs: A Series of Twisty Crypts All Similar","Catacombs: A Series of Twisty Crypts All Similar"
+)'s (range: 1, (random: 9, 13)))
+(set: $encounterIndex to 1)
+(if: $neighborhood's name is "South Quarry")[(set: $encounterStack to it + (a: "Catacombs: Lower Depths Gate"))]
+(else:)[(set: $encounterStack to it + (a: "Catacombs: South Quarry Gate"))]
+
+
+[[Sally Forth!->Next Encounter]]
+
+[[Catacombs: Grave Robbing]]
+[[Catacombs: Groping in the Darkness]]
+[[Catacombs: Spirit Flames]]
+[[Catacombs: A Series of Twisty Crypts All Similar]]
+[[Catacombs: Lower Depths Gate]]
+[[Catacombs: South Quarry Gate]]
+(display: "NavOptions")

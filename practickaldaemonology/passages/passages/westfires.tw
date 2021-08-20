@@ -1,0 +1,556 @@
+
+:: West Fires [tick] {"position":"1182,1374","size":"200,200"}
+(display: "Init West Fires")
+This neighborhood is known as the West Fires, because it is to the West and it is constantly on fire.  The supernatural flames are useful for the various industries in that region.
+(for: each _item, ...($neighborhood's locations))[(if: (history:) contains _item and (passage: _item)'s tags contains "bookmark")[(link-goto: _item)
+
+]]
+
+[[Explore the Neighborhood]] 
+
+[[Home Again]] 
+
+(display: "Contract Status")
+
+
+
+:: Init West Fires [function] {"position":"1226,1254","size":"100,100"}
+{(set: $environmentMaterials to (a: "stone", "brick", "charcoal", "cinderbrine", "quartz", "concrete", "flagstone", "cobble"))
+(set: $environmentColors to (a: "white", "red", "black", "gray"))
+(set: $clothingMaterials to (a: "fur", "felt", "linen", "rag", "metal plate", "leather"))
+(set: $clothingColors to (a: "brown", "black", "foxred", "gray", "grey", "yellowed", "tawny"))
+(set: $clothingTypes to (a: "kilt", "apron", "loincloth", "girdle", "three-piece suit", "coveralls", "one-piece"))
+(set: $adornmentMaterials to (a: "bone", "shell", "copper", "clay", "gold", "silver", "emerald", "iron", "tin", "brass"))
+(set: $adornmentTypes to (a: "plate", "plug", "tusk", "ring", "stud"))
+(set: $hairstyles to (a: "a shaven scalp", "a bald pate", "shaven sides and spiked top", "long dreadlocks", "long bangs", "a lacquered headdress", "a shaggy mane"))
+
+(set: $sizes to (a: "grand", "stout", "scrawny", "burly", "rotund", "gaunt", "obese", "muscular", "sculpted"))
+(set: $genders to (a: "man", "woman", "non", "herm"))
+(set: $races to (a: "human", "vulcan", "daemonkin", "changeling", "drakish", "mekannin"))
+(set: $skinColors to (a: "black", "tan", "brown", "red", "gray"))
+(set: $skinTypes to (a: "smooth", "lightly furred", "fur-covered", "scaled"))
+(set: $professions to (a: "soldier", "thief", "ragpicker", "sineater", "cursekeeper", "prostitute", "thug", "student", "alckymist", "blacksmith"))
+}
+{
+(set: $events to (altered: _item via _item's name, ...(find: _item where _item's tags contains all of (a: "westfires", "event"), ...(passages:))))
+(if: (history:) contains "Fulfilled: Slaying The Beast")[(set: $events to $events + (a: "Ripper's Carnage"))]
+(set: $neighborhood to 
+(dm: "tagname", "westfires",
+"name", "West Fires", 
+	"locations", (altered: _item via _item's name, ...(find: _item where _item's tags contains all of (a: "westfires", "location"), ...(passages:))),
+"contracts", (altered: _item via _item's name, ...(find: _item where _item's tags contains all of (a: "westfires", "contract"), ...(passages:))),
+		"events", $events))
+}
+
+
+
+:: West Fires Color {"position":"1061,1422","size":"100,100"}
+{(either: "In front of a ", "Sat in front of a ", "Hanging out near a ")(display: "QuickSetting") a (if: (random: 0,1)>0)[ (either: "lady", "gentleman", "creature") of (either: (either: "great", "small") + " size", (either: "dark", "ruddy", "pale", "blue", "translucent", "scaly", "tattooed") + " skin") (either: "wearing", "with", "in") a (display: "Random Jewelry") (either: " beckons you into their abode."," waves you over to their shop.", "regards you with indifference.", " dozes against the wall."," chats with their twin."," sips at a disreputable-looking pipe.", " glares at you from across the road but takes no action.")](else:)[(display: "QuickChar")(either: " beckons you into their abode."," waves you over to their shop.", "regards you with indifference.", " dozes against the wall."," chats with their twin."," sips at a disreputable-looking pipe.", " glares at you from across the road but takes no action.", " roughly pushes you aside as it passes by.")]}
+
+
+
+:: Daemonium [bookmark westfires location tick] {"position":"1230,1586","size":"100,100"}
+(if: $inventory contains "Soul Jar")["No more freebies", rasps the wraith-like owner of this disreputable shop.
+]
+(else:)[The shop owner hands over a Soul Jar in their slender talons.  They instruct you in its use and promise you great rewards should you successfully capture a Daemon with it.
+"The first one is aaaaaaaaaalways free."
+(set: $inventory to it + (ds: "Soul Jar"))
+]
+(set: _cost to 100)
+(if: $daemons's length > 0)["But if you've come to trade in Daemons with me, then I could be paying you quite handsomely," they say.
+(for: each _item, ...$daemons)[
+(link-reveal: "Examine " + _item)[
+(set: $itemName to _item)(display: _item)] - (link-reveal-goto: "Sell " + _item, "Sell a Daemon")[(set: $itemName to _item)]
+]
+]
+(for: each _item, "Fire Ghost", "Living Shadow", "Solar Spark")[(unless: $daemons contains _item)[(display: "QuickBuyDaemon")]]
+
+(display: "NavOptions")
+
+
+:: Semi-Legal Wards Broker [westfires northharbor location tick] {"position":"4129,2199","size":"100,100"}
+{(set: _price to 15)}
+(if: $inventory contains "Lump of Lead" and $gold > _price)[
+You hand over the Lump of Lead and a mite bit of gold, and your dealer quickly stamps you a Damage Ward on an amulet cord.  It emanates a thick, metallic aura in the ethereal plane and should offer a single shot of magical damage protection.
+{(set: $inventory to $inventory - (ds: "Lump of Lead"))
+(set: $arg to _price * -1)(display: "UpdateGold")
+(set: $arg to "Damage Ward")(display: "GetItem")}
+](else:)[
+If you want to get yourself a Damage Ward, you need a Lump of Lead and about _price gold coins to trade with a dealer in this kind of barely legal artificery.  Come back with the metal, and you'll get the goods.
+]
+
+(display: "NavOptions")
+
+
+:: Friendly Neighborhood Fire Ghost [tick] {"position":"1554,1985","size":"100,100"}
+(if: (history:) contains "A Little Tip From a Fire Ghost")
+[
+You're not going to let yourself be fooled again by an creature that doesn't even have a substance, and it's not going to let itself be cut to ribbons with a crystal spyglass.
+]
+(else:)
+[A fire ghost sleazes up beside you as you prop yourself up against a lamp post. It meets your gaze and reaches out a flimsy hand for your filthy lucre.
+
+"You want a tip, buddy? 10 coins," it hisses at you.
+[[Pay the Creature->A Little Tip From a Fire Ghost]]
+]
+(display: "NavOptions")
+
+
+:: Alckymie Werkz [bookmark location westfires tick] {"position":"1229,1696","size":"100,100"}
+(if: $ticks / 13 % 13 > 8)[
+You've come at the wrong time of the day for alchemical ingredients.  All of the alchemists and artificers have gone home to get deliriously high on their own concoctions.
+
+(unless: $inventory contains "Lump of Lead")
+[
+You find a nice lump of lead on the ground where the stalls were.  Finders = Keepers.  QED.
+(set: $inventory to it + (ds: "Lump of Lead"))
+]
+](else:)[(display: "Alckymie Inventory")
+]
+
+(display: "NavOptions")
+
+
+
+:: A Little Tip From a Fire Ghost {"position":"1661,1983","size":"100,100"}
+(if: $gold > 9)
+[
+The fire ghost whispers into your ear, "You should know that living fire cares only about burning foolish mortals..."
+
+(if: $gold > 19)[(set: $arg to -20)](else-if: $gold > 0 and $gold <= 19)[(set: $arg to $gold)](display: "UpdateGold")
+
+](else:)[
+It sneers at your lack of coin and lashes out at you.
+(set: $arg to 1) (display: "TakeDamage")
+]
+
+And then it's gone in a puff of smoke.  You're chagrined, and you'd rather hope no one saw that.
+
+(display: "An Embarassing Display")
+
+(display: "NavOptions")
+
+
+:: Next Encounter [tick] {"position":"3821,3038","size":"100,100"}
+(if: $encounterStack ($encounterIndex) is (history:)'s last)[
+(set: $encounterIndex to it + 1)
+(set: $encounterLength to it + 1)]
+(go-to: "Encounter")
+
+:: Gideon's Furniture Boutique [bookmark westfires location tick] {"position":"1224,1911","size":"100,100"}
+Gideon greets you at the front of the store.
+"Ah, yes, a discerning customer who recognizes the superiority of our merchandise," they say, displaying their shimmering teeth. "Prices may have increased recently due to our popularity."
+{(set: $goldCost to 1500)
+
+(for: each _item, ...(a: "Vivification Chamber", "Neighborhood Door to North Harbor", "Rack of Torment"))[(if: $inventory contains _item)[(set: $goldCost to it * 2)]]}
+
+(for: each _item, ...(a: "Vivification Chamber", "Neighborhood Door to North Harbor", "Rack of Torment"))[(unless: $inventory contains _item)[(link-reveal-goto: "Examine the " + _item, "Furniture For Sale")[(set: $itemName to _item)]
+]]
+
+(display: "NavOptions")
+
+
+
+
+:: Examine Furniture {"position":"3633,2716","size":"100,100"}
+(display: "Tick")
+(display: $itemName)
+
+(link-reveal: "Use " + $itemName)[
+(display: "Use " + $itemName)]
+(link-goto: "Return", (history:)'s last)
+
+
+:: Farlywell's Inimitable Trinkets [location westfires bookmark] {"position":"1215,2479","size":"100,100"}
+(set: _cost to 150)
+(for: each _item, "Infernal Lens", "Straight Razor", "Thorn Ward")[
+(display: "QuickBuy")
+]
+
+(display: "NavOptions")
+
+:: Burning Hammer [location westfires bookmark] {"position":"1215,2710","size":"100,100"}
+Like the kind of bells that a god would ring, giant piston-powered hammers smashing down on anvils the size of houses.
+Industrial productivity is clearly being executed at an epic scale, using the energy of the eternal firestorm below to manufacture possible item.
+In practice, most of those items tend to be only infinitesimally different from each other.
+
+They have a street-level shop where you can buy samples:
+(set: _cost to 150)(set: $marketplace to (a: "Aqua Regia", "Platinum Platelet", "Meteor Iron", "Damage Ward"))(for: each _item, ...$marketplace)[(unless: $inventory contains _item)[
+(display: "QuickBuy")
+]]
+
+(if: $reputation contains "House Guild Mechanika" and $reputation's ("House Guild Mechanika") > 0)[
+You have some favor with the House Guild Mechanicka, which runs this majestic beast.
+](else:)[The House Guild Mechanicka runs this majestic beast.]
+
+[[House Guild Mechanika]] 
+
+(display: "NavOptions")
+
+
+:: House Guild Mechanika [location westfires bookmark] {"position":"1218,2830","size":"100,100"}
+It is built up from the stones out of steaming pipes and clattering gears.  It is hideously dangerous.  The workers entering and exiting are often conspicuously burn-scarred or missing digits.
+
+You can hire their boffins to update your available tech wherever they have an outpost.  
+
+(link-repeat: "Buy 1 Unit of Science/Engineering")[
+(if: $gold > 100)[
+(set: $arg to "House Guild Mechanika")(display: "ImproveReputation")
+(set: $arg to -100)(display: "UpdateGold")
++ Science/Engineering
+Of course, you can bottle lightning.  It's called a Leyden jar.  Well, what about magic essence?  Only one way to find out.  Here, hold my ale.
+It seems that his heart stopped.  Perfect opportunity for the Leyden jar!
+]
+]
+
+(display: "NavOptions")
+
+:: Phil "Itchy" Palm [westfires persona] {"position":"1331,2592","size":"100,100"}
+Scabrous, overgrown nails, two eyes like piss holes in a snowbank if the pisser had a life-threatening kidney infection.
+He's constantly trying not to scratch his itches, because his flesh is so delicate and his nails so sharp.
+Wears ruined finery.  Accepts gold for information.  Always a gamble with him.  If you don't give him enough gold, he'll give you garbage information.
+
+
+
+:: Librem Perditus Bookstore [bookmark westfires location tick] {"position":"1226,2026","size":"100,100"}
+(if: $perception < 5)
+[
+Some books in this room could kill you.
+Some of them give you a migraine if you try to comprehend the very first page.
+One gave you a nosebleed when you so much as looked at its spine.
+
+(set: _item to "Pamphlet of Cunning")(set: _cost to 15)(display: "QuickBuy")
+
+(set: _item to "Percepção de Cristal")(set: _cost to 750)(display: "QuickBuy")
+
+(set: _item to "The Complete History of History")(set: _cost to 400)(display: "QuickBuy")
+]
+(else:)[You realize that these books are purely theoretical and academical, dealing with domains of High Magick that have nothing to do with earning gold coins or slaying your enemies. (if: $perception > 5)[And even more than half of those have a glamour on them to make them seem more worthwhile than they really are.]
+(set: _item to "Pamphlet of Cunning")(set: _cost to 15)(display: "QuickBuy")
+
+(set: _item to "Percepção de Cristal")(set: _cost to 20)(display: "QuickBuy")
+
+(set: _item to "The Complete History of History")(set: _cost to 1)(display: "QuickBuy")
+]
+
+(display: "NavOptions")
+
+
+:: Encounter: Thug [event westfires] {"position":"3533,4200","size":"100,100"}
+{(set: $enemyHealth to 2)(set: $enemyType to "Thug")
+(set: $fightPattern to (a:"Strike","Block",(either: "Strike", "Throw")))
+(set: $fightIndex to 1)(set: $enemyElementType to "Mortal")
+(set: $deathReason to "You were garrotted in a back alley by a street urchin.")
+}You see a (either: "right", "nasty", "poxy") (either: "prick", "lout", "bastard") waving their knife about at you. 
+They demand your purse.
+
+|output>[]
+|input>[(display: "Fight")
+(link-reveal-goto: "Hand Over A Purse", "Home Again")[(set: $gold to it - (floor: $gold/4))(set: $deathReason to "")]]
+
+(event: when $enemyHealth <= 0)[ (replace:?input)[ [[Next Encounter]] ]]
+
+
+
+
+:: Den of Untouchables [westfires location tick bookmark] {"position":"1223,2138","size":"100,100"}
+(if: $inventory contains any of (a: "Badge of Shame", "Plague Marks"))[At the entrance to the Den of Untouchables is Manky, the bouncer.  They are 8 cubits tall and adorned in a patchwork of rags.
+
+"Got jobs what you could do", they say:
+(for: each _persona, ...(shuffled: ...(find: _i where _i's tags contains "brass-level", ...(passages:)))'s (range: 1,$cunning))[
+(link-goto: _persona's name)
+]
+
+]
+(else:)[At the entrance to a boisterous club is a (display: "QuickChar"), pointing at a series of gruesome scars on their face.  Then they point towards your unlined and unscarred visage.
+"You aren't one of us, and you aren't welcome here," they intone.
+
+"We've heard rumors," they say.  "Want to buy some?"
+(link-repeat: "Buy Rumor")[(set: $gold to it - 1)(replace:?output)[
+(if: (random: 0, 10) > 7)[(display: "Interesting Rumors")]
+(else:)[(display: "Baseless Rumors")]]]
+|output>[]
+]
+
+(display: "NavOptions")
+
+:: A Beggar's Bowl [westfires event] {"position":"3778,3716","size":"100,100"}
+A beggar is sleeping on the ground.  In front of him is a bowl full of coins.
+|input>[
+(link-reveal: "Take a Few")[(replace:?input)["Take a Few"](replace:?output)[(if: $gold < 15)[(set: $arg to 15)(display: "UpdateGold")
+You take just as much as you need.](else:)[Despite having no need for the poor man's meagre lucre, you have been caught debasing yourself in front of the gentry.
+(display: "An Embarassing Display")
+
+[[Next Encounter]]]]]
+(link-reveal: "Take Them All")[(replace:?input)["Take Them All"](replace:?output)[(set: $arg to 150)(display: "UpdateGold")
+He had an amazing amount of money for such a pathetic old man.
+Despite having no need for the poor man's meagre lucre, you have been caught debasing yourself in front of the gentry.
+(display: "An Embarassing Display")
+(replace:?clock)[(display: "RenderHeader")]
+[[Next Encounter]]]]
+(link-reveal: "Leave Them Be")[(replace:?input)["Leave Them Be"](replace:?output)[You studiously avoid them.  It is uncertain if the buboes on his lymph nodes are merely lethal to him or will they erupt and spray virulent slime on everyone nearby.
+
+[[Next Encounter]]]]
+
+(if: $gold > 0)[(link-reveal: "Give Them A Coin")[(replace:?input)["Give Them A Coin"](replace:?output)[You quickly toss them a coin without checking to see who's watching you.
+(set: $arg to (random: -1, 1))(display: "UpdateReputation")
+(set: $arg to -1)(display: "UpdateGold")
+[[Next Encounter]]]]
+
+(link-reveal: "Give Them All Your Gold")[(replace:?input)["Give Them All Your Gold"](replace:?output)[
+(if: (random: 0, 10) > 1)[You offer this wretched creature all of your lucre.  You suddenly feel no need for it.
+It is then revealed to you that this is no mere beggar.  It is a holy monk down from the Mountain.
+The humble monk refuses your kind offer.  They are not a beggar at all.
+Everyone can see what a kind person you truly are.
+(set: $arg to 10)(display: "UpdateReputation")
+[[Next Encounter]]]
+(else:)[(set: $gold to 0)Not sure why you did that.  You feel cheated but would feel even worse if you tried getting your money back.
+
+[[Next Encounter]]
+]]]
+
+]]
+|output>[]
+
+
+:: Encounter: Pickpocket [westfires event] {"position":"3781,3836","size":"100,100"}
+A gerning thug bumps into you.  His deft hands get a hold of one of your coin purses (if: $perception + (random: -1,1) > 4)[but you intercept him before he makes off with your lucre.
+
+[[Next Encounter]]](else:)[before you're aware of it, and you're now lighter in the wallet. 
+(set: $arg to -(random: 0, (ceil:$gold/4)))(display: "UpdateGold")
+
+[[Next Encounter]] 
+]
+
+:: Mudlarking [location westfires] {"position":"4278,2437","size":"100,100"}
+(if: $ticks % 13 < 7)[Along the canal, the tide is low.  Rich mounds of sediment on the canal bottom are embedded with detritus from millenia of the City Past.
+|input>[
+(link-repeat: "Search for Trinkets")[(replace:?output)[(display: "RandomMudlark")]]]](else:)[The canal tide is high.  Come again in the morning if you want to try finding treasures in the mud.]
+|output>[]
+
+(display: "NavOptions")
+
+:: Delilah's Bar [location westfires bookmark tick] {"position":"1216,2365","size":"100,100"}
+This wreck of a place reeks of cheap beer, whiskey, vomit, and hope.
+
+Young wizards looking to get a leg up come here for liquid courage.
+
+Old wizards looking to forget come here for the same.
+
+(if: (random: 0, 3) is 3)[ A drunk old man slides over to you at the bar.
+"You look like you could use a friend in this big, scary place," he slurs.  "How'd you like to buy a friend...  a drink?"
+[[Buy Erno a Drink]]
+]
+
+(for: each _i, (random: 1, 8), (random: 1, 8), (random: 1, 8))[{(set: _cost to _i)(set: _cup to (either: "Dram", "Chalice", "Mug", "Flute"))(set: _drink to (either: "Lager", "Wine", "Brandy", "Port", "Ichor", "Elixir", "Cocktail"))}
+(link-reveal: "Buy a " + _cup + " of " + _drink + " for " + (str:_cost) + " gold")[:
+//(display: "Buy an X of Y")//]
+]
+
+(display: "NavOptions")
+
+
+:: Buy an X of Y {"position":"1326,2363","size":"100,100"}
+{(if: $gold > _cost)[(set: $gold to it - _cost)
+As you polish off your _cup of _drink, Delilah regales you with some recent gossip.
+(if: _cost > 6)[
+They tell you about a great new place in the neighborhood.
+(set: _locations to (find: _item where not ((history:) contains _item and (passage: _item)'s tags contains "bookmark") and (passage: _item)'s tags contains "location", ...($neighborhood's locations)))
+(if: _locations's length > 0)[
+(if: _locations's length is 1)[(link-goto: _locations's 1st)]
+(else:)[
+(for: each _i, ...((shuffled: ..._locations)'s (range: 1, (min: 3, (ceil: $perception/2)))))[
+(link-goto: _i)<br/><br/>
+]]](else:)[No, I guess you'd already seen that, too.]
+]
+(else-if: _cost > 3)[(display: "Interesting Rumors")
+]
+(else:)[
+
+(if: $reputation's ($neighborhood's name) < 5)[(set: $reputationTag to "brass-level")]
+(else-if: $reputation's ($neighborhood's name) < 15)[(set: $reputationTag to "silver-level")]
+(else:)[(set: $reputationTag to "gold-level")]
+
+(if: $currentContract is "")[
+(display: "GenerateChar")(set: $clientDescription to $char)
+(set: $potentialContracts to (find: _item where (not ((passage: _item)'s tags  contains "unique") or not ((history:) contains _item)) and (passage: _item)'s tags contains all of (a: "contract", $reputationTag), ...($neighborhood's contracts)))
+(if: $potentialContracts's length > 0)[People have been asking around for ambitious wizards looking for work...<br/>
+(for: each _i, ...((shuffled: ...$potentialContracts)'s (range: 1, (min: 3, (ceil: $perception/2)))))[
+(link-goto: _i)<br/><br/>
+]](else:)[(display: "Baseless Rumors")]
+]
+]
+](else:)[
+"Sorry, darling, but you haven't the gold to spare."
+]}
+
+
+:: Erno, The Enchanter [westfires persona] {"position":"1221,2593","size":"100,100"}
+A doddering old man wobbles drunkenly about.  He grins keenly when you make eye contact with him.
+
+(if: (passage:)'s name != "Delilah's Bar")[
+Oh, you should take me over to [[Delilah's Bar]] and buy me a drink or two.
+]
+(else:)[
+Shattering an enchantment trap will risk your body.  Unweaving an enchantment trap will risk your mind.  Whichever is currently the strongest, just use that to get through the trap.  If neither are strong, like in my case, you might just run away.
+
+Let's just say you've disassembled some other wizard's enchantment.  You'll get the Ethereal threads that make up that trap.  You can sell them or use them for your own enchantments.
+
+Hey, are you going to [[Delilah's Bar]]?  I'll tag along!
+
+Ah! You got a ward press.  Very clever.  These stamp an enchantment very quickly into a piece of reagent.  It turns out that for the simpler enchantments, this works just fine.  Here's instructions for a new ward type:
+
+You're my best friend, he sobs, maybe in the whole world.  No one ever treated me as good as you.
+
+Here's my favorite book M.C. Escher: Beginner's Embroidery.  You can have it.  Tell me that you'll read it, and I'll let you have it.
+]
+
+
+
+:: Buy Erno a Drink {"position":"1449,2358","size":"100,100"}
+(if: visits % 3 is 0)[
+Erno got drunk and violated the toilet once again.  No one can use it, because he laid a complex and dangerous enchantment trap across it, claiming (either: "that'll sort the bastards out.", "the albino alligators were coming to get him.", "it was a right laugh.")
+
+Delilah kicks you both out!
+[[Get Out!->Staggering Through The Alleys]] 
+]
+(else:)[
+Delilah frowns slightly but overserves him, anyway.
+"Oh, most excellent virtue!  I'll tell you a bit of the helpful."
+
+(display: "Erno, The Enchanter")
+
+[[Buy Erno a Drink]] ]
+
+
+
+:: Reliquarium [bookmark westfires lowerdepths location tick] {"position":"4131,2316","size":"100,100"}
+This is the Reliquarium, a place where the Undead can purchase the kinds of things that an Undead thing needs.
+(if: ((history:) contains "Death"))
+[
+The purse-faced thug at the door steps back as you approach.  A pursed grin appears on his face.
+"Come right on in, my brother," he mutters.
+The pegs and cords stitching his lips together must be keeping his soul inside his somewhat decayed corpse.
+[[Enter the Reliquarium]]
+[[Home Again]] 
+]
+(else:)
+[
+The purse-faced thug at the door refuses your passage.  His nostrils flare in a manner designed to express a very specific disgust.  You notice by his general condition that he is at least partially or recently deceased.
+"You stink like someone who's never passed by the Veil," he sneers.  "Turn around and go [[Home Again]], because the Reliquarium only accepts custom from the Undead."
+]
+
+(display: "NavOptions")
+
+
+:: Enter the Reliquarium {"position":"4241,2304","size":"100,100"}
+Within the reliquary, you meet Lilah, the head curator.
+She grins at you with teeth filed to points.
+"Welcome to the reliquary.  You're finally ready to see what we have to offer."
+
+(if: $LazarusBeaconCharges < 10)
+[
+[[Relics for Initiates->Reliquary Display Case #1]]
+]
+(if: $LazarusBeaconCharges < 9)
+[
+[[Relics for Novices->Reliquary Display Case #2]]
+]
+(if: $LazarusBeaconCharges < 6)
+[
+[[Relics for Journeymen->Reliquary Display Case #3]] 
+]
+
+(display: "NavOptions")
+
+
+
+:: Exit the Reliquarium {"position":"4356,2177","size":"100,100"}
+In what is surely designed to be pure showmanship, as soon as you've finished your purchase, you find yourself with it in your hands, back [[Home Again]].
+
+
+:: Reliquary Display Case #1 {"position":"4460,2316","size":"100,100"}
+Lilah waves one clawed hand over to a display case with three items.
+"These are our introductory items, for the recently deceased."
+
+(for: each _item, ...(a: "Crystal Spyglass", "Damage Ward"))[
+(unless: $inventory contains _item)[(set: _cost to 35 + ($LazarusBeaconCharges * 5))(display: "QuickBuy")]
+]
+
+[[Reliquarium]] 
+
+(display: "NavOptions")
+
+
+
+:: Reliquary Display Case #2 {"position":"4565,2316","size":"100,100"}
+Lilah waves one clawed hand over to a display case with two items.
+"These are our next-level items, for the maturely departed."
+
+(for: each _item, ...(a: "Slow Clock", "Chameleon Scarf"))[
+(unless: $inventory contains _item)[(set: _cost to 170)(display: "QuickBuy")]
+]
+
+[[Reliquarium]] 
+
+(display: "NavOptions")
+
+
+
+:: Reliquary Display Case #3 {"position":"4674,2309","size":"100,100"}
+Lilah waves one clawed hand over to a display case with two items.
+"These are our ultimate items, for the frequently deceased."
+
+(for: each _item, ...(a: "Silent Ansible", "Neighborhood Door to Lower Depths"))[
+(unless: $inventory contains _item)[(set: _cost to 750)(display: "QuickBuy")]
+]
+
+[[Reliquarium]] 
+
+(display: "NavOptions")
+
+
+
+:: Ripper's Carnage [tick] {"position":"1222,2250","size":"100,100"}
+A shocked gasp arises from the crowd when someone stumbles across a mutilated corpse.  You've heard about a serial murderer terrorising the (print: $neighborhood's name), and now you've seen it for yourself.
+
+(if: visits + $perception > 7)[Hunched over the body is the twisted form of the killer, blood still on their hands.
+
+[[The Beast Ripper]]]
+(else:)[
+(display: "NavOptions")]
+
+
+:: The Beast Ripper [tick] {"position":"1327,2247","size":"100,100"}
+You finally meet The Ripper face-to-face, and it is a face that you recognize.  This is the face of a man you killed yourself, his face now discolored and bloated from the effects of the poison you used to kill him.
+
+He has somehow been brought back to life in some gruesome form of Undeath.
+"I can live," he says, "but I must kill in order to survive.  My new form is an obligate predator.  I was a monster before, but now I've done far worse things, and more!"
+
+[[Encounter: Rattle Bones]]
+
+
+
+:: Encounter: Card Sharks [encounter westfires] {"position":"3768,4332","size":"100,100"}
+(display: "Card Game")
+
+(display: "NavOptions")
+
+
+:: Hexonium, the Alckymickematician [westfires persona] {"position":"1433,2594","size":"100,100"}
+Will definitely try to convince you to invest in their lead into gold scheme.
+
+Hexonium, the Alckymickematician,
+Your reputation with them can give access to alchemical secrets and recipes
+Low-Level: 
+    Ward Presses are a cheap way to make Damage Wards and other charms
+    The Alckymickal district keeps regular hours.  If they are closed when you visit, come again later.
+Mid-Level:
+    Never mix X and Y, unless you are trying to make a noxious explosion.  In that case, you definitely want to mix X and Y.
+    You can go [[Mudlarking]] for reagents.
+High-Level:
+    New Ward Press recipe
+
+
+:: Magisterium Local Office: West Fires [location unlisted westfires] {"position":"1230,1807","size":"100,100"}
+(display: "NavOptions")

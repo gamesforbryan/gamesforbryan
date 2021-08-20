@@ -1,0 +1,185 @@
+:: Wastelands [location westfires southquarry] {"position":"2408,4057","size":"200,100"}
+(display: "Init Wastelands")
+Factories deposit their waste materials, slag, expended reagents.
+Skeletons of dead trees. 
+Mechanical vultures eternally pivoting through the air, tirelessly riding hot updrafts, 
+while you are choking on toxic dust and being staggered by dusty billows racing across the hardpan.
+
+The shortest route between West Fires and South Quarry.
+
+(set: $pursued to 0)
+(set: $stamina to $health * 10)
+
+(set: $encounterStack to (shuffled: "Wastelands: Waystation", "Wastelands: Waystation", "Wastelands: Waystation", "Wastelands: Dust Storm","Wastelands: Dust Storm","Wastelands: Dust Storm", "Wastelands: Dust Storm","Wastelands: Dust Storm", "Wastelands: Arackne Patrol","Wastelands: Arackne Patrol","Wastelands: Arackne Patrol","Wastelands: Arackne Patrol",  "Wastelands: Standing Stones", "Wastelands: Standing Stones", "Wastelands: Trudging Through the Wastelands", "Wastelands: Trudging Through the Wastelands", "Wastelands: Trudging Through the Wastelands", "Wastelands: Trudging Through the Wastelands", "Wastelands: Trudging Through the Wastelands", "Wastelands: Trudging Through the Wastelands")'s (range: 1, (random: 9, 13)))
+(set: $encounterIndex to 1)
+(if: $neighborhood's name is "South Quarry")[(set: $encounterStack to it + (a: "Wastelands: West Fires Gate"))]
+(else:)[(set: $encounterStack to it + (a: "Wastelands: South Quarry Gate"))]
+
+
+[[Sally Forth!->Next Encounter]]
+
+(display: "NavOptions")
+
+
+
+
+:: Init Wastelands [function] {"position":"2450,3939","size":"100,100"}
+{(set: $environmentMaterials to (a: "stone", "stalagmite", "sulfur", "calcite", "dirt", "sand", "fossilized wood", "fossil"))
+(set: $environmentColors to (a: "white", "yellow", "ochre", "gray"))
+(set: $clothingMaterials to (a: "fur", "hide", "flaxen", "hair"))
+(set: $clothingColors to (a: "brown", "black", "gray", "yellowed", "dun","sunbleached"))
+(set: $clothingTypes to (a: "loincloth", "tunic", "skirt", "bracers"))
+(set: $adornmentMaterials to (a: "bone", "fossil", "clay", "ochre", "geode", "glass"))
+(set: $adornmentTypes to (a: "horns", "tusks"))
+(set: $hairstyles to (a: "a shaven scalp", "a bald pate", "a shaggy mane","long matted tendrils"))
+
+(set: $sizes to (a: "scrawny", "rawboned"))
+(set: $races to (a: "human", "drake-kin", "goblin", "devil"))
+(set: $skinColors to (a: "black", "tan", "brown", "red", "gray"))
+(set: $skinTypes to (a: "smooth", "lightly furred", "fur-covered", "scaled"))
+(set: $professions to (a: "hunter", "gatherer", "warlord"))
+}
+{(set: $neighborhood to 
+(dm: "name", "Wastelands", 
+"tagname", "wastelands",
+	"locations", (a:),
+"contracts", (a:),
+		"events", (a:)))}
+
+:: Wastelands: Waystation {"position":"1958,4205","size":"100,100"}
+You see a domed mudbrick shelter up ahead.
+(if: $pursued is 1)[Your pursuers won't be able to see you inside.(set: $pursued to 0)]
+
+You should be safe here from all of the //known// hostilities.
+
+In fact, there's a reasonable cot and a trickle of fresh water from a little pump in the back.
+
+(link-reveal: "Refresh Myself")[
+You feel marginally better.
+(set: $arg to 10)(display: "UpdateStamina")
+(if: (random: 0, 100) is 0)[Scratched into the wall is "Jake wuz here".]
+]
+
+[[Next Encounter]]
+
+
+:: Wastelands: Dust Storm {"position":"2108,4207","size":"100,100"}
+The furious wind blows hot, caustic grit into your eyes and sinuses, rendering you nearly blind and anosmic.  Not to mention almost deaf.
+(if: (random: 0,$perception) > 1)[(set: $arg to -1)(display: "UpdatePerception")]
+(set: $arg to -10)(display: "UpdateStamina")
+
+[[Next Encounter]]
+
+
+:: Wastelands: Arackne Patrol {"position":"2258,4207","size":"100,100"}
+As you cross the flat plain of the Wasteland, you've grown accustomed to seeing the metal carcasses of giant mechanical spiders.
+(if: $pursued < 0)[The immobile giants stand over you in ominous silence.]
+(else-if: $pursued >= 0)[
+Now, you've blundered into a group of giant mechanical spiders that are very much still animated!
+(if: (random: 0, $cunning + $perception) > 2)[You manage to sneak right past them without their detection.](else:)[
+(either: "The loose crust of the hardpan cracks under your foot like a clay roof tile.",
+"A different spider that you hadn't seen has spotted you from far above.",
+"A bag full of garbage has blown into the wall of a building near your hiding place.  The noise causes the spider machines to swarm around you")
+(set: $pursued to 1)The spiders are now chasing you!
+]]
+(set: $arg to -1)(display: "UpdateStamina")
+
+[[Next Encounter]]
+
+
+:: Wastelands: West Fires Gate {"position":"2408,4207","size":"100,100"}
+You arrive at the gate to West Fires.
+
+[[West Fires]]
+
+
+:: Wastelands: South Quarry Gate {"position":"2559,4207","size":"100,100"}
+You arrive at the gate to [[South Quarry]].
+
+
+:: Wastelands: Standing Stones {"position":"2708,4208","size":"100,100"}
+(either: "Great basalt obelisks just out from the ground, with piles of rubbish creating ramps at their bases.", "You find a labyrinthian structure made from regular stone rectangular solids.")
+
+(if: $pursued < 1)[
+[[Wastelands: Explore the Standing Stones]]
+](else:)[Sadly, you are too hotly pursued to explore them.]
+
+(set: $arg to -1)(display: "UpdateStamina")
+
+[[Next Encounter]]
+
+
+:: Wastelands: Trudging Through the Wastelands {"position":"2858,4207","size":"100,100"}
+(set: $arg to -1)(display: "UpdateStamina")
+It grows tiresome walking the virtually identical after virtually identical miles in this wretched place.  Still, you cannot stop.
+If the gigantic, mechanical vultures that maintain their position above you constantly sensed you flagging or growing weak for even a moment, they would swoop down and tear you to pieces.
+(if: $pursued is 1)[Behind you, the relentless clinking of the giant mechanical spiders pursuing you gives you an extra incentive to move.]
+
+[[Next Encounter]]
+
+
+:: UpdateStamina [function] {"position":"2206,4082","size":"100,100"}
+(if: $pursued is 1 and $arg is < 0)[(set: $arg to it * 2)]
+(set: $stamina to it + $arg)*Stamina (if: $arg >= 0)[+] $arg*
+(if: $stamina < 0)[(goto: "Wastelands: Succumb to Exhaustion")]
+
+
+:: Wastelands: Explore the Standing Stones {"position":"2708,4357","size":"100,100"}
+(set: _roll to (either: "spiders", "supplies", "remnant"))
+(if: _roll is "spiders")[You find a switch that is labelled "Spiders".  Do you want to throw the switch?
+(link-reveal: "Yes, it definitely seems like a good idea to throw a switch labelled Spiders")[(if: (random: 0, 1) > 0)[
+(set: $pursued to 1)You hear the distinct sound of a bunch of mechanical spiders suddenly powering on.
+](else:)[You don't hear anything.  Nothing appears to happen.  (set: $pursued to -1)]]]
+(else-if: _roll is "supplies")[You find a few bits and pieces here and there that will actually help with your supplies.  Old cloth...  dried beans... flashlight batteries...
+(set: $arg to (random: 1, 10))(display: "UpdateStamina")]
+(else-if: _roll is "remnant")[(either:"Creepypasta of a dead world", "Creepypasta of a dead world #2")]
+
+[[Next Encounter]]
+
+
+:: Wastelands: Succumb to Exhaustion {"position":"2061,4094","size":"100,100"}
+(set: $encounterStack to (a:))(set: $encounterIndex to 1)
+(if: $stamina < -9)[
+(set: $deathReason to "You literally ran out of energy to continue living, so your body just stopped.")
+(if: $pursued is 1)[
+(set: $deathReason to "The spiders quickly kill you.  At first, you think you're being vivisected, but then you realize that they mean no harm.  They are simply disassembling you.")(goto: "Death")
+](goto: "Death")
+]
+
+(if: (random: 0, 100) is 0)[
+A kindly hermit has found you out here in the nightmare and has brought you somewhere safe.
+[[Hermits Passage]] 
+](else:)[
+[[Wastelands: Vulture Attack]]
+]
+
+
+:: Wastelands: Vulture Attack {"position":"1804,4207","size":"100,100"}
+(set: $guardianHealth to 5)(set: $deathReason to "You were torn to shreds, dried, then converted to food for a ravenous, mechanical vulture.")
+(display: "Encounter: Guardian Beast (Mechanical)")
+(event: when $health <= 0)[(goto: "Death")]
+
+(event: when $guardianHealth <= 0)[(replace:?input)[The killing machine slumps to the ground, its body ceasing to animate.
+
+[[Next Encounter]] 
+
+]]
+
+
+:: Hermits Passage [location] {"position":"1401,5900","size":"100,100"}
+You encounter a small cottage in the middle of the intersection of various biomes, you peek inside the window. Alas, you see merely (either: "steampunk machinery of the future"(set: $hermitpass to "steampunk"), "magic wares from millenia ago"(set: $hermitpass to "millenia"), "a mirror"(set: $hermitpass to "mirror")). You: [[Go Through the Hermits Passage]] or [[Nope...->Next Encounter]]
+
+
+:: Go Through the Hermits Passage {"position":"1397,6051","size":"100,100"}
+(if: $hermitpass is "steampunk")[You search through all the bit of machinery, you find so many trinkets, you are smarter than everyone else in the entirety of the universe combined.
+(set $perception to 99999999999)]
+(else:)
+[
+(if: $hermitpass is "millenia")[You poke and prod a jar made of melted snake and monkey bones. While you are at it, a spider crawls onto your back and applies a curse so fatal, it makes the victim suffer eternally. [[Encounter Calamity]]]
+]
+(else:)
+[
+(if: $hermitpass is "mirror")[You stare at your reflection for quite some time. You are amazed to see that your own reflection decided to put his hand on your face.(set: $LazarusBeaconCharges to it + 999999999999999)
+]
+(if: $hermitpass is not "millenia)[[Take a postcard]]
+

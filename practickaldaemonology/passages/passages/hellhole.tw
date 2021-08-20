@@ -1,0 +1,104 @@
+
+:: Hell Hole [location westfires northharbor] {"position":"2480,972","size":"200,100"}
+(display: "Init Hell Hole")
+Hot springs, geysers, fumaroles, etc. between West Fires and North Harbor.
+
+You will encounter fire daemons, impassible terrain, and dangerous fumeroles in order to pass over into the other neighborhood.
+
+(set: $pursued to false)
+(set: $encounterStack to (shuffled: "Encounter: Fire Ghost", "Hell Hole: Impassible Cliff", "Hell Hole: Uncrossable Shoreline", "Hell Hole: Hot Spring", "Hell Hole: Exit"
+))
+(set: $encounterIndex to 1)
+(if: $neighborhood's name is "West Fires")[(set: $encounterStack to it + (a: "Hell Hole: North Harbor Gate"))]
+(else:)[(set: $encounterStack to it + (a: "Hell Hole: West Fires Gate"))]
+
+[[Sally Forth!->Next Encounter]]
+
+(display: "NavOptions")
+
+:: Init Hell Hole [function] {"position":"2333,852","size":"100,100"}
+{(set: $environmentMaterials to (a: "stone", "stalagmite", "sulfur", "calcite", "dirt", "sand", "fossilized wood", "fossil"))
+(set: $environmentColors to (a: "white", "yellow", "ochre", "gray"))
+(set: $clothingMaterials to (a: "fur", "hide", "flaxen", "hair"))
+(set: $clothingColors to (a: "brown", "black", "gray", "yellowed", "dun","sunbleached"))
+(set: $clothingTypes to (a: "loincloth", "tunic", "skirt", "bracers"))
+(set: $adornmentMaterials to (a: "bone", "fossil", "clay", "ochre", "geode", "glass"))
+(set: $adornmentTypes to (a: "horns", "tusks"))
+(set: $hairstyles to (a: "a shaven scalp", "a bald pate", "a shaggy mane","long matted tendrils"))
+
+(set: $sizes to (a: "scrawny", "rawboned"))
+(set: $races to (a: "human", "drake-kin", "goblin", "devil"))
+(set: $skinColors to (a: "black", "tan", "brown", "red", "gray"))
+(set: $skinTypes to (a: "smooth", "lightly furred", "fur-covered", "scaled"))
+(set: $professions to (a: "hunter", "gatherer", "warlord"))
+}
+{(set: $neighborhood to 
+(dm: "name", "Hell Hole", 
+"tagname", "hellhole",
+	"locations", (a:),
+"contracts", (a:),
+		"events", (a:)))}
+        
+:: Hell Hole: Impassible Cliff {"position":"2760,890","size":"100,100"}
+You've come up against a cliff that is sheer.  You must retrace your steps and start over.
+
+(set: $encounterStack to (shuffled: ...$encounterStack))
+(set: $encounterIndex to 1)
+[[Next Encounter]]
+
+
+:: Hell Hole: Uncrossable Shoreline {"position":"2765,995","size":"100,100"}
+You come up to the shoreline of a vast, boiling lake.  You must retrace your steps and start over.
+
+(set: $encounterStack to (shuffled: ...$encounterStack))
+(set: $encounterIndex to 1)
+[[Next Encounter]]
+
+
+:: Hell Hole: Hot Spring {"position":"2630,1122","size":"100,100"}
+You find a hot spring.  You could try to soothe your aches and pains, or you could harvest some mineral samples.
+
+[[Hell Hole: Relax in Hot Spring]]
+
+[[Hell Hole: Harvest Minerals]]
+
+[[Next Encounter]]
+
+
+:: Hell Hole: Exit {"position":"2510,1122","size":"100,100"}
+You find the exit that you desired.(set: $encounterStack to (a:))
+(if: $neighborhood's name is "West Fires")[(goto: "Hell Hole: North Harbor Gate")]
+(else:)
+[(goto: "Hell Hole: West Fires Gate")]
+
+
+:: Hell Hole: Relax in Hot Spring {"position":"2555,1272","size":"100,100"}
+(set: _deadly to (random: 0, 1))
+(if: _deadly > 0 and $perception > 2)[It's not safe to go in there.  You'll be boiled like a pudding.]
+(else:)[It looks quite hot, but not dangerous.]
+
+(link-reveal: "Get In And Relax")[
+(if: _deadly > 0)[(set: $deathReason to "That hot spring was way too hot.  You were boiled like a pudding.")(goto: "Death")]
+Your body is soothed by the hot, mineral-rich waters and the various extremophiles they support.
+(set: $arg to 1)(display: "GainHealth")
+]
+
+[[Next Encounter]]
+
+
+:: Hell Hole: Harvest Minerals {"position":"2705,1273","size":"100,100"}
+You find a bit of sulfur...  sulphur...  sulfer?
+
+(set: $arg to "Sack of Sulfur")(display: "GetItem")
+
+[[Next Encounter]]
+
+
+:: Hell Hole: North Harbor Gate {"position":"2526,845","size":"100,100"}
+You find the exit that you desired.(set: $encounterStack to (a:))
+[[North Harbor]]
+
+
+:: Hell Hole: West Fires Gate {"position":"2340,985","size":"100,100"}
+You find the exit that you desired.(set: $encounterStack to (a:))
+[[West Fires]]

@@ -1,0 +1,956 @@
+
+:: Contract Fulfilled {"position":"3358,2697","size":"100,100"}
+{(set: $currentContractStatus to 1)
+(set: $encounterStack to (a:))
+(set: $encounterIndex to 0)
+(set: $currentContractStatus to 0)
+(set: $currentContract to "")
+(set: $encounterPayout to 0)
+(set: $encounterLength to 0)
+}
+
+You've done us proud, my (either: "little", "lovely", "darling", "wonderful") (either: "pet", "treasure", "love", "child").  
+
+(display: "NavOptions")
+
+
+:: Slaying The Beast [unique contract westfires brass-level] {"position":"173,935","size":"100,100"}
+"You want to make a difference?", your contact asks. "I've got a guy you could get rid of and protect a lot of little kids at the same time."
+
+You're handed a crystal flask of poison gas and an itinerary for your target.  (if: $perception > 2)[The target is an enchanter who may have left enchantment traps to snare would-be assassins.]
+
+(set: $encounterPayout to (min: (50 + 5 * $reputation's ($neighborhood's name)), 250))
+I'll offer you $encounterPayout coins for your trouble.
+|input>[
+(link-reveal: "Accept")[
+(set: $currentContract to (passage:)'s name)(replace:?input)[
+You follow your target through a labyrinthine section of the Liar's Market.
+He suspects that an assassin has been sent for him, but instead of going to ground, he is spending this day as if it is his last.
+
+It is his last.
+
+Need I describe for you the evil this man committed?
+Need I describe for you the evil he will surely commit if he were to be allowed to live?
+{
+(set: $encounterStack to (a: "Encounter: Enchantment Trap", "Encounter Random Color", "Encounter: Enchantment Trap", "Fulfilled: Slaying The Beast"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 1)
+}
+
+[[Let Us Begin!->Encounter]]
+
+[[Home Again]] To Prepare
+]]
+
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Encounter: Enchantment Trap {"position":"3904,4484","size":"100,100"}
+(if: $enchantmentHidden is 0 or $perception > $enchantmentHidden)[
+You see the delicate tracery of an enchantment trap.  You've seen these chop grown men to pieces.
+You can attempt to destroy the enchantment with physical magic at the risk of your body or unravel the many knots at the risk of your mind.
+|input>[(link-reveal: "Shatter the Enchantment")[(replace:?input)[](replace:?output)[(display: "Shatter the Enchantment")]]
+(if: $cunning > 1)[ (link-reveal: "Unweave the Enchantment")[(replace:?input)[](replace:?output)[(display: "Attempt to Unweave the Enchantment")]]]]
+]
+(else:)[ (display: "Display Random Color")
+(link-reveal: "Next Encounter")[(display: "Trigger Enchantment")]
+]
+|output>[]
+[[Run Away->Cancel Contract]]
+
+
+
+:: Shatter the Enchantment {"position":"4024,4484","size":"100,100"}
+You strike out at the enchantment with a surge of ley-line energy focussed by your force of will.  A meagre trick that shatters the strands of arcane energy that bound this place, sending fragments of it at terrifying speed.  Each strand of the web was under terrible tension, and you recoil as it lashes at you.
+(set: $deathReason to "Your corrupt, human flesh is lashed by razor-wire fine strands of arcane energy that cannot be stopped by your mortal armor.
+  It's all too much.  You slump to the ground in a ragged, red mass.")
+(set: $arg to 1)(display: "TakeDamage")
+Your corrupt, human flesh is lashed by razor-wire fine strands of arcane energy that cannot be stopped by your mortal armor.
+
+You survive the blast with blood to spare.  Next time, you might lose an eye, my sweet child.
+
+[[Next Encounter]]
+
+
+:: Attempt to Unweave the Enchantment {"position":"4138,4480","size":"100,100"}
+Each silky strand of the enchantment glides across your fingers as you attempt to unbind it from this spot.  It starts out very promisingly...
+(set: _roll to $cunning + (random: -1,1))
+(if: _roll > 5)[and you get the payoff of some completely salvaged Ethereal Threads.
+The strain makes you a bit weary.
+(set: $inventory to it + (ds: "Ethereal Threads"))
+(set: $cunning to it - 1)
+Cunning - 1 ($cunning)
+[[Next Encounter]] ](else-if: _roll > 2)[
+but you lose the thread of it.  You'd managed to relieve enough of the pressure that you aren't injured, but you don't get any salvage from the activity.  Still, practice makes perfect.
+(set: $cunning to it + 1)
+Cunning + 1 ($cunning)
+[[Next Encounter]] 
+](else:)[
+but you lose the thread of it while it's still under high tension.  The warp of it had been altered enough by your mishandling that instead of killing you outright, you are merely badly jolted.
+(set: $cunning to it - 1)
+Cunning - 1
+(if: $cunning is 0)
+[
+Unfortunately, that jolt rendered you so completely stupid that your brain forgets to tell your heart to continue beating or your lungs to keep breathing.  You expire immediately.
+[[Death]] 
+]
+(else:)
+[
+You've got a migraine and blurry vision, but you can continue on your mission.
+[[Next Encounter]] 
+]
+]
+(replace:?clock)[(display: "RenderHeader")]
+
+:: Fulfilled: Slaying The Beast {"position":"287,942","size":"100,100"}
+You slip past the enchantments the Beast placed in your path, leaving him vulnerable to your attack.  You take out the vessel of poison gas and weave a simple teleportation spell.
+
+He expires with a slight cough of greenish smoke and slumps against the market stall where he had been browsing the pornography.  In the vessel which held the poison gas is now the target's last breath.  You tuck it into a specially warded drake-hide satchel for safe keeping.
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Mutilating The Mountebank [unique contract westfires brass-level] {"position":"173,1046","size":"100,100"}
+"A mountebank that performs at the Red Fountain in the Screaming Downs disrespected my boss," says the client's red-faced thug in the ill-fitting cuirass.  "They're too cunning for me to catch them."
+The thug sidles up to you and places a thick wedge of finger meat on your collar-bone.  "Ruin their casting hand for me.  Do it right now!"
+
+(set: $encounterPayout to (min: (50 + 5 * $reputation's ($neighborhood's name)), 250))
+"I'll offer you $encounterPayout coins for your trouble."
+|input>[
+(link-reveal: "Accept")[(replace:?input)[
+(set: $currentContract to (passage:)'s name)
+You spot your target as they're performing by the fountain in the Screaming Downs.  They spot you, too, and flee on foot.  (if: $perception > 2)[The makes some obvious gestures, laying down enchantments and releasing a guardian daemon.]
+
+(set: $encounterStack to (a: "Encounter Random Color", "Encounter: Enchantment Trap", "Encounter: Fire Ghost", "Encounter: Thug", "Fulfilled: Mutilating The Mountebank"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 1)
+(set: $contractCancelledOnDeath to 1)
+[[Chase After Them!->Encounter]]
+
+ ]]
+
+[[Reject->Explore the Neighborhood]] 
+]
+
+
+:: Fulfilled: Mutilating The Mountebank {"position":"281,1046","size":"100,100"}
+Snicker-snack! goes your folding knife as you take a precious casting finger from the furious clown you've subdued.
+"Stay down," you advise, and they listen.
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+
+:: Encounter Random Color {"position":"4143,2880","size":"100,100"}
+(display: ($neighborhood's name) + " Color")
+
+[[Next Encounter]] 
+[[Cancel Contract]]
+
+
+:: Fulfilled: Hijinks in the Hedgemaze {"position":"287,1167","size":"100,100"}
+After stumbling your way through the maze, you finally find your quarry: two young nieces of a certain Senator, talking about things they should not know.  The one on the right gets up and leaves the bench.  Another of your client's agents are responsible for that one.
+
+When the young lady on the left is turned away, you quickly reach in and snatch the silver thread of a brand new memory out from her perfect ear.
+The secret that was whispered to her lives now in a small pouch made from the mummified head of a mutineer, its lips stitched shut and its lying tongue cut out.
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Hijinks in the Hedgemaze [contract silver-level gold-level westfires] {"position":"173,1172","size":"100,100"}
+"It is common enough for young lovers to exchange secret time with each other in the ever-shifting hedgemaze at the Baron's castle grounds," the $clientDescription says to you.  "I need you to erase a very specific secret... right away."
+
+(set: $encounterPayout to (min: (50 + 5 * $reputation's ($neighborhood's name)), 350))
+"I'll offer you $encounterPayout coins for your trouble."
+|input>[
+(link-reveal: "Accept")[
+(set: $currentContract to (passage:)'s name)(replace:?input)[
+The client left a parcel under a parkbench in front of the Baron's hedgemaze.  You open the parcel and pocket the tools of the trade.
+
+You enter the maze, already frustrated.
+(set: $encounterStack to (a: "Encounter Random Color", "Encounter: Shortcut", "Encounter: Aura of Illusion", "Encounter: Solar Spark", "Encounter Random Color", "Encounter: Enchantment Trap", "Fulfilled: Hijinks in the Hedgemaze"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 3)
+(set: $contractCancelledOnDeath to 1)
+[[Let Us Begin!->Encounter]]
+]]
+
+[[Reject->Explore the Neighborhood]] 
+]
+
+
+:: Craftwork for Sale [contract westfires brass-level silver-level] {"position":"170,1280","size":"100,100"}
+(set: $clientGimmeItem to (either: "Damage Ward", "Love Potion", "Shadow Threads", "Ethereal Threads", "Witch Bottle"))
+Your client desires a $clientGimmeItem.
+(set: $encounterPayout to (min: (10 * (random: 0, 5) + 10 * $reputation's ($neighborhood's name)), 150))
+They are willing to pay you $encounterPayout gold coins.
+|input>[
+(if: $inventory contains $clientGimmeItem)[
+(link-reveal: "I Have One Right Here!")[(replace:?input)[(set: $currentContract to (passage:)'s name)You hand over the $clientGimmeItem, and they hand over the cash.  No hassles.(set: $inventory to it - (ds: $clientGimmeItem))
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $arg to $encounterPayout)(display: "UpdateGold")
+(display: "Contract Fulfilled")]
+]]
+
+[[Reject->Explore the Neighborhood]] 
+]
+
+
+:: Encounter Gimme {"position":"3658,3621","size":"100,100"}
+"Do you have the $clientGimmeItem?" asks the (set: _char to $clientDescription)(display: "DescribeChar").
+(if: $inventory contains $clientGimmeItem)[(link-goto: "Hand It Over", "Next Encounter")]
+[[Home Again]]
+
+:: Mask of Memory [unique contract gold-level westfires] {"position":"172,1384","size":"100,100"}
+A cloaked figure approaches you with an awkward gait and an outstretched hand.  "Please, I need an artificer.  It's to save my life!"
+(set: $encounterPayout to (min: (50 + 5 * $reputation's ($neighborhood's name)), 450))
+I'll offer you $encounterPayout coins for your trouble.
+The $clientDescription asks if you are a skilled artificer.  They have an enchantment designed that they need skilled hands to assemble.  Their own are weak and twisted and endlessly shake.
+
+"I desire an enchantment to be cast upon me by a skilled artificer.  Are you cunning enough?" they ask.
+|input>[
+(if: $cunning > 4)["You are cunning enough, indeed.  Will you assist me?"
+
+(link-reveal: "Accept")[ (replace:?input)[
+(set: $currentContract to (passage:)'s name)
+(set: $clientGimmeItem to "Ink of Enchantment")
+(set: $encounterStack to (a: "Encounter Gimme", "Fulfilled: Mask of Memory"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 4)
+"What I need you to acquire is some $clientGimmeItem", they ask.
+(if: $inventory contains $clientGimmeItem)[[[I Have One Right Here!->Encounter]]](else:)
+[(link-goto: "I'll Go Round One Up", (history:)'s last)]]]
+
+](else:)["No.  You are not.  Go refresh yourself and come back when you're ready."]
+
+
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Fulfilled: Mask of Memory {"position":"287,1393","size":"100,100"}
+You bring them the $clientGimmeItem, and they pass you a diagram on lambskin of the design they want you to tattoo on their forehead.
+You perform the work well, and they reward you with the remaining Ink as well as 150 gold coins.
+(if: $perception < $enchantmentHidden)[When you look up from the bag of gold, your client has disappeared.]
+(else:)[Before your very eyes, your client reaches up to their mask-like countenance.  They grab their face like it was mask, as if it had always been a mask.  A different face is beneath.  A younger face.  
+Now, their body is no longer plagued and bent.  They are suddenly lithe and supple.
+They are an Immortal, and you performed the enchantment.  You should be able to reproduce it.  If only you could remember the design.]
+(set: $inventory to it + (ds: "Ink of Enchantment"))
+(set: $encounterPayout to it + 150)
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+
+
+:: Duel of Honor [unique contract silver-level gold-level] {"position":"169,1502","size":"100,100"}
+A minor noble's $clientDescription assistant approaches you with a hefty sack of gold coins to proxy in a duel of honor to the death.
+(set: $encounterPayout to (min: (100 + 5 * $reputation's ($neighborhood's name)), 450))
+"I'll offer you $encounterPayout coins for your trouble.  Right away, right away!"
+|input>[(link-reveal: "Accept")[
+(set: $currentContract to (passage:)'s name)(replace:?input)[
+It happens from time to time that some City noble picks a fight with someone they really shouldn't have and gets in over their heads.  For example, you loudly brag that you could defeat another noble in a duel, and they happened to overhear you in front of their entire retinue.  They have, of course, challenged you to a duel to the death that you accepted, because you are apparently a suicidal idiot.
+However, a loophole in the Imperial Law allows you to have a champion as a proxy.  So, you've been hired to be that champion/suicidal idiot fighting against a different proxy wizard.
+
+(set: $encounterStack to (a: "Encounter: Wizard Duel", "Fulfilled: Duel of Honor"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 4)
+(set: $contractCancelledOnDeath to 1)
+
+[[FIGHT!->Encounter]]
+]]
+
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Fulfilled: Duel of Honor {"position":"286,1505","size":"100,100"}
+You step over the smoldering body of your slain opponent and approach the noble for your pay.  They are too afraid of you to attempt any chicanery, so you end up with the whole amount plus a gratuity.
+(set: $encounterPayout to it + 250)
+(set: $inventory to it + (ds: "Noble Cowl"))
+(set: $arg to 3)(display: "UpdateReputation")
+
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+
+:: Standard Exorcism [contract westfires brass-level] {"position":"169,1624","size":"100,100"}
+A (set: _char to $clientDescription)(display: "DescribeChar") hands you an application for the Daemon cull that is occurring right now.  Any aethereal creatures you can trap or kill in a single day.
+(set: $encounterPayout to 0)
+"You'll get about 3 coins for every beast you bag starting now," the client explains. "But there's a sliding scale to reward culling several daemons in a row.  Performance bonuses from the City administration."
+
+|input>[
+(replace:?input)[
+(set: $currentContract to (passage:)'s name)
+Occasionally, daemons will rise up and start attacking mortals en masse.  No mortal is sure why this happens, and daemons won't explain.  They follow their own systems.  It is coincidence that our worlds intersect.
+Wizards will be temporarily conscripted to trap and cull aethereals in a single area for a span of a single day.
+{
+(set: $encounterStack to (a: "Call Off the Hunt", "Encounter Select Random Daemon Encounter", "EncounterRewind1or2"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 4)
+(set: $contractCancelledOnDeath to 1)}
+
+[[Tally Ho!->Encounter]]]
+
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Fulfilled: Standard Exorcism {"position":"286,1629","size":"100,100"}
+You turn in your card to the (print: $clientDescription's profession).
+(set: $encounterPayout to (pow: 2, $encounterLength))
+They hand you (print: $encounterPayout) gold coins and point the way out.
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Encounter: Graceful Exit {"position":"3776,3613","size":"100,100"}
+You don't have to go any further.  You could finish this right now.  No one will be offended if you bowed out.
+
+[[Next Encounter]] 
+
+[[Contract Fulfilled]]
+
+
+:: Cancel Contract {"position":"3705,3164","size":"100,100"}
+|clock>[]
+You can't hack it.  You'll lose some face but at least it won't cost your life.
+
+{(set: $encounterStack to (a:))
+(set: $encounterIndex to 0)
+(set: $currentContract to "")
+(set: $currentContractStatus to 0)
+(set: $encounterPayout to 0)
+(set: $encounterLength to 0)}
+(set: $arg to -2)(display: "UpdateReputation")
+
+[[Home Again]] with your tail between your legs.
+(replace:?clock)[(display: "Clock")]
+
+:: Bagging the Bagman [unique contract westfires silver-level gold-level] {"position":"167,1739","size":"100,100"}
+A (set: _char to $clientDescription)(display: "DescribeChar") approaches you with a proposal:
+Intercept Begoudoum the Bagman
+Get his package one way or the other
+Bring it to your client
+
+Begoudoum is a strong opponent who won't give up his goods easily.
+
+(set: $encounterPayout to (min: (50 + 5 * $reputation's ($neighborhood's name)), 650))
+I'll offer you $encounterPayout coins for your trouble.
+|input>[(link-reveal: "Accept")[(replace:?input)[
+(set: $currentContract to (passage:)'s name)(set: $remainingPuzzleAttempts to 2)
+Bagadoum is an Ifriti magician who runs special deliveries for the underlord of West Fires.
+You are to intercept him during a delivery and divest him of his package.
+Then, you are to return the package to an agent in the North Harbor.
+{
+(set: $encounterStack to (a: "Encounter: Thug", "Encounter Select Random Daemon Encounter", "Encounter: Shortcut", "EncounterRewind1or2",
+"Encounter: Shortcut", "Encounter Select Random Daemon Encounter", "Encounter: Shortcut", "EncounterRewind1or2","Encounter: Wizard Duel","Take a Peek in the Package?","Fulfilled: Bagging the Bagman"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 5)}
+
+[[Tally Ho!->Encounter]]
+
+[[Home Again]] To Prepare
+
+(link-goto: (history:)'s last)
+]]
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Fulfilled: Bagging the Bagman {"position":"288,1735","size":"100,100"}
+(if: $remainingPuzzleAttempts <= 0)[
+As soon as you hand over the package, they notice that you've tampered with it.  They are angry enough to kill you, but they are honorable beings.  They throw your payment on the ground.
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+
+(display: "An Embarassing Display")
+]
+(else:)[
+You hand over the package, unopened.  The (set: _char to $clientDescription)(display: "DescribeChar") takes the package and examines both the embossed wax seal as well as a set of of unmolested trap enchantments.  Of course you didn't mess with the package: that wasn't part of the deal.
+(set: $gold to it + $encounterPayout)
+They hand you (print: $encounterPayout) gold coins and make a polite gesture as they leave out the back.
+(set: $arg to 3)(display: "UpdateReputation")
+]
+(display: "Contract Fulfilled")
+
+:: Contract Status {"position":"3723,2177","size":"100,100"}
+(if: $currentContract is not "" and $currentContractStatus is 0)[[[Continue Contract->Encounter]] : $currentContract
+(display: "Description " + $currentContract)
+](else-if: $currentContract is not "")[(link-goto: "Start the Contract", $currentContract) : $currentContract
+(display: "Description " + $currentContract)]
+
+:: Class Warfare [contract easternfortress brass-level] {"position":"166,1848","size":"100,100"}
+Two rival schools of spellcraft are in a rivalry that has recently boiled over.  Each school has called in their own brute squad.
+You have been elected to be a member of a goon squad to smash members of a rival Arcane College's student body.  They will likely do the same to you.
+For every student wizard you wreck, you'll get a payout.
+|input>[(link-reveal: "Accept")[(replace:?input)[
+(set: $currentContract to (passage:)'s name)
+ You are issued a copy of "Ex Nobilis Aetherium", which is a sophomore year text on capturing and containing daemons, in order to prove that you are a student in case the police question why a group of hardened sociopaths is hanging around a campus estate.
+{(set: $encounterPayout to 0)(set: $arg to "Ex Nobilis Aetherium")(display: "GetItem")
+(set: $encounterStack to (a: "Encounter: Wizard Duel", "Encounter: Shortcut","EncounterRewind1or2","Fulfilled: Class Warfare"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 5)
+(set: $contractCancelledOnDeath to 1)}
+
+[[Tally Ho!->Encounter]]
+
+[[Home Again]] To Prepare
+
+(link-goto: (history:)'s last)]]
+
+[[Reject->Explore the Neighborhood]] ]
+
+:: Shopping Trip to South Quarry [contract unique westfires silver-level gold-level] {"position":"162,1966","size":"100,100"}
+Your client needs an escort to South Quarry right away, as their financial situation right now is... complicated.
+
+Not to worry you, though, because for you, they will pay in cash.
+
+(set: $encounterPayout to (min: (50 + 5 * $reputation's ($neighborhood's name)), 250))
+
+They will pay you $encounterPayout for your help.
+|input>[(link-reveal: "Accept")[(replace:?input)[
+
+(set: $currentContract to (passage:)'s name)
+Your client wants you to escort them to South Quarry for a shopping spree.
+They are semi-famous (for the wrong reasons) and may need protection.  That's where you come in.  You will keep them safe during their journey and get a ride to South Quarry out of the deal.
+
+(set: $encounterStack to (a: "Encounter Random Color", "Encounter: Enchantment Trap", "Encounter: Fire Ghost", "Encounter: Thug", "Fulfilled: Shopping Trip to South Quarry"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 1)
+(set: $contractCancelledOnDeath to 1)
+[[Let's Go!->Encounter]]]]
+
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Nest of Box Adders [contract] {"position":"161,2077","size":"100,100"}
+(set: $currentContract to (passage:)'s name)
+You are handed an elaborate hardwood box traced with silvery sigils of power.  It is a box protected with Enchantment Locks, which are strong and deadly.
+{
+(set: $encounterStack to (a: "Encounter: Enchantment Trap Lock", "Encounter: Aura of Illusion",
+"Encounter: Enchantment Trap Lock", "Encounter: Aura of Illusion",
+"Encounter: Enchantment Trap Lock", "Encounter: Aura of Illusion",
+"Encounter: Enchantment Trap Lock", "Encounter: Aura of Illusion",
+"Encounter: Enchantment Trap Lock", "Encounter: Aura of Illusion",
+"Encounter: Enchantment Trap Lock", "Encounter: Aura of Illusion",
+"Encounter: Enchantment Trap Lock", "Encounter: Aura of Illusion",
+"Encounter: Enchantment Trap Lock", "Encounter: Aura of Illusion",
+"Encounter: Enchantment Trap Lock", "Encounter: Aura of Illusion",
+"Encounter: Enchantment Trap Lock", "Encounter: Aura of Illusion",
+"Encounter: Enchantment Trap Lock", "Encounter: Aura of Illusion",
+"Encounter: Enchantment Trap Lock", "Encounter: Aura of Illusion"
+
+,"Fulfilled: Nest of Box Adders", "Hidden Treasure: Nest of Box Adders"))
+(set: $encounterIndex to 1)
+(set: $danger to 1)
+(set: $enchantmentHidden to 1)}
+(set: $contractCancelledOnDeath to 1)
+[[Tally Ho!->Encounter]]
+
+[[Home Again]] To Prepare
+
+(link-goto: (history:)'s last)
+
+
+
+:: The Shadow Heist [unique contract gold-level westfires] {"position":"677,2187","size":"100,100"}
+(set: $currentContract to (passage:)'s name)
+Your client wants you to crack into the Shadow Vault, a safehouse of legend where the most dangerous items in the world are kept away when they cannot be destroyed or are too valuable to be destroyed.
+
+(set: $encounterStack to (a: "Encounter Random Color", "Encounter: Enchantment Trap", "Encounter: Fire Ghost", "Encounter: Thug", "Fulfilled: The Shadow Heist"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 1)
+[[Begin!->Encounter]]
+(display: "NavOptions")
+
+
+:: Plant A Spying Eye [uppercastlerock contract silver-level] {"position":"167,2294","size":"100,100"}
+Your client wants you to plant a trinket in an unobtrusive place in a powerful dignitaries home.  They can't be seen doing it, so they're hiring you to do the necessary.  The dignitary themselves is not at home right now.
+|input>[(link-reveal: "Accept")[(replace:?input)[
+(set: $currentContract to (passage:)'s name)
+{(set: $encounterPayout to (min: (100 + 10 * $reputation's ($neighborhood's name)), 500))
+(set: $encounterStack to (a: "Encounter Random Color", "Encounter: Enchantment Trap", "Encounter: Fire Ghost", "Encounter: Thug", "Fulfilled: Plant A Spying Eye"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 1)
+(set: $contractCancelledOnDeath to 1)}
+[[Get to Work!->Encounter]]]]
+
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Crack the Vault [easternfortress contract silver-level gold-level] {"position":"165,2405","size":"100,100"}
+The client would like you to take point on liberating some treasure from one of the minor vaults in the Fortress.
+
+|input>[(link-reveal: "Accept")[(replace:?input)[
+(set: $currentContract to (passage:)'s name)
+(set: $contractCancelledOnDeath to 1)
+
+[[Let's Get to Work->Vault Heist]]
+]]
+
+[[Reject->Explore the Neighborhood]] 
+]
+
+
+:: Steal a Package [westfires easternfortress lowerdepths contract brass-level] {"position":"165,2518","size":"100,100"}
+|input>[(link-reveal: "Accept")[(replace:?input)[
+(set: $currentContract to (passage:)'s name)
+{(set: $encounterPayout to (min: (100 + 10 * $reputation's ($neighborhood's name)), 500))
+(set: $encounterStack to (a: "Encounter Random Color", "Encounter: Thug", (either: "Encounter: Enchantment Trap", "Encounter Random Color"), "Fulfilled: Steal a Package"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 1)
+(set: $contractCancelledOnDeath to 1)}
+[[Get to Work!->Encounter]]]]
+
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Tamper with Evidence [westfires contract brass-level] {"position":"172,2630","size":"100,100"}
+You've got to get into the local Magistrate's office and alter a fingerprint on a morphine ampoule.
+
+(set: $encounterPayout to (min: (100 + 10 * $reputation's ($neighborhood's name)), 750))
+|input>[(link-reveal: "Accept")[(replace:?input)[
+(set: $currentContract to (passage:)'s name)
+(set: $encounterStack to (a: "Encounter: Corrupt Guard", "Fulfilled: Tamper with Evidence"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 1)
+(set: $contractCancelledOnDeath to 1)
+[[Begin!->Encounter]]
+]]
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Erase My Enemy [uppercastlerock lowerdepths contract brass-level silver-level] {"position":"174,2739","size":"100,100"}
+|input>[
+(link-reveal: "Accept")[(replace:?input)[
+
+(set: $currentContract to (passage:)'s name)
+Your client wants you erase an enemy of theirs.  It's like an assassination, but the victim will never have existed.  Your employer will put the payout in a temporal escrow enchantment so that when they don't remember having hired you, because the target of their hit no longer exists, you'll still get paid.
+
+(set: $encounterPayout to (min: (100 + 10 * $reputation's ($neighborhood's name)), 900))
+(set: $encounterStack to (a: "Encounter Random Color", "Encounter: Enchantment Trap", "Encounter: Fire Ghost", "Encounter: Thug", "Fulfilled: Erase My Enemy"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 1)
+[[Chase After Him!->Encounter]]
+]]
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Prison Break [southquarry contract silver-level] {"position":"181,2961","size":"100,100"}
+|input>[(link-reveal: "Accept")[(replace:?input)[
+(set: $currentContract to (passage:)'s name)
+(set: $encounterPayout to (min: (300 + 30 * $reputation's ($neighborhood's name)), 1500))
+(set: $encounterStack to (a: "Encounter Random Color", "Encounter: Enchantment Trap", "Encounter: Fire Ghost", "Encounter: Thug", "Fulfilled: Jailbreak"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 1)
+(set: $contractCancelledOnDeath to 1)
+[[Chase After Him!->Encounter]]
+
+]]
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Jailbreak [southquarry contract brass-level] {"position":"176,2851","size":"100,100"}
+|input>[(link-reveal: "Accept")[(replace:?input)[
+(set: $currentContract to (passage:)'s name)
+(set: $encounterPayout to (min: (300 + 30 * $reputation's ($neighborhood's name)), 1500))
+(set: $encounterStack to (a: "Encounter Random Color", "Encounter: Enchantment Trap", "Encounter: Fire Ghost", "Encounter: Thug", "Fulfilled: Jailbreak"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 1)
+(set: $contractCancelledOnDeath to 1)
+[[Chase After Him!->Encounter]]
+
+]]
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Soul Jar Break [southquarry easternfortress lowerdepths contract silver-level gold-level] {"position":"180,3071","size":"100,100"}
+|input>[(link-reveal: "Accept")[(replace:?input)[
+(set: $currentContract to (passage:)'s name)
+(set: $encounterPayout to (min: (300 + 30 * $reputation's ($neighborhood's name)), 1500))
+(set: $encounterStack to (a: "Encounter Random Color", "Encounter: Enchantment Trap", "Encounter: Fire Ghost", "Encounter: Thug", "Fulfilled: Jailbreak"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 1)
+(set: $contractCancelledOnDeath to 1)
+[[Chase After Him!->Encounter]]
+
+]]
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Craft a Spellbook [easternfortress uppercastlerock contract brass-level silver-level gold-level] {"position":"181,3181","size":"100,100"}
+What a wizard does is constantly shaping the world around them to their will, altering threads of reality, reweaving or cutting where necessary.
+You do not know "spells", so much as you understand the seething skein of the Multiverse that surrounds us all.
+However, the average Mortal cannot maintain such hypervigilance.  If they could, they'd be wizards.  However, they can still perform magic: very specific effects for very specific conditions.
+A mortal wishes for you to craft them a spell book with a handful of rituals for some minor effects.
+- Get Ink of Enchantment
+- Get Blank Scroll
+- Get Ethereal Threads
+|input>[(link-reveal: "Accept")[(replace:?input)[
+(set: $currentContract to (passage:)'s name)
+(set: $encounterPayout to (min: (300 + 30 * $reputation's ($neighborhood's name)), 1500))
+(set: $encounterStack to (a: "Encounter Random Color", "Encounter: Bring Your Client Spellbook Ingredients", "Fulfilled: Craft a Spellbook"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 1)
+(set: $contractCancelledOnDeath to 1)
+(set: $contractRequirements to (a: "Ink of Enchantment", "Blank Scroll", "Ethereal Threads"))
+[[Go Fetch!->Encounter]]
+
+]]
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Matchmaker [uppercastlerock westfires lowerdepths contract silver-level gold-level] {"position":"183,3292","size":"100,100"}
+Your client wants you to perform enchantments and glamours on two young nobles so that they will marry and unite their houses in a strategic alliance.
+|input>[(link-reveal: "Accept")[(replace:?input)[
+(set: $currentContract to (passage:)'s name)
+(set: $encounterPayout to (min: (300 + 30 * $reputation's ($neighborhood's name)), 1500))
+(set: $encounterStack to (a: "Encounter Random Color", "Encounter: Enchantment Trap", "Encounter: Fire Ghost", "Encounter: Thug", "Fulfilled: Jailbreak"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 1)
+(set: $contractCancelledOnDeath to 1)
+[[Chase After Him!->Encounter]]
+
+]]
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Matchbreaker [easternfortress lowerdepths uppercastlerock contract brass-level silver-level] {"position":"183,3394","size":"100,100"}
+Your client wants you to pretend to be a young noble's blind date and ruin the whole experience in order to ruin the potential relationship.
+
+(set: $encounterTimeLimit to 15)
+(set: $encounterLocation to (either: "West Fires", "North Harbor", "Eastern Fortress", "South Quarry", "Lower Depths", "Upper Castlerock"))
+(set: $encounterPayout to (min: (300 + 30 * $reputation's ($neighborhood's name)), 1500))
+They want you to go to $encounterLocation within $encounterTimeLimit hours to visit with the young noble.
+Then ruin the date.
+
+|input>[(link-reveal: "Accept")[(replace:?input)[
+(set: $currentContract to (passage:)'s name)
+(set: $encounterStack to (a:))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 1)
+(set: $contractCancelledOnDeath to 1)
+
+[[Home Again]]
+
+(link-goto: (history:)'s last)
+
+]]
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Smuggle Your Client Out of the City [westfires contract silver-level gold-level] {"position":"184,3500","size":"100,100"}
+Your client wants you to escort them out of the city.
+"I can't be seen leaving!  They may send an assassin!"
+
+|input>[(link-reveal: "Accept")[(replace:?input)[
+(set: $currentContract to (passage:)'s name)
+(set: $encounterPayout to (min: (300 + 30 * $reputation's ($neighborhood's name)), 1500))
+(set: $encounterStack to (a: "Encounter Random Color", "Encounter: Enchantment Trap", "Encounter: Fire Ghost", (either: "Encounter: Thug", "Encounter: Assassin"), "Fulfilled: Smuggle Your Client Out of the City"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 1)
+(set: $contractCancelledOnDeath to 1)
+[[Let Us Away!->Encounter]]
+
+]]
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Professionals at the Card Table [lowerdepths easterfortress contract brass-level silver-level] {"position":"693,3573","size":"100,100"}
+(set: $currentContract to (passage:)'s name)
+You've been invited to a card game.  It is strictly illegal.
+
+(set: $encounterStack to (a: "Encounter Random Color", "Encounter: Card Sharks", "Fulfilled: Professionals at the Card Table"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 1)
+[[Let's Get Paid!->Encounter]]
+
+
+:: Take a Dive [westfires lowerdepths contract brass-level] {"position":"188,3715","size":"100,100"}
+Your client wants you to take a dive in a wizard duel.  They promise you won't be killed or seriously maimed.
+
+|input>[(link-reveal: "Accept")[(replace:?input)[
+(set: $currentContract to (passage:)'s name)
+(set: $encounterPayout to (min: (300 + 30 * $reputation's ($neighborhood's name)), 1500))
+(set: $encounterStack to (a: "Encounter: Sparring Duel", "Fulfilled: Take a Dive"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 1)
+(set: $contractCancelledOnDeath to 1)
+[[Let's Get It On!->Encounter]]
+
+]]
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Lift a Curse [easternfortress northharbor contract brass-level silver-level gold-level] {"position":"185,3825","size":"100,100"}
+Your client wants you to remove a curse mark that has been placed upon them by their enemy.
+|input>[(link-reveal: "Accept")[(replace:?input)[
+(set: $currentContract to (passage:)'s name)
+(set: $encounterPayout to (min: (300 + 30 * $reputation's ($neighborhood's name)), 1500))
+(set: $encounterStack to (a: "Encounter Random Color", "Encounter: Enchantment Trap", "Encounter: Fire Ghost", "Encounter: Thug", "Fulfilled: Lift a Curse"))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 1)
+(set: $contractCancelledOnDeath to 1)
+[[Chase After Him!->Encounter]]
+
+]]
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Deliver a Package [westfires easternfortress lowerdepths uppercastlerock contract brass-level] {"position":"188,3934","size":"100,100"}
+(set: $encounterTarget to (shuffled: ...($neighborhood's locations))'s 1st)
+Your client wants you to carry a package to $encounterTarget.
+
+|input>[(link-reveal: "Accept")[(replace:?input)[
+{(set: $currentContract to (passage:)'s name)(set: $encounterPayout to (min: (50 + 10 * $reputation's ($neighborhood's name)), 150))
+(set: $encounterStack to (either: (a: "Encounter Random Color", "Encounter Random Color", "Encounter Random Color", "Fulfilled: Deliver a Package"),(a: "Encounter Random Color", "Encounter Random Color", "Encounter: Assassin", "Fulfilled: Deliver a Package")))
+(set: $encounterIndex to 1)
+(set: $enchantmentHidden to 1)
+
+(set: $contractCancelledOnDeath to 1)
+}
+
+[[Run Along!->Encounter]]
+
+]]
+[[Reject->Explore the Neighborhood]] ]
+
+
+:: Fulfilled: Class Warfare {"position":"281,1848","size":"100,100"}
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $encounterPayout to $encounterLength * (min: 45, 15 * $reputation's ($neighborhood's name)))
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+
+(display: "Contract Fulfilled")
+
+
+:: Fulfilled: Deliver a Package {"position":"296,3932","size":"100,100"}
+You deliver the package to the dead drop outside the (link-goto: $encounterTarget).
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Fulfilled: Lift a Curse {"position":"301,3822","size":"100,100"}
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Fulfilled: Take a Dive {"position":"295,3714","size":"100,100"}
+(if: $reputation's ($neighborhood's name) < $enchantmentHidden)[
+(set: $arg to -1)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")]
+(else:)
+[
+(display: "Cancel Contract")
+]
+
+
+:: Description Professionals at the Card Table {"position":"577,3568","size":"100,100"}
+Professionals at the Card Table
+
+(set: $encounterPayout to 0)
+
+[[Accept->Professionals at the Card Table]] 
+
+[[Reject->Explore the Neighborhood]]
+
+
+:: Fulfilled: Professionals at the Card Table {"position":"806,3570","size":"100,100"}
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Fulfilled: Smuggle Your Client Out of the City {"position":"303,3495","size":"100,100"}
+Once you've escorted them past the last toll gate, a carriage with curtained windows is there to pick them up.  They swiftly pay you then depart.
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Fulfilled: Matchbreaker {"position":"301,3388","size":"100,100"}
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Fulfilled: Matchmaker {"position":"298,3279","size":"100,100"}
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Fulfilled: Craft a Spellbook {"position":"295,3173","size":"100,100"}
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Fulfilled: Soul Jar Break {"position":"294,3063","size":"100,100"}
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Fulfilled: Prison Break {"position":"295,2960","size":"100,100"}
+(set: $arg to 2)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Fulfilled: Jailbreak {"position":"294,2851","size":"100,100"}
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Fulfilled: Erase My Enemy {"position":"284,2743","size":"100,100"}
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Fulfilled: Tamper with Evidence {"position":"290,2630","size":"100,100"}
+You spend a moment deciding whether to use illusion magic or hygromancy to change the fingerprint and decide the (either: "former", "latter") to be the best for this particular application.
+I don't think anyone will end up on the wrong end of a gibbet over this business.
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Fulfilled: Steal a Package {"position":"290,2516","size":"100,100"}
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Fulfilled: Crack the Vault {"position":"282,2404","size":"100,100"}
+(set: $arg to 2)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Fulfilled: Plant A Spying Eye {"position":"278,2299","size":"100,100"}
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Hextant [item] {"position":"5969,3471","size":"100,100"}
+This device is used to identify and trace ley lines.
+
+
+:: Description The Shadow Heist {"position":"564,2192","size":"100,100"}
+The Shadow Heist
+
+(set: $encounterPayout to (min: (100 + 10 * $reputation's ($neighborhood's name)), 1500))
+
+[[Accept->The Shadow Heist]]
+
+[[Reject->Explore the Neighborhood]]
+
+
+:: Fulfilled: The Shadow Heist {"position":"796,2185","size":"100,100"}
+(set: $arg to 5)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Fulfilled: Shopping Trip to South Quarry {"position":"270,1966","size":"100,100"}
+They blow you a kiss as they depart back to the smoke and cinders of the West Fires.
+
+Stay for a while here in [[South Quarry]] 
+(set: $arg to 1)(display: "UpdateReputation")
+(set: $gold to it + $encounterPayout)
+<b>Gold + $encounterPayout</b>
+(display: "Contract Fulfilled")
+
+
+:: Fulfilled: Nest of Box Adders {"position":"281,2073","size":"100,100"}
+In the center of the nested puzzle boxes is a tangled, serpentine, venomous beast.  Think: asp meets rat king.
+(display: "Encounter Small Beast")
+
+
+:: Void Contract {"position":"3700,3281","size":"100,100"}
+{(set: $encounterStack to (a:))
+(set: $encounterIndex to 0)
+(set: $currentContract to "")
+(set: $currentContractStatus to 0)
+(set: $encounterPayout to 0)
+(set: $encounterLength to 0)}
+
+
+:: Call Off the Hunt {"position":"3511,3036","size":"100,100"}
+You don't have to go any further.  You could finish this right now.  No one will be offended if you bowed out.
+
+[[Keep Going->Next Encounter]] 
+
+[[Right, Let's Wrap It Up->Fulfilled: Standard Exorcism]]
+
+
+:: Hidden Treasure: Nest of Box Adders {"position":"398,2075","size":"100,100"}
+Once the foul creature has been slain, you find inside of it the treasure that you sought:
+
+(set: $inventory to it + ("Universal Solvent"))
+
+(display: "Contract Fulfilled")
+[[Next Journey]]
+
+
+:: Take a Peek in the Package? {"position":"410,1737","size":"100,100"}
+You went through such trouble to get this package.
+
+It would be a shame if it were something more valuable than the mere lucre you'd be getting otherwise.
+
+What if it were something very special, like a Crystal Spyglass or a Lazarus Beacon charge?
+
+[[I Must Know!->Encounter: Enchantment Trap Lock]] 
+
+[[Let's Go Meet the Client->Next Encounter]]
+
+
+:: Negotiate Contract {"position":"3700,3055","size":"100,100"}
+Double-click this passage to edit it.
+
+:: Encounter: Bring Your Client Spellbook Ingredients {"position":"413,3168","size":"100,100"}
+(set: $encounterIndex to it - 1)
+
+(for: each _i, ...$contractRequirements)[(set: _ingredient to _i)I need _ingredient for this recipe. 
+(if: $inventory contains _ingredient)[Do you have it for me?
+(link-reveal: "Give Them " + _ingredient)[You hand them the _ingredient.
+(set: $contractRequirements to it - (a: _ingredient))
+(set: $arg to _ingredient)(display: "LoseItem")
+]]]
+
+(event: when $contractRequirements's length <= 0)[(set: $encounterIndex to it + 1) (replace:?input)[ [[Next Encounter]] ]]
+
+|input>[ [[Go Shopping->Explore the Neighborhood]] ]

@@ -1,0 +1,372 @@
+
+:: Reset Rift Journey [function] {"position":"3744,1158","size":"100,100"}
+{(set: $riftSupplies to 100)
+(set: $riftCrew to 10)
+(set: $riftDistance to 0)
+(set: $riftTripDistance to 9999999)
+(set: $riftTreasure to 0)
+(set: $riftCommand to 1)
+(set: $riftVoyageDirection to 1)}
+
+
+:: Deliver a Rousing Speech to the Crew {"position":"3993,1164","size":"100,100"}
+You can try to lift the crew's spirits at the expense of some of your goodwill.
+(cycling-link: bind _sacrifice, ...(altered: _i via (str: _i), ...(range: 0, $riftCommand)))
+
+(link-reveal: "Speechify")[
+You take a deep breath and prepare to give forth:
+
+(set: _roll to (random: 0, (pow: (num:_sacrifice), 2) * 5))
+Roll: _roll
+(if: _roll > 20)[
+Your speech is epic, and your crew is invigorated.
+
+(set: $arg to 3)(display: "UpdateRiftDistance")
+(set: $arg to _roll)(display: "UpdateRiftCommand")
+](else:)[
+Your speech is terrible, and your crew is demoralized.
+(set: $arg to -(_roll + (num:_sacrifice)))(display: "UpdateRiftCommand")
+]]
+
+[[Next Journey]]
+
+:: Walk the Plank [tick] {"position":"3885,1412","size":"100,100"}
+The crew has had enough of you and forces you to walk the plank.
+
+(if: $inventory contains "Selkie Skin")[You could [[Dive In Headfirst->Next Journey]] while wearing your Selkie Skin.]
+(else:)[You could [[Dive In Headfirst->Death]](set: $deathReason to "As you collide with the surface of raw riftspace, your very being is torn into infinitely thin slices.")]
+
+:: Recruit a Salty Crew {"position":"5576,1154","size":"100,100"}
+|output>[(set: $arg to (random: 0, 5))(display: "UpdateRiftCrew")]
+
+[[Next Journey]]
+
+
+:: Parlay with the Pirates {"position":"5694,1155","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: UpdateRiftCrew [function] {"position":"3628,1263","size":"100,100"}
+{(set: $riftCrew to it + $arg)(if: $riftCrew > $riftMaxCrew)[Not everyone can fit on your merry boat.  Some, you have to leave behind. (set: $riftCrew to $riftMaxCrew)]
+(if: $riftCrew <= 0)[
+(set: $riftCrew to 0)
+It's just you now.
+]}
+<b>Crew (unless: $arg < 0)[+] $arg ($riftCrew)</b>
+
+:: UpdateRiftSupplies [function] {"position":"3634,1369","size":"100,100"}
+(if: $riftSupplies + $arg > $riftMaxSupplies)[You don't have enough room in the hold, and some supplies go to waste.]
+{(set: $riftSupplies to (min: $riftMaxSupplies, it + $arg))<b>Supplies (if: $arg >= 0)[+] $arg ($riftSupplies)
+(if: $riftSupplies < -20)[(set: $arg to -2)(display: "UpdateRiftCommand")(set: $riftSupplies to -20)]
+(else-if: $riftSupplies <= 0)[(set: $arg to -1)(display: "UpdateRiftCommand")]}
+
+
+
+:: UpdateRiftCommand [function] {"position":"3635,1476","size":"100,100"}
+(set: $riftCommand to it + $arg)<b>Command (if: $arg >= 0)[+] $arg ($riftCommand)
+
+
+:: Steal a Lifeboat {"position":"4716,1731","size":"100,100"}
+(if: (random: 0, 1) is 0)[
+[[On the Lifeboat]]
+](else:)[
+[[Set Adrift]] 
+]
+
+:: Sparring Shuffle {"position":"4806,754","size":"100,100"}
+{(set: $options to (shuffled: ...((a: "Biff", "Biff", "Boff", "Boff", "Bash", "Bash")))'s (range: 1, $cunning))
+(for: each _i, ...$options)[(set: _i2 to _i)<br/><br/>
+(link-reveal: _i)[(replace:?output)[(display: _i2)](replace:?input)[
+(if: $enemyHealth <= 0)[(replace:?input)[You've clobbered your sparring partner but good!(set: $koReason to "")
+
+[[Next Journey]] ]](else:)[Your opponent is wounded, but they are still on their feet.
+(display: "Sparring Shuffle")]]]
+]
+}
+
+
+:: Biff {"position":"4917,750","size":"100,100"}
+{(set: _opponentMove to $fightPattern's ($fightIndex))
+(replace:?output)[You biff.(if: _opponentMove is "Biff")[.. but they biff, too.  It's awkward.](else-if: _opponentMove is "Boff")[  They grab at your biff and boff you about! (set: $arg to (random: 0, 1))(display: "TakeKoDamage")](else-if: _opponentMove is "Bash")[]]
+(set: $fightIndex to (it + 1))
+(if: $fightIndex > $fightPattern's length)[(set: $fightIndex to 1)(replace:?clock)[(display: "RenderHeader")]]
+}
+
+
+:: Boff {"position":"5027,755","size":"100,100"}
+{(set: _opponentMove to $fightPattern's ($fightIndex))
+(replace:?output)[You launch a boff at your opponent's temple.(if: _opponentMove is "Biff")[.. but they biff your fist away.](else-if: _opponentMove is "Boff")[  As they dip in to boff your arm, you boff them in the throat.(set: $arg to 2)(display: "DealKoDamage")](else-if: _opponentMove is "Bash")[  You trade boffs and bashes at each other, bloodying each other's noses.(set: $arg to 1)(display: "DealKoDamage")(display: "TakeKoDamage")](else:)[  They make no move to avoid it and take the full brunt of your boff.(set: $arg to 2)(display: "DealKoDamage")]]
+(set: $fightIndex to (it + 1))
+(if: $fightIndex > $fightPattern's length)[(set: $fightIndex to 1)]
+(replace:?clock)[(display: "RenderHeader")]}
+
+
+:: Bash {"position":"5151,762","size":"100,100"}
+{(set: _opponentMove to $fightPattern's ($fightIndex))
+(replace:?output)[You attempt to bash them.(if: _opponentMove is "Biff")[ You get a firm grip on their biff and bash them to the ground. (set: $arg to 1)(display: "DealKoDamage")](else-if: _opponentMove is "Boff")[  The two of you boff indecisively for a few seconds before pulling apart again.](else-if: _opponentMove is "Bash")[As you attempt to bash them, they land a sharp counterbash to your liver. (set: $arg to 1)(display: "TakeKoDamage")]]
+(set: $fightIndex to (it + 1))
+(if: $fightIndex > $fightPattern's length)[(set: $fightIndex to 1)]
+(replace:?clock)[(display: "RenderHeader")]}
+
+
+:: TakeKoDamage [function] {"position":"4810,644","size":"100,100"}
+<br/><b>Consciousness - $arg</b>(set: $koHealth to it - $arg)
+(if: $koHealth <= 0)[
+(set: $riftCommand to it - 1)
+(goto: "Wake Up In The Brig")
+]
+
+
+:: Wake Up In The Brig {"position":"4563,771","size":"100,100"}
+Ugh, whatever happened last night...  (either: "a rave?", "a wake?", "a fight?", "tequila shots?", "Vegas?")
+
+[[Next Journey]]
+
+
+:: DealKoDamage [function] {"position":"4918,646","size":"100,100"}
+(set: $enemyHealth to it - $arg)<b>Opponent - $arg</b>
+(if: $enemyHealth <= 0)[Your formerly conscious crewmate gracefully pirouettes as they collapse bonelessly to the ground, your last strike finding its way to a secret nerve bundle under the chin.  "Well fought, mate!" you cheer.
+(set: $arg to 1)(display: "UpdateRiftCommand")
+](else:)[Your opponent is visibly affected by your attack, but they remain on their feet.]
+
+
+:: About to Aft, Return Home! {"position":"4440,690","size":"100,100"}
+(set: $riftDirection to -1)(set: $riftTripDistance to $riftDistance)(goto: "Next Journey")
+
+
+
+:: UpdateRiftTreasure [function] {"position":"3638,1589","size":"100,100"}
+(if: $riftTreasure + $arg > $riftMaxTreasure)[You can't fit anymore treasure in the hold.  You'll have to leave some behind.]
+(set: $riftTreasure to (min: $riftMaxTreasure, it + $arg))*Treasure (if: $arg >= 0)[+] $arg ($riftTreasure)*
+
+
+:: Go Hunting [tick] {"position":"4606,1277","size":"100,100"}
+(set: $arg to -1)(display: "UpdateRiftSupplies")(set: _roll to (random: 1, 6))
+(if: _roll is 1)[
+You find a wild beast.
+(if: (random: 0, 2) is 0)[(set: $deathReason to "You were gored and trampled by a beast while on the hunt.")(set: $arg to 1)(display: "TakeDamage")]
+(set: $arg to (random: 5, 15) * 3)(display: "UpdateRiftSupplies")
+]
+(else:)[
+You don't find anything.
+]
+
+[[Go Hunting]]
+
+[[Return to the Ship->Next Journey]]
+
+
+:: Purchase Supplies {"position":"5812,1151","size":"100,100"}
+(set: $marketplace to (a: "Supply Crate", "Supply Crate", "Supply Crate"))
+(set: $price to 100)
+(for: each _item, ...$marketplace)[	(set: _t1 to _item)	(set: _t2 to $price)	(link-reveal: "Buy " + _t1 + " For " + (str: _t2) + " Gold")[(if: $gold > _t2)[You buy _t1 for _t2. 
+	(set: $riftSupplies to it + 50)(set: $gold to it - _t2)
+	(replace:?clock)[(display: "RenderHeader")]](else:)[You don't have the dosh, mate.]]
+	(set: $price to $price * 2)
+]
+
+[[Next Journey]]
+
+
+
+:: Pick Next Heading {"position":"3855,1039","size":"100,100"}
+"Here are the options, mate!" a crewmember squacks at you.
+
+(set: _options to (shuffled: ...(find: _item where _item's tags contains "journey", ...(passages:))))
+(set: _optionCount to $cunning)(if: $inventory contains "Compass of Many Places")[(set: _optionCount to it + 4)]
+(for: each _item, ...(subarray: _options, 1, $cunning))
+[
+(link-goto: (_item's name), (_item's name))]
+
+(link-goto: "Spin the Wheel!", (shuffled: ...(find: _item where _item's tags contains "journey", ...(passages:)))'s 1st's name)
+
+
+:: Next Journey [tick] {"position":"3993,1053","size":"200,100"}
+(if: $riftCrew > 0)[(set: $arg to -$riftCrew)(display: "UpdateRiftSupplies")
+(if: $riftSupplies <= -15)[You've scavanged everything of value on the ship.  Every belt has been boiled into soup, every pet has been slaughtered and their skeleton's picked clean. You are now starving. 
+
+(if: $riftCommand < 0)[(set: $riftNextJourney to (either: "Mutiny!", "Cannibalism"))]]
+(else-if: $riftSupplies <= 0)[You're completely out of supplies.  The crew is terrified.
+
+(if: $riftCommand < 0)[(set: $riftNextJourney to (either: "Mutiny!", "Cannibalism", "Walk the Plank"))]
+]
+(else-if: $riftSupplies <= $riftCrew)[The crew is quite anxious about the lack of supplies.
+(if: (random: 0,1) > 0)[(set: $riftNextJourney to "Scurvy")]]
+(else-if: $riftSupplies <= $riftCrew * 3)[Your crew is starting to get worried about the lack of supplies.
+(if: $riftDirection is 1)[
+[[About to Aft, Return Home!]]
+
+[[Deliver a Rousing Speech to the Crew]]
+]]
+(else:)[Your crew is quite sanguine about their supplies.
+(set: $arg to (random: 0, 1))(display: "UpdateRiftCommand")]
+Supplies -> $riftSupplies
+Crew -> $riftCrew
+Treasure -> $riftTreasure
+Command -> $riftCommand
+(if: $riftDirection is 1)[Distance -> $riftDistance/$riftTripDistance
+You are sailing into the eye of the Rift.](else:)[Distance -> (print: $riftDistance-$riftTripDistance)/$riftTripDistance
+You are heading back to North Harbor.
+
+(if: $riftDistance >= $riftTripDistance * 2)[You've returned to this place after untold years for you and your crew, but mere hours or days for the citizens of North Harbor.
+
+[[Unload the Ship]] ]
+]
+(if: $riftDistance < $riftTripDistance * 2)[
+(if: $riftCommand > 7 or $inventory contains "Captain's Hat")[You command this crew.
+[[Pick Next Heading]] 
+]
+(else:)
+[(if: $riftNextJourney is "")[(link-goto: (shuffled: ...(find: _item where _item's tags contains "journey", ...(passages:)))'s 1st's name)]
+(else:)[(link-goto: $riftNextJourney)]]]]
+(else:)[(set: $arg to -1)(display: "UpdateRiftSupplies")
+(if: $riftSupplies <= -15)[You've scavanged everything of value on the ship.  Every belt has been boiled into soup, every pet has been slaughtered and their skeleton's picked clean. You are now starving. 
+(set: $arg to -1)(display: "UpdateRiftCommand")
+(if: (random: 0,1) > 0)[Your hunger pains begin to signal real physical damage.
+(set: $arg to 1)(display: "TakeDamage")]]
+
+Supplies -> $riftSupplies
+Crew -> $riftCrew
+Treasure -> $riftTreasure
+Command -> $riftCommand
+
+You are the only one left on this ship.  It is completely rudderless!
+(set: $riftDirection to (random: 0, 1))
+(if: $riftDirection is 1)[Distance -> $riftDistance/$riftTripDistance
+You are sailing into the eye of the Rift.](else:)[Distance -> (print: $riftDistance-$riftTripDistance)/$riftTripDistance
+You are heading back to North Harbor.
+
+(if: $riftDistance >= $riftTripDistance * 2)[You've returned to this place after untold years for you and your crew, but mere hours or days for the citizens of North Harbor.
+
+[[Unload the Ship]] ]
+]
+
+(link-goto: (shuffled: ...(find: _item where _item's tags contains "journey", ...(passages:)))'s 1st's name)]
+
+
+:: Mutiny! {"position":"4012,1284","size":"100,100"}
+(set: $riftNextJourney to "")
+(set: _roll to (random: 1, 6))
+The crew begin to riot.  Without clear leadership, the situation becomes completely chaotic.
+
+(if: _roll < 3)[
+[[Set Adrift]] 
+]
+(else-if: _roll < 6)[
+[[Stranded on a Deserted Island]]
+]
+(else:)[
+[[Come out on Top of the Uprising]]
+]
+
+
+:: Cannibalism {"position":"4017,1539","size":"100,100"}
+(if: $riftCrew > 1)[Your crew has created an innovative solution to both the supply and overpopulation problem simultaneously!
+
+(set: $arg to -1)(display: "UpdateRiftCommand")
+(set: $arg to (ceil: $riftCrew / 2) * 10)(display: "UpdateRiftSupplies")
+(set: $arg to -(ceil: $riftCrew / 2))(display: "UpdateRiftCrew")
+|output>[]
+(set: $riftNextJourney to "")
+(if: (history:)'s last is "On the Lifeboat")[ [[Next Journey->On the Lifeboat]] ]
+(else:)[
+[[Next Journey]] ]
+(set: $health to it + 1)](else-if: $riftCrew is 1)[Only one crew member remains, and they're hankering for a hunk of your haunches.
+{
+(set: $enemyHealth to 2)(set: $deathReason to "What's worse than being killed by a former crew mate is still feeling the teeth as they eat you while the old nervous system powers down.")(set: $enemyType to "Riftrunner")
+(set: $fightPattern to (a:(either: "Strike","Throw"),(either: "Strike", "Dodge")))(set: $enemyElementType to "mortal")
+(set: $fightIndex to 1)}
+|output>[]
+|input>[(display: "Fight")]
+
+(event: when $enemyHealth <= 0)[ (set: $arg to -1)(display: "UpdateRiftCrew")(replace:?input)[ (if: (history:)'s last is "On the Lifeboat")[ [[Next Journey->On the Lifeboat]] ]
+(else:)[
+[[Next Journey]] ] ]]
+]
+
+
+:: Scurvy {"position":"4017,1658","size":"100,100"}
+(set: $deathReason to "Nutrition has been sacrificed, which has reduced your effective crew capacity.")$deathReason
+
+(set: $arg to (random: -1, -(ceil: $riftCrew / 2)))(display: "UpdateRiftCrew")
+(set: $riftNextJourney to "")
+You also go hungry.
+(display: "TakeDamage")
+
+(if: (history:)'s last is "On the Lifeboat")[ [[Next Journey->On the Lifeboat]] ]
+(else:)[
+[[Next Journey]] ]
+
+:: Stranded on a Deserted Island {"position":"3880,1287","size":"100,100"}
+(set: $riftNextJourney to "")
+You've been deposited on a deserted island to take care of yourself.  Quite a favor.  You could have been keelhauled.
+(set: _item to "Captain's Hat")(display: "LoseItem")
+
+|output>[]
+(set: $resources to 3)
+(link-repeat: "Establish Camp")[(append:?output)[(display: "Tick")
+(set: $resources to it + (random: 0, 2))(set: $riftSupplies to it + (random: 0, 5))You build up fuel for a signal fire, gather what meager food and water you can find, and prepare for signs of a rescue.
+]]
+
+(link-repeat: "Try to Escape")[(append:?output)[(display: "Tick")You attempt a grand signal fire. (set: $resources to (ceil: it / 2))
+(if: (random: 0, 10) < $resources)[
+You are saved by a passing crew in a lifeboat!
+
+[[On the Lifeboat]]
+]]]
+
+
+:: Come out on Top of the Uprising {"position":"4015,1413","size":"100,100"}
+(set: $riftNextJourney to "")
+
+(set: $inventory to it + (ds: "Captain's Hat"))
+You've somehow managed to come out on top in this battle, and your crew have a newfound respect for you!
+(set: $riftCommand to (max: $riftCommand, 11))
+
+(if: (history:)'s last is "On the Lifeboat")[ [[Next Journey->On the Lifeboat]] ]
+(else:)[
+[[Next Journey]] ]
+
+
+
+:: Unload the Ship {"position":"3889,1150","size":"100,100"}
+Convert all of your treasure and distance into gold, items, and/or reputation.
+(set: _totalBuyback to 0)
+Supply Buyback: (set: _buyback to (ceil: $riftSupplies/2))_buyback(set: _totalBuyback to it + _buyback)(set: $riftSupplies to 0)
+Crew Bonus: (set: _buyback to $riftCrew * 10)_buyback(set: _totalBuyback to it + _buyback)(set: $riftCrew to 0)
+Distance Bonus: (set: _buyback to $riftDistance)_buyback(set: _totalBuyback to it + _buyback)
+Treasure Bonus: (set: _buyback to $riftTreasure * 5)_buyback(set: _totalBuyback to it + _buyback)
+(for: each _item, ...(shuffled: "Hand of Glory","Slow Clock","Grain of Gold","Perfect Pearl","Noble Cowl"))[
+(if: (random: 0, $riftTreasure) > 10)[(set: $arg to _item)(display: "GetItem")]
+]
+(set: $arg to  _totalBuyback)
+(display: "UpdateGold")
+[[Riftrunner's Guild]] 
+(display: "Reset Rift Journey")
+(display: "NavOptions")
+
+
+
+:: Scrape Barnacles off of the Hull {"position":"4832,1615","size":"100,100"}
+Unpopular, tiresome work that nevertheless gives an immediate distance boost.
+
+<b>Command - 1</b>(set: $riftCommand to it - 1)
+(set: $arg to 3)(display: "UpdateRiftDistance")
+[[Next Journey]]
+
+
+
+:: On the Lifeboat [tick] {"position":"5198,1163","size":"100,100"}
+You (if: $riftCrew > 0)[and the $riftCrew remaining crew are on a lifeboat together](else:)[are on a lifeboat alone], awaiting rescue.
+(set: $arg to -1)(display: "UpdateRiftCommand")
+(display: "UpdateRiftSupplies")
+(if: $riftCrew > 0 and $riftSupplies < 0 and $riftCommand < 0)[(goto: (either: "Mutiny!", "Cannibalism", "Scurvy"))](else:)[
+(set: $arg to (either: 0, 1, 1))(display: "UpdateRiftDistance")
+(if: (random: 0, 100) is 0)[ [[Safe Harbor]]]
+(if: $riftDistance >= $riftTripDistance * 2)[ [[North Harbor]] ](else:)[
+[[On the Lifeboat]]]](set: $riftTreasure to 0)
+
+
+:: UpdateRiftDistance [function] {"position":"3630,1158","size":"100,100"}
+(set: _i to (ceil: $arg * $riftCrew))<br/><b>Distance (if: _i >= 0)[+ ]_i<b/>(set: $riftDistance to it + _i)
+
