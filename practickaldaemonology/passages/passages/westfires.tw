@@ -1,5 +1,6 @@
 
 :: West Fires [tick] {"position":"1182,1374","size":"200,200"}
+<script>document.getElementById("stylesheet").href="pd_style_west_fires.css";</script>
 (display: "Init West Fires")
 This neighborhood is known as the West Fires, because it is to the West and it is constantly on fire.  The supernatural flames are useful for the various industries in that region.
 (for: each _item, ...($neighborhood's locations))[(if: (history:) contains _item and (passage: _item)'s tags contains "bookmark")[(link-goto: _item)

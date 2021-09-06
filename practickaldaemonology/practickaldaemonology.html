@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><link rel="stylesheet" href="pd_style_default.css">
+<head><link id="stylesheet" rel="stylesheet" href="pd_style_default.css">
 <meta charset="utf-8">
 <title>PracticalDaemonology</title>
 
@@ -10,7 +10,7 @@
 
 <tw-story></tw-story>
 
-<!-- UUID://3128F1D7-B233-41CC-B2BE-0FCE619629B2// --><tw-storydata name="PracticalDaemonology" startnode="889" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="3128F1D7-B233-41CC-B2BE-0FCE619629B2" zoom="0.6" format="Harlowe" format-version="3.1.0" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css"></style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-tag name="book" color="gray"></tw-tag><tw-tag name="npc" color="blue"></tw-tag><tw-tag name="persona" color="blue"></tw-tag><tw-tag name="reagent" color="purple"></tw-tag><tw-tag name="journey" color="yellow"></tw-tag><tw-tag name="potion" color="gray"></tw-tag><tw-tag name="rumor" color="yellow"></tw-tag><tw-tag name="daemon" color="red"></tw-tag><tw-tag name="daemon-description" color="red"></tw-tag><tw-tag name="foray" color="yellow"></tw-tag><tw-tag name="function" color="green"></tw-tag><tw-tag name="incense" color="red"></tw-tag><tw-tag name="startup" color="green"></tw-tag><tw-passagedata pid="1" name="Canals" tags="location northharbor easternfortress" position="8381,2064" size="200,100">(display: &quot;Init Canals&quot;)
+<!-- UUID://3128F1D7-B233-41CC-B2BE-0FCE619629B2// --><tw-storydata name="PracticalDaemonology" startnode="889" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="3128F1D7-B233-41CC-B2BE-0FCE619629B2" zoom="0.6" format="Harlowe" format-version="3.1.0" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css"></style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-tag name="book" color="gray"></tw-tag><tw-tag name="daemon" color="red"></tw-tag><tw-tag name="daemon-description" color="red"></tw-tag><tw-tag name="function" color="green"></tw-tag><tw-tag name="incense" color="red"></tw-tag><tw-tag name="journey" color="yellow"></tw-tag><tw-tag name="npc" color="blue"></tw-tag><tw-tag name="rumor" color="yellow"></tw-tag><tw-tag name="foray" color="yellow"></tw-tag><tw-tag name="persona" color="blue"></tw-tag><tw-tag name="potion" color="gray"></tw-tag><tw-tag name="reagent" color="purple"></tw-tag><tw-tag name="startup" color="green"></tw-tag><tw-passagedata pid="1" name="Canals" tags="location northharbor easternfortress" position="8381,2064" size="200,100">(display: &quot;Init Canals&quot;)
 Hilbert space-filling curves of canals.
 Borders North Harbor and Eastern Fortress.
 
@@ -5910,7 +5910,8 @@ A kindly hermit has found you out here in the nightmare and has brought you some
 [
 (if: $hermitpass is &quot;mirror&quot;)[You stare at your reflection for quite some time. You are amazed to see that your own reflection decided to put his hand on your face.(set: $LazarusBeaconCharges to it + 999999999999999)
 ]
-(if: $hermitpass is not &quot;millenia)[[Take a postcard]]</tw-passagedata><tw-passagedata pid="852" name="West Fires" tags="tick" position="1182,1374" size="200,200">(display: &quot;Init West Fires&quot;)
+(if: $hermitpass is not &quot;millenia)[[Take a postcard]]</tw-passagedata><tw-passagedata pid="852" name="West Fires" tags="tick" position="1182,1374" size="200,200">&lt;script&gt;document.getElementById(&quot;stylesheet&quot;).href=&quot;pd_style_west_fires.css&quot;;&lt;/script&gt;
+(display: &quot;Init West Fires&quot;)
 This neighborhood is known as the West Fires, because it is to the West and it is constantly on fire.  The supernatural flames are useful for the various industries in that region.
 (for: each _item, ...($neighborhood&#39;s locations))[(if: (history:) contains _item and (passage: _item)&#39;s tags contains &quot;bookmark&quot;)[(link-goto: _item)
 

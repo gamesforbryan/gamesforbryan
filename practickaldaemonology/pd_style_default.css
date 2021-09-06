@@ -189,7 +189,7 @@ tw-passage tw-enchantment[style*=" color"] tw-broken-link:not(:hover){color:inhe
 .enchantment-clickblock:hover{color:rgba(0,191,255,0.5)}
 .enchantment-clickblock:active{color:rgba(222,78,59,0.5)}html{margin:0; height:100%; overflow-x:hidden}*,:before,:after{position:relative; box-sizing:inherit}body{margin:0; height:100%}
 tw-storydata{display:none}
-tw-story{display:-webkit-box; display:-webkit-flex; display:-moz-flex; display:-ms-flexbox; display:flex; -webkit-box-direction:normal; -webkit-box-orient:vertical; -webkit-flex-direction:column; -moz-flex-direction:column; -ms-flex-direction:column; flex-direction:column; font:100% Georgia, serif; box-sizing:border-box; width:100%; min-height:100%; font-size:1.5em; line-height:1.5em; padding:5% 20%; margin:0; overflow:hidden; background-color:#000; color:#fff}
+tw-story{display:-webkit-box; display:-webkit-flex; display:-moz-flex; display:-ms-flexbox; display:flex; -webkit-box-direction:normal; -webkit-box-orient:vertical; -webkit-flex-direction:column; -moz-flex-direction:column; -ms-flex-direction:column; flex-direction:column; font:100% Georgia, serif; box-sizing:border-box; width:100%; min-height:100%; font-size:1.5em; line-height:1.5em; padding:5% 20%; margin:0; overflow:hidden; background-color:#fff; color:#000}
 tw-story br[data-cons]{display:block; height:0; margin:0.8ex 0}
 tw-story select{background-color:transparent; font:inherit; border-style:solid; padding:2px}
 tw-story select:not([disabled]){color:inherit}
