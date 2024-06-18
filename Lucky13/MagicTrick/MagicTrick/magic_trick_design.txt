@@ -1,0 +1,53 @@
+Magic Trick
+Andrew Ulysses Baker
+
+Overview: A light, trick taking microgame for 2 players.
+
+Components:
+- 13 Cards
+	- 4 Rabbits (Star, 2, 3, 4)
+	- 4 Hats (Star, 2, 3, 4)
+	- 4 Wands (Star, 2, 3, 4)
+	- 1 Illusionist (Trump)
+	
+Setup:
+- Dealer shuffles all 13 cards.
+- Dealer sets aside 1 face down.
+- Dealer deals 6 cards to both players.
+- Dealer selects 1 card from his hand and plays it face down.
+- The other player selects 1 card from his hand and plays it face down.
+- Dealer takes all three face down cards and shuffles them.  He then fans them face down to the The other player.
+- The other player selects 2 cards from the fan and places them face up.  The Laws on the 2 face up cards determine how this hand will play.  If the Law cards require a bid, then the players will bid now.
+- Dealer burns the remaining face down card. It is now out of the game, and no one gets to know what it is.
+- The default trump suit is Wands.  By default, Stars are low (count as 1).
+
+- The Laws:
+	- Trump: "The Illusionist": First losing trick card's effect replaces this one.
+	- Star of Hats: "Grand Finale": Points are only scored for the last trick, but it is worth x4 points.
+	- Star of Rabbits: "Heart Break": -2 points per trick won.
+	- Star of Wands: "Moon Shot": Lose all tricks to win +10 points.
+	- 2 of Hats: "Topsy Turvy": High is Low (makes Illusionist lowest card).
+	- 2 of Wands: "The Stars Are Right": Stars are High (value of 13).
+	- 2 of Rabbits: "Oh, Dickens!": Bid how many tricks you think you will win.  Exact Bid required to score (only affects positive points.  For example, if you also had "Heart Break", you would still score negative for every trick).
+	- 3 of Hats: "Night Club": Only non-trump cards are worth points.  If a player wins a trick with a trump suit, those cards are burned instead of being added to their score pile.
+	- 3 of Wands: "The Contract": Bid how many tricks you think you will win.  Achieve your bid to get +3 points.  -2 points for every trick over or under.
+	- 3 of Rabbits: "Poison": Each 4 won is -3 points.  Each 2 won is +1 point.
+	- 4 of Wands: "Rope Trick": Players take turns either playing higher in the lead suit or matching the current rank.  If a player cannot follow, his opThe other playernt takes the trick and leads the next.  The first player to run out of cards gets +2 points, takes the trick, and ends the hand.
+	- 4 of Hats: "Top Hat": Hats are Trump. Cancels "Rabbits Are Trump" if both are the Law Cards, leaving no trump suits.
+	- 4 of Rabbits: "Top Rabbit": Rabbits are Trump. Cancels "Hats Are Trump" if both are the Law Cards, leaving no trump suits.
+	
+- The Play
+	- The other player leads with any of his remaining cards.
+	- Dealer must follow to the suit lead, if he can.  Otherwise, he can follow trump or any other card.
+	- The winner of each trick leads to the next trick until no cards are left in hand.
+	- When all tricks have been played, each player scores 1 point per 2 cards they have taken in tricks, rounded up,  factored against the scoring effects of either of the two face up Law Cards.
+	
+Winning the Game:
+	- Players alternate dealing until 1 or more score 31 points total.  Highest score wins.
+	
+Prototype Assets:
+Pentagram by Anton Noskov from the Noun Project
+Top Hat by Andrea Mazzini from the Noun Project
+Rabbit by Madeleine Bennett from the Noun Project
+Magic Wand by Matthew R. Miller from the Noun Project
+	
